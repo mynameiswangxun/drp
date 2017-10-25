@@ -1,7 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>ÓÃ»§Î¬»¤</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ç”¨æˆ·ç»´æŠ¤</title>
 		<link rel="stylesheet" href="../style/drp.css">
 		<script type="text/javascript">
 	
@@ -17,7 +18,12 @@
 		
 	}
 		
-	function checkAll() {
+	function checkAll(field) {
+		var checkboxes = document.getElementsByName("selectFlag");
+		for(var i = 0; i<checkboxes.length; i++){
+		    checkboxes[i].checked = field.checked;
+		}
+
 	}
 
 	function topPage() {
@@ -53,7 +59,7 @@
 						<td width="522" class="p1" height="17" nowrap>
 							<img src="../images/mark_arrow_02.gif" width="14" height="14">
 							&nbsp;
-							<b>ÏµÍ³¹ÜÀí&gt;&gt;ÓÃ»§Î¬»¤</b>
+							<b>ç³»ç»Ÿç®¡ç†&gt;&gt;ç”¨æˆ·ç»´æŠ¤</b>
 						</td>
 					</tr>
 				</table>
@@ -63,7 +69,7 @@
 				cellspacing="0" class="rd1" id="toolbar">
 				<tr>
 					<td width="49%" class="rd19">
-						<font color="#FFFFFF">²éÑ¯ÁĞ±í</font>
+						<font color="#FFFFFF">æŸ¥è¯¢åˆ—è¡¨</font>
 					</td>
 					<td width="27%" nowrap class="rd16">
 						<div align="right"></div>
@@ -74,22 +80,22 @@
 				align="center" class="table1">
 				<tr>
 					<td width="55" class="rd6">
-						<input type="checkbox" name="ifAll" onClick="checkAll()">
+						<input type="checkbox" name="ifAll" onClick="checkAll(this)">
 					</td>
 					<td width="119" class="rd6">
-						ÓÃ»§´úÂë
+						ç”¨æˆ·ä»£ç 
 					</td>
 					<td width="152" class="rd6">
-						ÓÃ»§Ãû³Æ
+						ç”¨æˆ·åç§°
 					</td>
 					<td width="166" class="rd6">
-						ÁªÏµµç»°
+						è”ç³»ç”µè¯
 					</td>
 					<td width="150" class="rd6">
 						email
 					</td>
 					<td width="153" class="rd6">
-						´´½¨ÈÕÆÚ
+						åˆ›å»ºæ—¥æœŸ
 					</td>
 				</tr>
 				<tr>
@@ -101,7 +107,7 @@
 						1001
 					</td>
 					<td class="rd8">
-						ÕÅÈı
+						å¼ ä¸‰
 					</td>
 					<td class="rd8">
 						135xxxxxxxxx
@@ -121,7 +127,7 @@
 					<td class="rd8">
 						1002
 					</td>
-					<td class="rd8">ÀîËÄ</td>
+					<td class="rd8">æå››</td>
 					<td class="rd8">
 						135xxxxxxxxx
 					</td>
@@ -140,7 +146,7 @@
 					<td class="rd8">
 						1003
 					</td>
-					<td class="rd8">ÍõÎå</td>
+					<td class="rd8">ç‹äº”</td>
 					<td class="rd8">
 						135xxxxxxxxx
 					</td>
@@ -297,31 +303,31 @@
 				<tr>
 					<td nowrap class="rd19" height="2">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;¹²&nbspxx&nbspÒ³</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<font color="#FFFFFF">µ±Ç°µÚ</font>&nbsp
+							<font color="#FFFFFF">&nbsp;å…±&nbspxx&nbspé¡µ</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">å½“å‰ç¬¬</font>&nbsp
 							<font color="#FF0000">x</font>&nbsp
-							<font color="#FFFFFF">Ò³</font>
+							<font color="#FFFFFF">é¡µ</font>
 						</div>
 					</td>
 					<td nowrap class="rd19">
 						<div align="right">
 							<input name="btnTopPage" class="button1" type="button"
-								id="btnTopPage" value="|&lt;&lt; " title="Ê×Ò³"
+								id="btnTopPage" value="|&lt;&lt; " title="é¦–é¡µ"
 								onClick="topPage()">
 							<input name="btnPreviousPage" class="button1" type="button"
-								id="btnPreviousPage" value=" &lt;  " title="ÉÏÒ³"
+								id="btnPreviousPage" value=" &lt;  " title="ä¸Šé¡µ"
 								onClick="previousPage()">
 							<input name="btnNextPage" class="button1" type="button"
-								id="btnNextPage" value="  &gt; " title="ÏÂÒ³" onClick="nextPage()">
+								id="btnNextPage" value="  &gt; " title="ä¸‹é¡µ" onClick="nextPage()">
 							<input name="btnBottomPage" class="button1" type="button"
-								id="btnBottomPage" value=" &gt;&gt;|" title="Î²Ò³"
+								id="btnBottomPage" value=" &gt;&gt;|" title="å°¾é¡µ"
 								onClick="bottomPage()">
 							<input name="btnAdd" type="button" class="button1" id="btnAdd"
-								value="Ìí¼Ó" onClick="addUser()">
+								value="æ·»åŠ " onClick="addUser()">
 							<input name="btnDelete" class="button1" type="button"
-								id="btnDelete" value="É¾³ı" onClick="deleteUser()">
+								id="btnDelete" value="åˆ é™¤" onClick="deleteUser()">
 							<input name="btnModify" class="button1" type="button"
-								id="btnModify" value="ĞŞ¸Ä" onClick="modifyUser()">
+								id="btnModify" value="ä¿®æ”¹" onClick="modifyUser()">
 						</div>
 					</td>
 				</tr>

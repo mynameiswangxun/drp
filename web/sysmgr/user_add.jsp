@@ -36,7 +36,7 @@
     <script src="../script/client_validate.js"></script>
     <script type="text/javascript">
         function goBack() {
-            window.self.location = "user_maint.html"
+            window.self.location = "user_maint.jsp"
         }
 
         function addUser() {
@@ -104,40 +104,33 @@
             document.getElementById("userId").focus();
         }
 
-        var xmlHttp;
-
-        function createXMLHttpRequest() {
+        function validate(field) {
+            //alert("离开焦点");
+            //创建Ajax核心对象XMLHttpRequest
+            var xmlHttp;
             if (window.XMLHttpRequest) {
                 xmlHttp = new XMLHttpRequest();
             } else if (window.ActiveXObject) {
                 xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
-        }
-
-        function validate(field) {
-            //alert("离开焦点");
-
-            //创建Ajax核心对象XMLHttpRequest
-            createXMLHttpRequest();
 
             var url = "../user_validate.servlet?userId=" + trim(field.value) + "&time=" + new Date().getTime();
             //设置请求方式为GET，设置请求的URL，设置为异步提交
             xmlHttp.open("GET", url, true);
             //将函数地址赋值给onreadystatechange属性（响应事件），当Ajax状态发生变化时会调用该函数
-            xmlHttp.onreadystatechange = callback;
+            xmlHttp.onreadystatechange = function(){
+                //引擎状态为成功
+                if(xmlHttp.readyState == 4){
+                    //Http协议为成功
+                    if(xmlHttp.status == 200){
+                        document.getElementById("userIdCk").innerHTML = "<font color='red'>"+xmlHttp.responseText+"</font>";
+                    }else{
+                        alert("请求失败，错误码:"+xmlHttp.status);
+                    }
+                }
+            };
             //将设置信息发送到Ajax引擎
             xmlHttp.send(null);
-        }
-        function callback() {
-            //引擎状态为成功
-            if(xmlHttp.readyState == 4){
-                //Http协议为成功
-                if(xmlHttp.status == 200){
-                    document.getElementById("userIdCk").innerHTML = "<font color='red'>"+xmlHttp.responseText+"</font>";
-                }else{
-                    alert("请求失败，错误码:"+xmlHttp.status);
-                }
-            }
         }
     </script>
 </head>
