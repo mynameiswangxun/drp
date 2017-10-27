@@ -1,10 +1,13 @@
 package drp.systemmgr.manager;
 
+import drp.systemmgr.domain.PageModel;
 import drp.systemmgr.domain.User;
 import drp.util.DBUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 采用单例管理用户
@@ -76,5 +79,48 @@ public class UserManager {
             DBUtil.closePreparedStatement(preparedStatement);
         }
         return user;
+    }
+
+    /**
+     * 分页查询
+     * @param pageNo 第几页
+     * @param pageSize 每页多少条数据
+     * @return pageModel
+     */
+    public PageModel findUserList(int pageNo,int pageSize){
+        String sql = "select * from user_msg where id!='root' order by id limit ?,? ";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        PageModel pageModel = new PageModel();
+        List pageUserList = new ArrayList();
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,(pageNo-1)*pageSize);
+            preparedStatement.setInt(2,pageSize);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getString("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setContactTel(resultSet.getString("contact_tel"));
+                user.setEmail(resultSet.getString("email"));
+                user.setCreateDate(resultSet.getTimestamp("create_date"));
+                pageUserList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closePreparedStatement(preparedStatement);
+        }
+        pageModel.setList(pageUserList);
+        pageModel.setPageNo(pageNo);
+        pageModel.setPageSize(pageSize);
+        pageModel.setTotalPageSize(0);
+        pageModel.setTotalRecords(0);
+        return pageModel;
     }
 }

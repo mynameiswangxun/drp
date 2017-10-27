@@ -7,7 +7,6 @@ import java.sql.Connection;
 
 public class Test {
     public static void main(String[] args) {
-        Connection connection = DBUtil.getConnection();
-        System.out.println(UserManager.getInstance().findUserById("a1235"));
+        System.out.println(UserManager.getInstance().findUserList(1,5));
     }
 }

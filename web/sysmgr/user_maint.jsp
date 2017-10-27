@@ -1,4 +1,13 @@
+<%@ page import="drp.systemmgr.manager.UserManager" %>
+<%@ page import="drp.systemmgr.domain.PageModel" %>
+<%@ page import="java.util.List" %>
+<%@ page import="drp.systemmgr.domain.User" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	UserManager userManager = UserManager.getInstance();
+	PageModel pageModel = userManager.findUserList(1,12);
+%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -32,7 +41,7 @@
 	
 	function previousPage() {
 		
-	}	
+	}
 	
 	function nextPage() {
 		
@@ -98,205 +107,38 @@
 						创建日期
 					</td>
 				</tr>
+				<!--循环开始-->
+				<%
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+					List userList = pageModel.getList();
+					for(int i = 0; i<userList.size(); i++){
+				%>
 				<tr>
 					<td class="rd8">
 						<input type="checkbox" name="selectFlag" class="checkbox1"
 							value="1001">
 					</td>
 					<td class="rd8">
-						1001
+						<%=((User)userList.get(i)).getId()%>
 					</td>
 					<td class="rd8">
-						张三
+						<%=((User)userList.get(i)).getUsername()%>
 					</td>
 					<td class="rd8">
-						135xxxxxxxxx
+						<%=((User)userList.get(i)).getContactTel()==null?"":((User)userList.get(i)).getContactTel()%>
 					</td>
 					<td class="rd8">
-						wwa@163.com
+						<%=((User)userList.get(i)).getEmail()==null?"":((User)userList.get(i)).getEmail()%>
 					</td>
 					<td class="rd8">
-						2007-06-26 16:27:28
+						<%=((User)userList.get(i)).getCreateDate()==null?"":
+								simpleDateFormat.format(((User)userList.get(i)).getCreateDate())%>
 					</td>
 				</tr>
-				<tr>
-					<td class="rd8">
-						<input type="checkbox" name="selectFlag" class="checkbox1"
-							value="1002">
-					</td>
-					<td class="rd8">
-						1002
-					</td>
-					<td class="rd8">李四</td>
-					<td class="rd8">
-						135xxxxxxxxx
-					</td>
-					<td class="rd8">
-						wwa@163.com
-					</td>
-					<td class="rd8">
-						2007-06-26 16:27:28
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						<input type="checkbox" name="selectFlag" class="checkbox1"
-							value="1003">
-					</td>
-					<td class="rd8">
-						1003
-					</td>
-					<td class="rd8">王五</td>
-					<td class="rd8">
-						135xxxxxxxxx
-					</td>
-					<td class="rd8">
-						wwa@163.com
-					</td>
-					<td class="rd8">
-						2007-06-26 16:27:28
-					</td>
-				</tr>
-				<tr>
-					<td width="55" class="rd7">&nbsp;
-						
-					</td>
-					<td width="119" class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td width="152" class="rd7">&nbsp;
-						
-					</td>
-					<td width="166" class="rd7">&nbsp;
-						
-					</td>
-					<td width="150" class="rd7">&nbsp;
-						
-					</td>
-					<td width="153" class="rd7">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7" height="13">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-					<td class="rd7">&nbsp;
-						
-					</td>
-				</tr>
+				<!--循环结束-->
+				<%
+					}
+				%>
 			</table>
 			<table width="95%" height="30" border="0" align="center"
 				cellpadding="0" cellspacing="0" class="rd1">

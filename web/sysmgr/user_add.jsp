@@ -1,8 +1,9 @@
 <%@ page import="drp.systemmgr.domain.User" %>
 <%@ page import="drp.systemmgr.manager.UserManager" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%
     //调用UserManager保存用户
+    request.setCharacterEncoding("utf-8");
     UserManager userManager = UserManager.getInstance();
     String userId = "";
     String username = "";
@@ -10,7 +11,6 @@
     String email = "";
     if ("add".equals(request.getParameter("command"))) {                          //判断是否是点击button提交
         if (userManager.findUserById(request.getParameter("userId")) == null) {
-            request.setCharacterEncoding("utf-8");
             User user = new User();
             user.setId(request.getParameter("userId"));
             user.setUsername(request.getParameter("userName"));
@@ -18,7 +18,7 @@
             user.setContactTel(request.getParameter("contactTel"));
             user.setEmail(request.getParameter("email"));
             userManager.addUser(user);
-            out.println("添加用户成功!");
+            out.println("添加用户成功!"+request.getParameter("userName"));
         } else {
             userId = request.getParameter("userId");
             username = request.getParameter("userName");
@@ -30,7 +30,7 @@
 %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>添加用户</title>
     <link rel="stylesheet" href="../style/drp.css">
     <script src="../script/client_validate.js"></script>
