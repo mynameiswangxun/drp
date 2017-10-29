@@ -1,27 +1,25 @@
-package drp.systemmgr.domain;
+package drp.util.entity;
 
 import java.util.List;
 
 /**
  * 页面模型类
  */
-public class PageModel {
+public class PageModel<E> {
     //结果集
-    private List list;
+    private List<E> list;
     //总记录数
     private int totalRecords;
     //每页多少条数据
     private int pageSize;
     //第几页
     private int pageNo;
-    //总页数
-    private int totalPageSize;
 
-    public List getList() {
+    public List<E> getList() {
         return list;
     }
 
-    public void setList(List list) {
+    public void setList(List<E> list) {
         this.list = list;
     }
 
@@ -49,14 +47,22 @@ public class PageModel {
         this.pageNo = pageNo;
     }
 
-    public int getTotalPageSize() {
-        return totalPageSize;
+    public int getTotalPageNum() {
+        return (totalRecords + pageSize - 1)/pageSize;
     }
 
-    public void setTotalPageSize(int totalPageSize) {
-        this.totalPageSize = totalPageSize;
+    public int getTopPageNo(){
+        return 1;
     }
-
+    public int getBottomPageNo(){
+        return getTotalPageNum();
+    }
+    public int getPreviousPageNo(){
+        return pageNo==getTopPageNo()?getTopPageNo():pageNo-1;
+    }
+    public int getNextPageNo(){
+        return pageNo==getBottomPageNo()?getBottomPageNo():pageNo+1;
+    }
     @Override
     public String toString() {
         return "PageModel{" +
@@ -64,7 +70,6 @@ public class PageModel {
                 ", totalRecords=" + totalRecords +
                 ", pageSize=" + pageSize +
                 ", pageNo=" + pageNo +
-                ", totalPageSize=" + totalPageSize +
                 '}';
     }
 }

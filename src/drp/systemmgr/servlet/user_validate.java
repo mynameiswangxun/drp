@@ -1,4 +1,4 @@
-package drp.servlet.sysmgr;
+package drp.systemmgr.servlet;
 
 import drp.systemmgr.manager.UserManager;
 

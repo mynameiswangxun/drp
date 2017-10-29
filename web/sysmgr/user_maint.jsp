@@ -1,12 +1,26 @@
 <%@ page import="drp.systemmgr.manager.UserManager" %>
-<%@ page import="drp.systemmgr.domain.PageModel" %>
+<%@ page import="drp.util.entity.PageModel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="drp.systemmgr.domain.User" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+	request.setCharacterEncoding("utf-8");
 	UserManager userManager = UserManager.getInstance();
-	PageModel pageModel = userManager.findUserList(1,12);
+	if("delete".equals(request.getParameter("command"))){
+		String[] userIds = request.getParameterValues("selectFlag");
+		for (String userId:
+				userIds) {
+			userManager.deleteUser(userId);
+		}
+	}
+	int pageNo = 1;
+	int pageSize = 6;
+	if(request.getParameter("pageNo")!=null){
+	    pageNo = Integer.parseInt(request.getParameter("pageNo"));
+	}
+	PageModel<User> pageModel = userManager.findUserList(pageNo,pageSize);
+
 %>
 <html>
 	<head>
@@ -20,11 +34,47 @@
 	}
 	
 	function modifyUser() {
-		window.self.location = "user_modify.html";
+        var checkboxes = document.getElementsByName("selectFlag");
+        var flag = 0;
+        //记录被选择的checkboxes
+        var j = 0;
+        for(var i = 0; i<checkboxes.length; i++){
+            if(checkboxes[i].checked){
+                j = i;
+                flag++;
+            }
+            if(flag>1){
+                alert("一次只能修改一个用户!");
+                return;
+			}
+        }
+        if(flag == 0){
+            alert("请选择需要修改的用户!");
+            return;
+		}
+		window.self.location = "user_modify.jsp?userId="+checkboxes[j].value;
 	}
 	
 	function deleteUser() {
-		
+		var checkboxes = document.getElementsByName("selectFlag");
+		var flag = false;
+        for(var i = 0; i<checkboxes.length; i++){
+           if(checkboxes[i].checked){
+				flag = true;
+				break;
+		   }
+        }
+        if(!flag){
+            alert("请选择需要删除的用户");
+            return;
+		}else {
+            if (window.confirm("确认删除吗?")){
+               var userform = document.getElementById("userform");
+               userform.action="user_maint.jsp?command=delete";
+               userform.method="post";
+               userform.submit();
+            }
+		}
 	}
 		
 	function checkAll(field) {
@@ -36,19 +86,19 @@
 	}
 
 	function topPage() {
-		
+		window.self.location = "user_maint.jsp?pageNo=<%=pageModel.getTopPageNo()%>";
 	}
 	
 	function previousPage() {
-		
+        window.self.location = "user_maint.jsp?pageNo=<%=pageModel.getPreviousPageNo()%>";
 	}
 	
 	function nextPage() {
-		
+        window.self.location = "user_maint.jsp?pageNo=<%=pageModel.getNextPageNo()%>";
 	}
 	
 	function bottomPage() {
-		
+        window.self.location = "user_maint.jsp?pageNo=<%=pageModel.getBottomPageNo()%>";
 	}
 
 </script>
@@ -110,29 +160,29 @@
 				<!--循环开始-->
 				<%
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-					List userList = pageModel.getList();
+					List<User> userList = pageModel.getList();
 					for(int i = 0; i<userList.size(); i++){
 				%>
 				<tr>
 					<td class="rd8">
 						<input type="checkbox" name="selectFlag" class="checkbox1"
-							value="1001">
+							value=<%=userList.get(i).getId()%>
 					</td>
 					<td class="rd8">
-						<%=((User)userList.get(i)).getId()%>
+						<%=userList.get(i).getId()%>
 					</td>
 					<td class="rd8">
-						<%=((User)userList.get(i)).getUsername()%>
+						<%=userList.get(i).getUsername()%>
 					</td>
 					<td class="rd8">
-						<%=((User)userList.get(i)).getContactTel()==null?"":((User)userList.get(i)).getContactTel()%>
+						<%=userList.get(i).getContactTel()==null?"":userList.get(i).getContactTel()%>
 					</td>
 					<td class="rd8">
-						<%=((User)userList.get(i)).getEmail()==null?"":((User)userList.get(i)).getEmail()%>
+						<%=userList.get(i).getEmail()==null?"":userList.get(i).getEmail()%>
 					</td>
 					<td class="rd8">
-						<%=((User)userList.get(i)).getCreateDate()==null?"":
-								simpleDateFormat.format(((User)userList.get(i)).getCreateDate())%>
+						<%=userList.get(i).getCreateDate()==null?"":
+								simpleDateFormat.format(userList.get(i).getCreateDate())%>
 					</td>
 				</tr>
 				<!--循环结束-->
@@ -145,9 +195,9 @@
 				<tr>
 					<td nowrap class="rd19" height="2">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;共&nbspxx&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">&nbsp;共&nbsp<%=pageModel.getTotalPageNum()%>&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<font color="#FFFFFF">当前第</font>&nbsp
-							<font color="#FF0000">x</font>&nbsp
+							<font color="#FF0000"><%=pageModel.getPageNo()%></font>&nbsp
 							<font color="#FFFFFF">页</font>
 						</div>
 					</td>

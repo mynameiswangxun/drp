@@ -1,6 +1,6 @@
 package drp.systemmgr.manager;
 
-import drp.systemmgr.domain.PageModel;
+import drp.util.entity.PageModel;
 import drp.systemmgr.domain.User;
 import drp.util.DBUtil;
 
@@ -92,8 +92,8 @@ public class UserManager {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        PageModel pageModel = new PageModel();
-        List pageUserList = new ArrayList();
+        PageModel<User> pageModel = new PageModel();
+        List<User> pageUserList = new ArrayList();
         try {
             connection = DBUtil.getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -119,8 +119,74 @@ public class UserManager {
         pageModel.setList(pageUserList);
         pageModel.setPageNo(pageNo);
         pageModel.setPageSize(pageSize);
-        pageModel.setTotalPageSize(0);
-        pageModel.setTotalRecords(0);
+        pageModel.setTotalRecords(getTotalRecords(connection));
         return pageModel;
+    }
+
+    /**
+     * 获得数据库用户总记录数
+     * @param connection
+     * @return
+     */
+    private int getTotalRecords(Connection connection){
+        String sql = "SELECT COUNT(*) FROM user_msg WHERE id!='root'";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int totalRecords = 0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            totalRecords = resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalRecords;
+    }
+
+    /**
+     * 修改用户
+     * @param user
+     */
+    public void modifyUser(User user){
+        String sql="UPDATE user_msg SET username=?,password=?,contact_tel=?,email=? WHERE id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,user.getUsername());
+            preparedStatement.setString(2,user.getPassword());
+            preparedStatement.setString(3,user.getContactTel());
+            preparedStatement.setString(4,user.getEmail());
+            preparedStatement.setString(5,user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closePreparedStatement(preparedStatement);
+        }
+    }
+
+    /**
+     * 根据用户ID删除用户
+     * @param userId
+     */
+    public void deleteUser(String userId){
+        String sql = "DELETE FROM user_msg WHERE id=?";
+        PreparedStatement preparedStatement= null;
+        Connection connection = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closePreparedStatement(preparedStatement);
+        }
     }
 }
