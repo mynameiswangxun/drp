@@ -1,3 +1,8 @@
+<%@ page import="drp.systemmgr.domain.User" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	User user = (User) session.getAttribute("user_info");
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -46,21 +51,21 @@ a:active {
 				</td>
 				<td width="58%" nowrap>
 					<font color="#FFFFFF">
-						<div id="showMainMenu" style="display='none'">
-							<a href="#" onClick="changeWin()">ÏÔÊ¾Ö÷²Ëµ¥</a>
+						<div id="showMainMenu" display='none'>
+							<a href="#" onClick="changeWin()">æ˜¾ç¤ºä¸»èœå•</a>
 						</div> </font>
 				</td>
 				<td width="21%">
-					µ±Ç°ÓÃ»§£ºxxx
+					å½“å‰ç”¨æˆ·ï¼š<%=user==null?"null":user.getUsername()%>
 				</td>
 				<td width="8%">
-					<font color="#FFFFFF">¹ØÓÚ &nbsp;°ïÖú</font>
+					<font color="#FFFFFF">å…³äºŽ &nbsp;å¸®åŠ©</font>
 				</td>
 				<td width="2%">
 					&nbsp;
 				</td>
 				<td width="6%">
-					<font color="#FFFFFF">×¢Ïú</font>
+					<font color="#FFFFFF">æ³¨é”€</font>
 				</td>
 			</tr>
 		</table>

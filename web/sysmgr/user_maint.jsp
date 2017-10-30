@@ -5,14 +5,11 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-	request.setCharacterEncoding("utf-8");
+	//request.setCharacterEncoding("utf-8");
 	UserManager userManager = UserManager.getInstance();
 	if("delete".equals(request.getParameter("command"))){
 		String[] userIds = request.getParameterValues("selectFlag");
-		for (String userId:
-				userIds) {
-			userManager.deleteUser(userId);
-		}
+		userManager.deleteUser(userIds);
 	}
 	int pageNo = 1;
 	int pageSize = 6;

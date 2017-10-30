@@ -189,4 +189,49 @@ public class UserManager {
             DBUtil.closePreparedStatement(preparedStatement);
         }
     }
+
+    /**
+     * 用户登录
+     * @param userId
+     * @param password
+     * @return
+     */
+    public User login(String userId,String password) throws UserIdNotExistException,PasswordErrorException{
+        User user = findUserById(userId);
+        if (user==null){
+            throw new UserIdNotExistException("用户ID不存在！");
+        }
+        if(!password.equals(user.getPassword())){
+            throw new PasswordErrorException("用户密码错误");
+        }
+        return user;
+    }
+
+    /**
+     * 批量删除用户
+     * @param userIds
+     */
+    public void deleteUser(String[] userIds){
+        StringBuilder sql = new StringBuilder("DELETE FROM user_msg WHERE id in(");
+        for (String userId:
+             userIds) {
+            sql.append("'");
+            sql.append(userId);
+            sql.append("',");
+        }
+        sql.deleteCharAt(sql.length()-1);
+        sql.append(")");
+        Statement statement = null;
+        Connection connection = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sql.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closePreparedStatement(statement);
+        }
+    }
 }

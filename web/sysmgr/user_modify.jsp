@@ -2,7 +2,7 @@
 <%@ page import="drp.systemmgr.manager.UserManager" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%
-	request.setCharacterEncoding("utf-8");
+	//request.setCharacterEncoding("utf-8");
 	String userId = request.getParameter("userId");
 	User user = UserManager.getInstance().findUserById(userId);
 	if("modify".equals(request.getParameter("command"))){
@@ -16,7 +16,7 @@
 %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>修改用户</title>
 		<link rel="stylesheet" href="../style/drp.css">
 		<script src="../script/client_validate.js"></script>

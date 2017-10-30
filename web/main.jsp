@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -19,7 +20,7 @@
         </frameset>
         <frameset rows="34,*" cols="*" framespacing="0" frameborder="no"
                   border="0">
-            <frame src="toolbar.html" name="toolBar" frameborder="no"
+            <frame src="toolbar.jsp" name="toolBar" frameborder="no"
                    scrolling="no" noresize marginwidth="0" marginheight="0"
                    id="toolBar">
             <!--

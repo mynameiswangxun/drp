@@ -42,10 +42,10 @@ public class DBUtil {
         }
     }
 
-    public static void closePreparedStatement(PreparedStatement preparedStatement){
-        if(preparedStatement!=null){
+    public static void closePreparedStatement(Statement Statement){
+        if(Statement!=null){
             try {
-                preparedStatement.close();
+                Statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%
     //调用UserManager保存用户
-    request.setCharacterEncoding("utf-8");
+    //request.setCharacterEncoding("utf-8");
     UserManager userManager = UserManager.getInstance();
     String userId = "";
     String username = "";
