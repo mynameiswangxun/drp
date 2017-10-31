@@ -42,12 +42,12 @@ public class UserManager {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeStatement(preparedStatement);
         }
     }
 
     /**
-     *
+     * 查找用户
      * @param userId
      * @return 如果存在返回User对象，否则返回null
      */
@@ -76,7 +76,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeResultSet(resultSet);
-            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeStatement(preparedStatement);
         }
         return user;
     }
@@ -114,7 +114,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeResultSet(resultSet);
-            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeStatement(preparedStatement);
         }
         pageModel.setList(pageUserList);
         pageModel.setPageNo(pageNo);
@@ -165,7 +165,7 @@ public class UserManager {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeStatement(preparedStatement);
         }
     }
 
@@ -186,7 +186,7 @@ public class UserManager {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtil.closePreparedStatement(preparedStatement);
+            DBUtil.closeStatement(preparedStatement);
         }
     }
 
@@ -231,7 +231,39 @@ public class UserManager {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtil.closePreparedStatement(statement);
+            DBUtil.closeStatement(statement);
         }
+    }
+
+    /**
+     * 修改密码
+     * @param userId
+     * @param newPassword
+     */
+    public void modifyPassword(String userId,String newPassword){
+        String sql="UPDATE user_msg SET password=? WHERE id=?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,newPassword);
+            preparedStatement.setString(2,userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
+    }
+
+    /**
+     * 根据ID得到密码
+     * @param userId
+     * @return
+     */
+    public String getPasswordById(String userId){
+        String password = findUserById(userId).getPassword();
+        return password;
     }
 }

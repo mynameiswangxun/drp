@@ -16,7 +16,7 @@
                   border="0">
             <frame src="hidden_left_frame.html" name="topFrame1"
                    frameborder="no" scrolling="no" noresize>
-            <frame name="leftFrame" scrolling="NO" src="outlook_small.html">
+            <frame name="leftFrame" scrolling="NO" src="menu.html">
         </frameset>
         <frameset rows="34,*" cols="*" framespacing="0" frameborder="no"
                   border="0">

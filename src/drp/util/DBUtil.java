@@ -42,7 +42,7 @@ public class DBUtil {
         }
     }
 
-    public static void closePreparedStatement(Statement Statement){
+    public static void closeStatement(Statement Statement){
         if(Statement!=null){
             try {
                 Statement.close();
