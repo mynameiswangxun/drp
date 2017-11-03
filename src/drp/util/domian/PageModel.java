@@ -1,4 +1,4 @@
-package drp.util.entity;
+package drp.util.domian;
 
 import java.util.List;
 

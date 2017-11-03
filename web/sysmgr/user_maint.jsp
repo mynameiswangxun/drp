@@ -1,5 +1,5 @@
 <%@ page import="drp.systemmgr.manager.UserManager" %>
-<%@ page import="drp.util.entity.PageModel" %>
+<%@ page import="drp.util.domian.PageModel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="drp.systemmgr.domain.User" %>
 <%@ page import="java.text.SimpleDateFormat" %>

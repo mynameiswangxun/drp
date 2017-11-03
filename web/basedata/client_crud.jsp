@@ -1,9 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
-		<title>·ÖÏúÉÌÎ¬»¤</title>
+		<title>åˆ†é”€å•†ç»´æŠ¤</title>
 	</head>
 
 	<body class="body1">
@@ -14,7 +15,7 @@
 					<td width="522" class="p1" height="2" nowrap="nowrap">
 						<img src="../images/mark_arrow_02.gif" width="14" height="14" />
 						&nbsp;
-						<b>»ù´¡Êý¾Ý¹ÜÀí&gt;&gt;·ÖÏúÉÌÎ¬»¤</b>
+						<b>åŸºç¡€æ•°æ®ç®¡ç†&gt;&gt;åˆ†é”€å•†ç»´æŠ¤</b>
 					</td>
 				</tr>
 			</table>
@@ -25,7 +26,7 @@
 				<tr>
 					<td width="213">
 						<div align="right">
-							µ±Ç°·ÖÏúÉÌÃû³Æ£º
+							å½“å‰åˆ†é”€å•†åç§°ï¼š
 						</div>
 					</td>
 					<td width="410">
@@ -44,14 +45,14 @@
 			<p align="center">
 				<input name="btnModifyClient" type="button" class="button1"
 					id="btnModifyClient" onClick="self.location='client_modify.html'"
-					value="ÐÞ¸Ä·ÖÏúÉÌ" />
+					value="ä¿®æ”¹åˆ†é”€å•†" />
 				&nbsp;
 				<input name="btinDeleteClient" type="button" class="button1"
-					id="btinDeleteClient" value="É¾³ý·ÖÏúÉÌ" />
+					id="btinDeleteClient" value="åˆ é™¤åˆ†é”€å•†" />
 				&nbsp;
 				<input name="btnViewDetail" type="button" class="button1"
 					id="btnViewDetail" onClick="self.location='client_detail.html'"
-					value="²é¿´ÏêÏ¸ÐÅÏ¢" />
+					value="æŸ¥çœ‹è¯¦ç»†ä¿¡æ¯" />
 			</p>
 		</form>
 	</body>

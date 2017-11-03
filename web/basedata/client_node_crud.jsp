@@ -1,8 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
-		<title>·ÖÏúÉÌÎ¬»¤</title>
+		<title>åˆ†é”€å•†ç»´æŠ¤</title>
 		<script type="text/javascript">
 
 	function addRegion() {
@@ -32,7 +33,7 @@
 					<td width="522" class="p1" height="2" nowrap="nowrap">
 						<img src="../images/mark_arrow_02.gif" width="14" height="14" />
 						&nbsp;
-						<b>»ù´¡Êý¾Ý¹ÜÀí&gt;&gt;·ÖÏúÉÌÎ¬»¤</b>
+						<b>åŸºç¡€æ•°æ®ç®¡ç†&gt;&gt;åˆ†é”€å•†ç»´æŠ¤</b>
 					</td>
 				</tr>
 			</table>
@@ -43,7 +44,7 @@
 				<tr>
 					<td width="213">
 						<div align="right">
-							µ±Ç°ÇøÓòÃû³Æ£º
+							å½“å‰åŒºåŸŸåç§°ï¼š
 						</div>
 					</td>
 					<td width="410">
@@ -61,16 +62,16 @@
 			<hr />
 			<p align="center">
 				<input name="btnAddRegion" type="button" class="button1"
-					id="btnAddRegion" onClick="addRegion()" value="Ìí¼ÓÇøÓò" />
+					id="btnAddRegion" onClick="addRegion()" value="æ·»åŠ åŒºåŸŸ" />
 				&nbsp;
 				<input name="btnDeleteRegion" type="button" class="button1"
-					id="btnDeleteRegion" value="É¾³ýÇøÓò" onClick="deleteRegion()" />
+					id="btnDeleteRegion" value="åˆ é™¤åŒºåŸŸ" onClick="deleteRegion()" />
 				&nbsp;
 				<input name="btnModifyRegion" type="button" class="button1"
-					id="btnModifyRegion" onClick="modifyRegion()" value="ÐÞ¸ÄÇøÓò" />
+					id="btnModifyRegion" onClick="modifyRegion()" value="ä¿®æ”¹åŒºåŸŸ" />
 				&nbsp;
 				<input name="btnAddClient" type="button" class="button1"
-					id="btnAddClient" onClick="addClient()" value="Ìí¼Ó·ÖÏúÉÌ" />
+					id="btnAddClient" onClick="addClient()" value="æ·»åŠ åˆ†é”€å•†" />
 			</p>
 		</form>
 	</body>

@@ -37,20 +37,25 @@ public class ClientTreeReader {
                     treeHtmlString.append("<img src=\"../images/white.gif\">\n");
                 }
                 if ("N".equals(resultSet.getString("is_leaf"))) {
-                    treeHtmlString.append("<img alt=\"展开\" style=\"cursor:hand;\" onClick=\"display('"+
-                            resultSet.getInt("id")+"');\"" +
-                            "id=\"img"+resultSet.getInt("id")+"\" src=\"../images/plus.gif\">\n");
-                    treeHtmlString.append("<img id=\"im"+resultSet.getInt("id")+"\" src=\"../images/closedfold.gif\">\n");
-                    treeHtmlString.append("<a href=\"client_node_crud.html\" target=\"clientDispAreaFrame\">"
+                    treeHtmlString.append("<img alt=\"展开\" style=\"cursor:hand;\" onClick=\"display('" +
+                            resultSet.getInt("id") + "');\"" +
+                            "id=\"img" + resultSet.getInt("id") + "\" src=\"../images/plus.gif\">\n");
+                    treeHtmlString.append("<img id=\"im" + resultSet.getInt("id") + "\" src=\"../images/closedfold.gif\">\n");
+                    treeHtmlString.append("<a href=\"client_node_crud.jsp+"+resultSet.getInt("id")+"\" target=\"clientDispAreaFrame\">"
                             + resultSet.getString("name") + "</a>\n");
-                    treeHtmlString.append("<div style=\"display:none;\" id=\"div"+resultSet.getInt("id")+"\">\n");
+                    treeHtmlString.append("<div style=\"display:none;\" id=\"div" + resultSet.getInt("id") + "\">\n");
                     readClientTree(resultSet.getInt("id"), level + 1);
                     treeHtmlString.append("</div>\n");
-                }else{
+                } else {
                     treeHtmlString.append("<img src=\"../images/minus.gif\">\n");
                     treeHtmlString.append("<img src=\"../images/openfold.gif\">\n");
-                    treeHtmlString.append("<a href=\"client_node_crud.html\" target=\"clientDispAreaFrame\">"
-                            +resultSet.getString("name")+"</a>\n");
+                    if ("N".equals(resultSet.getString("is_client"))) {
+                        treeHtmlString.append("<a href=\"client_node_crud.jsp?id="+resultSet.getInt("id")+"\" target=\"clientDispAreaFrame\">"
+                                + resultSet.getString("name") + "</a>\n");
+                    }else {
+                        treeHtmlString.append("<a href=\"client_crud.jsp?id="+resultSet.getInt("id")+"\" target=\"clientDispAreaFrame\">"
+                                + resultSet.getString("name") + "</a>\n");
+                    }
                 }
                 treeHtmlString.append("</div>\n");
             }

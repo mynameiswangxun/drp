@@ -1,6 +1,6 @@
 package drp.systemmgr.manager;
 
-import drp.util.entity.PageModel;
+import drp.util.domian.PageModel;
 import drp.systemmgr.domain.User;
 import drp.util.DBUtil;
 

@@ -65,14 +65,14 @@
                 <%--<img alt="展开" style="cursor:hand;" onClick="display('1');"--%>
                      <%--id="img1" src="../images/plus.gif">--%>
                 <%--<img id="im1" src="../images/closedfold.gif">--%>
-                <%--<a href="client_node_crud.html" target="clientDispAreaFrame">所有分销商</a>--%>
+                <%--<a href="client_node_crud.jsp" target="clientDispAreaFrame">所有分销商</a>--%>
                 <%--<div style="display:none;" id="div1">--%>
                     <%--<div>--%>
                         <%--<img src="../images/white.gif">--%>
                         <%--<img alt="展开" style="cursor:hand;" onClick="display('2');"--%>
                              <%--id="img2" src="../images/plus.gif">--%>
                         <%--<img id="im2" src="../images/closedfold.gif">--%>
-                        <%--<a href="client_node_crud.html" target="clientDispAreaFrame">华北区</a>--%>
+                        <%--<a href="client_node_crud.jsp" target="clientDispAreaFrame">华北区</a>--%>
                         <%--<div style="display:none;" id="div2">--%>
                             <%--<div>--%>
                                 <%--<img src="../images/white.gif">--%>
@@ -80,7 +80,7 @@
                                 <%--<img alt="展开" style="cursor:hand;" onClick="display('3');"--%>
                                      <%--id="img3" src="../images/plus.gif">--%>
                                 <%--<img id="im3" src="../images/closedfold.gif">--%>
-                                <%--<a href="client_node_crud.html" target="clientDispAreaFrame">北京市</a>--%>
+                                <%--<a href="client_node_crud.jsp" target="clientDispAreaFrame">北京市</a>--%>
                                 <%--<div style="display:none;" id="div3">--%>
                                     <%--<div>--%>
                                         <%--<img src="../images/white.gif">--%>
@@ -88,7 +88,7 @@
                                         <%--<img src="../images/white.gif">--%>
                                         <%--<img src="../images/minus.gif">--%>
                                         <%--<img src="../images/openfold.gif">--%>
-                                        <%--<a href="client_crud.html" target="clientDispAreaFrame">北京医药股份有限公司</a>--%>
+                                        <%--<a href="client_crud.jsp" target="clientDispAreaFrame">北京医药股份有限公司</a>--%>
                                     <%--</div>--%>
                                 <%--</div>--%>
                             <%--</div>--%>
@@ -98,13 +98,13 @@
                         <%--<img src="../images/white.gif">--%>
                         <%--<img src="../images/minus.gif">--%>
                         <%--<img src="../images/openfold.gif">--%>
-                        <%--<a href="client_node_crud.html" target="clientDispAreaFrame">东北区</a>--%>
+                        <%--<a href="client_node_crud.jsp" target="clientDispAreaFrame">东北区</a>--%>
                     <%--</div>--%>
                     <%--<div>--%>
                         <%--<img src="../images/white.gif">--%>
                         <%--<img src="../images/minus.gif">--%>
                         <%--<img src="../images/openfold.gif">--%>
-                        <%--<a href="client_node_crud.html" target="clientDispAreaFrame">华南区</a>--%>
+                        <%--<a href="client_node_crud.jsp" target="clientDispAreaFrame">华南区</a>--%>
                     <%--</div>--%>
                 <%--</div>--%>
             <%--</div>--%>
