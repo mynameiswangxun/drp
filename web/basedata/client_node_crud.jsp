@@ -1,4 +1,12 @@
+<%@ page import="drp.basedata.manager.ClientManager" %>
+<%@ page import="drp.basedata.domain.Client" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%
+	int id = Integer.parseInt(request.getParameter("id"));
+	ClientManager clientManager = ClientManager.getInstance();
+	Client client = clientManager.findClientOrAreaById(id);
+
+%>
 <html>
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
@@ -11,7 +19,7 @@
 	}
 	
 	function modifyRegion() {
-		window.self.location = "client_node_modify.html";
+		window.self.location = "client_node_modify.jsp?id="+<%=id%>;
 	}
 	
 	function deleteRegion() {
@@ -50,7 +58,7 @@
 					<td width="410">
 						<label>
 							<input name="name" type="text" class="text1" id="name"
-								" readonly="true" />
+								 readonly="true" value="<%=client.getName()%>"/>
 						</label>
 					</td>
 				</tr>

@@ -1,5 +1,12 @@
+<%@ page import="drp.basedata.manager.ClientManager" %>
+<%@ page import="drp.basedata.domain.Client" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%
+	int id = Integer.parseInt(request.getParameter("id"));
+	ClientManager clientManager = ClientManager.getInstance();
+	Client client = clientManager.findClientOrAreaById(id);
+
+%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
@@ -32,7 +39,7 @@
 					<td width="410">
 						<label>
 							<input name="clientName" type="text" class="text1"
-								id="clientName" readonly="true" />
+								id="clientName" readonly="true" value="<%=client.getName()%>"/>
 						</label>
 					</td>
 				</tr>
@@ -44,7 +51,7 @@
 			<hr />
 			<p align="center">
 				<input name="btnModifyClient" type="button" class="button1"
-					id="btnModifyClient" onClick="self.location='client_modify.html'"
+					id="btnModifyClient" onClick="self.location='client_modify.jsp'"
 					value="修改分销商" />
 				&nbsp;
 				<input name="btinDeleteClient" type="button" class="button1"

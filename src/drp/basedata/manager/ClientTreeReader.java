@@ -41,7 +41,7 @@ public class ClientTreeReader {
                             resultSet.getInt("id") + "');\"" +
                             "id=\"img" + resultSet.getInt("id") + "\" src=\"../images/plus.gif\">\n");
                     treeHtmlString.append("<img id=\"im" + resultSet.getInt("id") + "\" src=\"../images/closedfold.gif\">\n");
-                    treeHtmlString.append("<a href=\"client_node_crud.jsp+"+resultSet.getInt("id")+"\" target=\"clientDispAreaFrame\">"
+                    treeHtmlString.append("<a href=\"client_node_crud.jsp?id="+resultSet.getInt("id")+"\" target=\"clientDispAreaFrame\">"
                             + resultSet.getString("name") + "</a>\n");
                     treeHtmlString.append("<div style=\"display:none;\" id=\"div" + resultSet.getInt("id") + "\">\n");
                     readClientTree(resultSet.getInt("id"), level + 1);
