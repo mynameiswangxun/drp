@@ -1,4 +1,4 @@
-package drp.util.domian.datadict;
+package drp.util.datadict.domain;
 
 /**
  * 数据字典的抽象
@@ -21,5 +21,13 @@ public abstract class AbstractDataDict {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractDataDict{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

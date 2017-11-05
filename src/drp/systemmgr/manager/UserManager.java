@@ -1,8 +1,8 @@
 package drp.systemmgr.manager;
 
-import drp.util.domian.PageModel;
+import drp.util.pagemodel.PageModel;
 import drp.systemmgr.domain.User;
-import drp.util.DBUtil;
+import drp.util.database.DBUtil;
 
 import java.sql.*;
 import java.util.ArrayList;

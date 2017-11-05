@@ -51,7 +51,7 @@
 			<hr />
 			<p align="center">
 				<input name="btnModifyClient" type="button" class="button1"
-					id="btnModifyClient" onClick="self.location='client_modify.jsp'"
+					id="btnModifyClient" onClick="self.location='client_modify.jsp?id='+<%=id%>"
 					value="修改分销商" />
 				&nbsp;
 				<input name="btinDeleteClient" type="button" class="button1"

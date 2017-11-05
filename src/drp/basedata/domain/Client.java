@@ -1,6 +1,6 @@
 package drp.basedata.domain;
 
-import drp.util.domian.datadict.ClientLevel;
+import drp.util.datadict.domain.ClientLevel;
 
 public class Client {
     private int id;
@@ -48,7 +48,7 @@ public class Client {
     }
 
     public String getBankAccount() {
-        return bankAccount;
+        return bankAccount==null?"":bankAccount;
     }
 
     public void setBankAccount(String bankAccount) {
@@ -56,7 +56,7 @@ public class Client {
     }
 
     public String getContactTel() {
-        return contactTel;
+        return contactTel==null?"":contactTel;
     }
 
     public void setContactTel(String contactTel) {
@@ -64,7 +64,7 @@ public class Client {
     }
 
     public String getAddress() {
-        return address;
+        return address==null?"":address;
     }
 
     public void setAddress(String address) {
@@ -72,7 +72,7 @@ public class Client {
     }
 
     public String getZipCode() {
-        return zipCode;
+        return zipCode==null?"":zipCode;
     }
 
     public void setZipCode(String zipCode) {

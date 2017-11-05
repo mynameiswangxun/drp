@@ -1,4 +1,4 @@
-package drp.util.domian.datadict;
+package drp.util.datadict.domain;
 
 /**
  * 分销商级别

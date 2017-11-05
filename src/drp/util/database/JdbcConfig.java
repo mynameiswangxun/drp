@@ -1,4 +1,4 @@
-package drp.util;
+package drp.util.database;
 
 /**
  * 封装数据库连接所用到的信息

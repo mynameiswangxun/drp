@@ -1,8 +1,9 @@
 package drp.basedata.manager;
 
 import drp.basedata.domain.Client;
-import drp.util.DBUtil;
-import drp.util.domian.datadict.ClientLevel;
+import drp.util.database.DBUtil;
+import drp.util.datadict.domain.ClientLevel;
+import drp.util.datadict.manager.DataDictManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,7 +54,9 @@ public class ClientManager {
                 client.setZipCode(resultSet.getString("zip_code"));
                 client.setIsLeaf(resultSet.getString("is_leaf"));
                 client.setIsClient(resultSet.getString("is_client"));
-                client.setClientLevel(new ClientLevel());
+                ClientLevel clientLevel = (ClientLevel) DataDictManager.getInstance().
+                        findAbstractDataDictById(resultSet.getString("client_level_id"));
+                client.setClientLevel(clientLevel);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,6 +1,6 @@
 package drp.basedata.manager;
 
-import drp.util.DBUtil;
+import drp.util.database.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

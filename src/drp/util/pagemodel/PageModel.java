@@ -1,4 +1,4 @@
-package drp.util.domian;
+package drp.util.pagemodel;
 
 import java.util.List;
 

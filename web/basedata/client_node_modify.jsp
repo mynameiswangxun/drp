@@ -15,7 +15,7 @@
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
 		<script src="../script/client_validate.js"></script>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>修改区域节点</title>
 		<script type="text/javascript">
 	function modifyRegion() {
@@ -31,7 +31,7 @@
 	}
 	
 	function goBack() {
-		window.self.location = "client_node_crud.html";
+		window.self.location = "client_node_crud.jsp?id=<%=id%>";
 	}
 </script>
 	</head>
