@@ -53,7 +53,7 @@
                 xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
-            var url = "../oldPassword_validate.servlet?password=" + field.value+ "&time=" + new Date().getTime();
+            var url = "oldPassword_validate.servlet?password=" + field.value+ "&time=" + new Date().getTime();
             //设置请求方式为GET，设置请求的URL，设置为异步提交
             xmlHttp.open("GET", url, true);
             //将函数地址赋值给onreadystatechange属性（响应事件），当Ajax状态发生变化时会调用该函数

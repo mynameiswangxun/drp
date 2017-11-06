@@ -11,6 +11,6 @@ public class Test {
 //        Client client = clientManager.findClientOrAreaById(10005);
 //        System.out.println(client.getClientLevel().getId());
 
-        System.out.println(IdGenerator.generate("client"));
+        System.out.println(ClientManager.getInstance().isExistClientByClientId("A0001"));
     }
 }

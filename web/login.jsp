@@ -11,7 +11,7 @@
         String password = request.getParameter("password");
         try{
             User user = userManager.login(userId,password);
-            session.setMaxInactiveInterval(60*60);
+            session.setMaxInactiveInterval(12*60*60);
             session.setAttribute("user_info",user);
             //重定向到主页面
             response.sendRedirect(request.getContextPath()+"/main.jsp");

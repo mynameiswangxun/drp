@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "user_validate",urlPatterns = "/user_validate.servlet")
+@WebServlet(name = "user_validate",urlPatterns = "/sysmgr/user_validate.servlet")
 public class user_validate extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);

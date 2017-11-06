@@ -94,4 +94,94 @@ public class ClientManager {
             DBUtil.closeStatement(preparedStatement);
         }
     }
+
+    /**
+     * 添加分销商或者区域
+     * @param clientOrArea
+     */
+    public void addClientOrArea(Client clientOrArea){
+        String sql = "INSERT INTO client(id,pid,client_level_id,name,client_id,bank_accout,contact_tel,address,zip_code,is_leaf,is_client) " +
+                "VALUE (?,?,?,?,?,?,?,?,?,?,?)";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,clientOrArea.getId());
+            preparedStatement.setInt(2,clientOrArea.getPid());
+            preparedStatement.setString(3,clientOrArea.getClientLevel()==null?"":clientOrArea.getClientLevel().getId());
+            preparedStatement.setString(4,clientOrArea.getName());
+            preparedStatement.setString(5,clientOrArea.getClientId());
+            preparedStatement.setString(6,clientOrArea.getBankAccount());
+            preparedStatement.setString(7,clientOrArea.getContactTel());
+            preparedStatement.setString(8,clientOrArea.getAddress());
+            preparedStatement.setString(9,clientOrArea.getZipCode());
+            preparedStatement.setString(10,clientOrArea.getIsLeaf());
+            preparedStatement.setString(11,clientOrArea.getIsClient());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
+
+    }
+
+    /**
+     * 根据分销商代码判断分销商是否存在
+     * @param clientId
+     * @return
+     */
+    public boolean isExistClientByClientId(String clientId){
+        String sql = "SELECT * FROM client WHERE client_id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,clientId);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 区域名是已经存在
+     * @param areaName
+     * @return
+     */
+    public boolean isExistAreaName(String areaName){
+        String sql = "SELECT * FROM client WHERE is_client='N',name=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,areaName);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    /**
+     * 删除分销商或区域
+     * @param id
+     */
+    public void delClientOrRegin(int id){
+
+    }
 }

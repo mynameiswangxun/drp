@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "oldPassword_validate.servlet",urlPatterns = "/oldPassword_validate.servlet")
+@WebServlet(name = "oldPassword_validate.servlet",urlPatterns = "/sysmgr/oldPassword_validate.servlet")
 public class oldPassword_validate extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
