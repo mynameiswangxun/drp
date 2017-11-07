@@ -1,7 +1,14 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@page import="drp.basedata.domain.Client" %>
+<%@ page import="drp.basedata.manager.ClientManager" %>
+<%
+	int id = Integer.parseInt(request.getParameter("id"));
+	Client client = ClientManager.getInstance().findClientOrAreaById(id);
+%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>·ÖÏúÉÌÏêÏ¸ĞÅÏ¢</title>
+		<title>åˆ†é”€å•†è¯¦ç»†ä¿¡æ¯</title>
 		<link rel="stylesheet" href="../style/drp.css">
 	</head>
 
@@ -21,7 +28,7 @@
 						<td width="522" class="p1" height="2" nowrap>
 							<img src="../images/mark_arrow_03.gif" width="14" height="14">
 							&nbsp;
-							<b>»ù´¡Êı¾İ¹ÜÀí&gt;&gt;·ÖÏúÉÌÎ¬»¤&gt;&gt;·ÖÏúÉÌÏêÏ¸ĞÅÏ¢</b>
+							<b>åŸºç¡€æ•°æ®ç®¡ç†&gt;&gt;åˆ†é”€å•†ç»´æŠ¤&gt;&gt;åˆ†é”€å•†è¯¦ç»†ä¿¡æ¯</b>
 						</td>
 					</tr>
 				</table>
@@ -31,78 +38,78 @@
 					<tr>
 						<td width="22%">
 							<div align="right">
-								·ÖÏúÉÌ´úÂë:&nbsp;
+								åˆ†é”€å•†ä»£ç :&nbsp;
 							</div>
 						</td>
 						<td width="78%">
-							1001
+							<%=client.getClientLevel().getId()%>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div align="right">
-								·ÖÏúÉÌÃû³Æ:&nbsp;
+								åˆ†é”€å•†åç§°:&nbsp;
 							</div>
 						</td>
 						<td>
-							±±¾©Ò½Ò©¹É·İÓĞÏŞ¹«Ë¾
+							<%=client.getName()%>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div align="right">
-								·ÖÏúÉÌÀàĞÍ:&nbsp;
+								åˆ†é”€å•†ç±»å‹:&nbsp;
 							</div>
 						</td>
 						<td>
-							Ò»¼¶¾­ÏúÉÌ
+							<%=client.getClientLevel().getName()%>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div align="right">
-								ÒøĞĞÕÊºÅ:&nbsp;
+								é“¶è¡Œå¸å·:&nbsp;
 							</div>
 						</td>
 						<td>
-							&nbsp;
+							<%=client.getBankAccount()%>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div align="right">
-								ÁªÏµµç»°:&nbsp;
+								è”ç³»ç”µè¯:&nbsp;
 							</div>
 						</td>
 						<td>
-							&nbsp;
+							<%=client.getContactTel()%>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div align="right">
-								µØÖ·:&nbsp;
+								åœ°å€:&nbsp;
 							</div>
 						</td>
 						<td>
-							&nbsp;
+							<%=client.getAddress()%>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div align="right">
-								ÓÊ±à:&nbsp;
+								é‚®ç¼–:&nbsp;
 							</div>
 						</td>
 						<td>
-							&nbsp;
+							<%=client.getZipCode()%>
 						</td>
 					</tr>
 				</table>
 				<hr width="97%" align="center" size=0>
 				<div align="center">
 					<input name="btnBack" class="button1" type="button" id="btnBack"
-						value="·µ»Ø" onClick="history.go(-1)">
+						value="è¿”å›" onClick="self.location = 'client_crud.jsp?id=<%=id%>'">
 				</div>
 			</div>
 		</form>

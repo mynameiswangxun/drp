@@ -19,7 +19,13 @@
         client.setAddress(request.getParameter("address"));
         client.setZipCode(request.getParameter("zipCode"));
         clientManager.modifyClientOrArea(client);
-        out.print("修改成功");
+%>
+<script type="text/javascript">
+    alert("修改成功");
+    window.parent.clientTreeFrame.location.reload();
+</script>
+<%
+//        out.print("修改成功");
     }
 %>
 <html>

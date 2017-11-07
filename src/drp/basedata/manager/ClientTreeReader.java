@@ -61,6 +61,9 @@ public class ClientTreeReader {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
         }
     }
 

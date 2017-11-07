@@ -8,7 +8,13 @@
 	if("modify".equals(request.getParameter("command"))){
 		client.setName(request.getParameter("name"));
 		clientManager.modifyClientOrArea(client);
-		out.print("修改成功");
+//		out.print("修改成功");
+%>
+<script type="text/javascript">
+	alert("修改成功");
+    window.parent.clientTreeFrame.location.reload();
+</script>
+<%
 	}
 %>
 <html>

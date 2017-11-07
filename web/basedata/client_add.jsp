@@ -2,9 +2,38 @@
 <%@ page import="drp.util.datadict.domain.ClientLevel" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page import="drp.basedata.domain.Client" %>
+<%@ page import="drp.util.database.IdGenerator" %>
+<%@ page import="drp.basedata.manager.ClientManager" %>
 <%
+    request.setCharacterEncoding("utf-8");
     DataDictManager dataDictManager = DataDictManager.getInstance();
     List<ClientLevel> clientLevels = dataDictManager.findClientLevelList();
+
+    int pid = Integer.parseInt(request.getParameter("pid"));
+    if("add".equals(request.getParameter("command"))){
+        Client client = new Client();
+        client.setId(IdGenerator.generate("client"));
+        client.setPid(pid);
+        client.setName(request.getParameter("clientName"));
+        client.setClientId(request.getParameter("clientId"));
+        ClientLevel clientLevel = (ClientLevel) DataDictManager.getInstance().findAbstractDataDictById(request.getParameter("clientLevel"));
+        client.setClientLevel(clientLevel);
+        client.setBankAccount(request.getParameter("bankAcctNo"));
+        client.setContactTel(request.getParameter("contactTel"));
+        client.setAddress(request.getParameter("address"));
+        client.setZipCode(request.getParameter("zipCode"));
+
+        ClientManager clientManager = ClientManager.getInstance();
+        clientManager.addClientOrArea(client);
+%>
+<script type="text/javascript">
+    alert("添加分销商成功");
+    window.parent.clientTreeFrame.location.reload();
+</script>
+<%
+//        out.print("添加成功");
+    }
 %>
 <html>
 <head>
@@ -14,37 +43,65 @@
     <script src="../script/client_validate.js"></script>
     <script type="text/javascript">
         function validateClientId(field) {
-            if(trim(field.value).length>0){
+            if (trim(field.value).length > 0) {
                 var xmlHttp = null;
                 //表示当前浏览器不是ie，如ns，firefox
-                if(window.XMLHttpRequest){
+                if (window.XMLHttpRequest) {
                     xmlHttp = new XMLHttpRequest();
-                }else if(window.ActiveXObject){
+                } else if (window.ActiveXObject) {
                     xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-                var url = "ClientIdValidateServlet.servlet?clientId="+trim(field.value);
-                xmlHttp.open("GET",url,true);
-                xmlHttp.onreadystatechange=function () {
-                    if(xmlHttp.readyState == 4){
-                        if(xmlHttp.status == 200){
+                var url = "ClientIdValidateServlet.servlet?clientId=" + trim(field.value);
+                xmlHttp.open("GET", url, true);
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState == 4) {
+                        if (xmlHttp.status == 200) {
                             document.getElementById("clientIdExistSpan").innerHTML
-                                = "<font color='red'>"+xmlHttp.responseText + "</font>"
+                                = "<font color='red'>" + xmlHttp.responseText + "</font>";
                         }
-                        else{
-                            alert("请求失败,错误码："+xmlHttp.status)
+                        else {
+                            alert("请求失败,错误码：" + xmlHttp.status)
                         }
                     }
                 };
                 xmlHttp.send(null);
-            }else{
+            } else {
                 document.getElementById("clientIdExistSpan").innerHTML = "";
             }
+        }
+
+        function goAdd() {
+            if(trim(document.getElementById("clientId").value).length==0){
+                alert("分销商ID不能为空");
+                document.getElementById("clientId").focus();
+                return;
+            }
+            if(document.getElementById("clientIdExistSpan").innerHTML.indexOf("存在")>=0){
+                alert("分销商ID已经存在！");
+                document.getElementById("clientIdExistSpan").focus();
+                return;
+            }
+            if(trim(document.getElementById("clientName").value).length<1){
+                alert("分销商名称不能为空");
+                document.getElementById("clientName").focus();
+                return;
+            }
+            var form1 = document.getElementById("form1");
+            form1.method = "post";
+            form1.action = "client_add.jsp";
+            form1.submit();
+        }
+
+        function goBack() {
+            window.self.location = "client_node_crud.jsp?id=<%=pid%>";
         }
     </script>
 </head>
 
 <body class="body1">
-<form name="form1">
+<form name="form1" id="form1">
+    <input type="hidden" name="command" value="add">
+    <input type="hidden" name="pid" value="<%=pid%>">
     <div align="center">
         <table width="95%" border="0" cellspacing="2" cellpadding="2">
             <tr>
@@ -157,10 +214,10 @@
         <hr width="97%" align="center" size=0>
         <div align="center">
             <input name="btnAdd" class="button1" type="button" id="btnAdd"
-                   value="添加">
+                   value="添加" onclick="goAdd()">
             &nbsp;&nbsp;&nbsp;&nbsp;
             <input name="btnBack" class="button1" type="button" id="btnBack"
-                   value="返回" onclick="history.go(-1)"/>
+                   value="返回" onclick="goBack()"/>
         </div>
     </div>
 </form>

@@ -5,6 +5,16 @@
     int id = Integer.parseInt(request.getParameter("id"));
     ClientManager clientManager = ClientManager.getInstance();
     Client client = clientManager.findClientOrAreaById(id);
+    if("delete".equals(request.getParameter("command"))){
+        clientManager.delClientOrArea(id);
+%>
+<script type="text/javascript">
+    alert("删除成功");
+    window.parent.clientTreeFrame.location.reload();
+    self.location = "client_display_area.html";
+</script>
+<%
+    }
 
 %>
 <html>
@@ -15,7 +25,7 @@
     <script type="text/javascript">
 
         function addRegion() {
-            window.self.location = "client_node_add.jsp";
+            window.self.location = "client_node_add.jsp?pid="+<%=id%>;
         }
 
         function modifyRegion() {
@@ -23,18 +33,23 @@
         }
 
         function deleteRegion() {
-
+            var clientForm = document.getElementById("clientForm");
+            clientForm.method = "post";
+            clientForm.action = "client_node_crud.jsp";
+            clientForm.submit();
         }
 
         function addClient() {
-            window.self.location = "client_add.jsp";
+            window.self.location = "client_add.jsp?pid="+<%=id%>;
         }
 
     </script>
 </head>
 
 <body class="body1">
-<form id="clientForm" name="clientForm" method="post" action="">
+<form id="clientForm" name="clientForm">
+    <input type="hidden" name="command" value="delete">
+    <input type="hidden" name="id" value="<%=id%>">
     <table width="95%" border="0" cellspacing="0" cellpadding="0"
            height="8">
         <tr>

@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientManager {
     private static ClientManager instance =new ClientManager();
@@ -54,8 +56,11 @@ public class ClientManager {
                 client.setZipCode(resultSet.getString("zip_code"));
                 client.setIsLeaf(resultSet.getString("is_leaf"));
                 client.setIsClient(resultSet.getString("is_client"));
-                ClientLevel clientLevel = (ClientLevel) DataDictManager.getInstance().
-                        findAbstractDataDictById(resultSet.getString("client_level_id"));
+                ClientLevel clientLevel = null;
+                if(!(resultSet.getString("client_level_id")==null||"".equals(resultSet.getString("client_level_id")))){
+                    DataDictManager dataDictManager = DataDictManager.getInstance();
+                    clientLevel =(ClientLevel)dataDictManager.findAbstractDataDictById(resultSet.getString("client_level_id"));
+                }
                 client.setClientLevel(clientLevel);
             }
         } catch (SQLException e) {
@@ -73,7 +78,7 @@ public class ClientManager {
      * @param clientOrArea
      */
     public void modifyClientOrArea(Client clientOrArea){
-        String sql="UPDATE client SET name=?,client_level_id=?,bank_account=?,contact_tel=?,address=?,zip_code=? WHERE id=?";
+        String sql="UPDATE client SET name=?,client_level_id=?,bank_account=?,contact_tel=?,address=?,zip_code=?,is_leaf=?,is_client=? WHERE id=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -81,12 +86,14 @@ public class ClientManager {
             connection = DBUtil.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,clientOrArea.getName());
-            preparedStatement.setString(2,clientOrArea.getClientLevel().getId());
+            preparedStatement.setString(2,clientOrArea.getClientLevel()==null?null:clientOrArea.getClientLevel().getId());
             preparedStatement.setString(3,clientOrArea.getBankAccount());
             preparedStatement.setString(4,clientOrArea.getContactTel());
             preparedStatement.setString(5,clientOrArea.getAddress());
             preparedStatement.setString(6,clientOrArea.getZipCode());
-            preparedStatement.setInt(7,clientOrArea.getId());
+            preparedStatement.setString(7,clientOrArea.getIsLeaf());
+            preparedStatement.setString(8,clientOrArea.getIsClient());
+            preparedStatement.setInt(9,clientOrArea.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,8 +107,8 @@ public class ClientManager {
      * @param clientOrArea
      */
     public void addClientOrArea(Client clientOrArea){
-        String sql = "INSERT INTO client(id,pid,client_level_id,name,client_id,bank_accout,contact_tel,address,zip_code,is_leaf,is_client) " +
-                "VALUE (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO client(id, pid, client_level_id, name, client_id, bank_account, contact_tel, address, zip_code, is_leaf, is_client)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -110,7 +117,7 @@ public class ClientManager {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,clientOrArea.getId());
             preparedStatement.setInt(2,clientOrArea.getPid());
-            preparedStatement.setString(3,clientOrArea.getClientLevel()==null?"":clientOrArea.getClientLevel().getId());
+            preparedStatement.setString(3,clientOrArea.getClientLevel()==null?null:clientOrArea.getClientLevel().getId());
             preparedStatement.setString(4,clientOrArea.getName());
             preparedStatement.setString(5,clientOrArea.getClientId());
             preparedStatement.setString(6,clientOrArea.getBankAccount());
@@ -120,6 +127,14 @@ public class ClientManager {
             preparedStatement.setString(10,clientOrArea.getIsLeaf());
             preparedStatement.setString(11,clientOrArea.getIsClient());
             preparedStatement.executeUpdate();
+
+            //把是叶子的父节点转为非叶子
+            Client parent = findClientOrAreaById(clientOrArea.getPid());
+            if("Y".equals(parent.getIsLeaf())){
+                parent.setIsLeaf("N");
+                modifyClientOrArea(parent);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -159,7 +174,7 @@ public class ClientManager {
      * @return
      */
     public boolean isExistAreaName(String areaName){
-        String sql = "SELECT * FROM client WHERE is_client='N',name=?";
+        String sql = "SELECT * FROM client WHERE is_client='N' and name=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -178,10 +193,78 @@ public class ClientManager {
         return false;
     }
     /**
-     * 删除分销商或区域
+     * 根据id删除单个分销商或区域
      * @param id
      */
-    public void delClientOrRegin(int id){
+    private void delClientOrReginNode(int id){
+        String sql = "DELETE FROM client WHERE id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
+    }
+
+    /**
+     * 根据id删除整个树
+     * @param id
+     */
+    private void delClientTree(int id){
+        if(findClientOrAreaById(id)!=null){
+            List<Integer> childrenId = findIdListByPid(id);
+            for (int kid:
+                    childrenId) {
+                delClientTree(kid);
+            }
+            delClientOrReginNode(id);
+        }
+    }
+
+    /**
+     * 根据pid找到子结点的集合
+     * @param pid
+     * @return
+     */
+    public List<Integer> findIdListByPid(int pid){
+        String sql = "SELECT id FROM client WHERE pid=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Integer> list = new ArrayList<Integer>();
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,pid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                list.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 删除整个区域
+     */
+    public void delClientOrArea(int id) {
+        Client client = findClientOrAreaById(id);
+        int pid = client.getPid();
+        delClientTree(id);
+        List<Integer> parentsChildrenList = findIdListByPid(pid);
+        if (parentsChildrenList.size() == 0) {
+            Client parent = findClientOrAreaById(pid);
+            parent.setIsLeaf("Y");
+            modifyClientOrArea(parent);
+        }
     }
 }
