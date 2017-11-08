@@ -49,7 +49,7 @@
 <body class="body1">
 <form id="clientForm" name="clientForm">
     <input type="hidden" name="command" value="delete">
-    <input type="hidden" name="id" value="<%=id%>">
+    <input type="hidden" name="id" value="<%=id%>" id="id">
     <table width="95%" border="0" cellspacing="0" cellpadding="0"
            height="8">
         <tr>
@@ -88,7 +88,7 @@
                id="btnAddRegion" onClick="addRegion()" value="添加区域"/>
         &nbsp;
         <input name="btnDeleteRegion" type="button" class="button1"
-               id="btnDeleteRegion" value="删除区域" onClick="deleteRegion()"/>
+               id="btnDeleteRegion" value="删除区域" onClick="deleteRegion()" <%=id==10000?"disabled=\"disabled\"":""%>/>
         &nbsp;
         <input name="btnModifyRegion" type="button" class="button1"
                id="btnModifyRegion" onClick="modifyRegion()" value="修改区域"/>
