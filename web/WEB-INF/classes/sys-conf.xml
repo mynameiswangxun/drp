@@ -6,4 +6,7 @@
         <username>root</username>
         <password>woaijay123</password>
     </db-info>
+    <dao-factory>
+        <mysql>drp.basedata.dao.ItemDaoFactoryForMysql</mysql>
+    </dao-factory>
 </config>

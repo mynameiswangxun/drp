@@ -2,6 +2,7 @@ package drp.util.test;
 
 import drp.basedata.manager.ClientManager;
 import drp.util.database.IdGenerator;
+import drp.util.database.XmlConfigReader;
 import drp.util.datadict.manager.DataDictManager;
 import drp.basedata.domain.*;
 import drp.util.datadict.domain.ClientLevel;
@@ -23,8 +24,9 @@ public class Test {
 //        client.setZipCode("123");
 //
 //        clientManager.addClientOrArea(client);
-//        System.out.println(ClientManager.getInstance().isExistAreaName("北京市"));
-        ClientManager clientManager = ClientManager.getInstance();
-        clientManager.delClientOrArea(10021);
+////        System.out.println(ClientManager.getInstance().isExistAreaName("北京市"));
+//        ClientManager clientManager = ClientManager.getInstance();
+//        clientManager.delClientOrArea(10021);
+        System.out.println(XmlConfigReader.getInstance().getDaoFactoryClassPathByName("mysql"));
     }
 }

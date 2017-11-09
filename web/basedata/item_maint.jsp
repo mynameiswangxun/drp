@@ -1,12 +1,13 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>ÎïÁÏÎ¬»¤</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ç‰©æ–™ç»´æŠ¤</title>
 		<link rel="stylesheet" href="../style/drp.css">
 		<script src="../script/windows.js"></script>
 		<script type="text/javascript">
 	function addItem() {
-		window.self.location = "item_add.html";
+		window.self.location = "ShowAddItemServlet.servlet";
 	}
 	
 	function modifyItem() {
@@ -57,10 +58,10 @@
 					height="8">
 					<tr>
 						<td width="522" class="p1" height="2" nowrap>
-							<img src="../images/mark_arrow_02.gif" alt="ÎÒ" width="14"
+							<img src="../images/mark_arrow_02.gif" alt="æˆ‘" width="14"
 								height="14">
 							&nbsp;
-							<b>»ù´¡Êý¾Ý¹ÜÀí&gt;&gt;ÎïÁÏÎ¬»¤</b>
+							<b>åŸºç¡€æ•°æ®ç®¡ç†&gt;&gt;ç‰©æ–™ç»´æŠ¤</b>
 						</td>
 					</tr>
 				</table>
@@ -69,7 +70,7 @@
 					<tr>
 						<td width="17%" height="29">
 							<div align="left">
-								ÎïÁÏ´úÂë/Ãû³Æ:
+								ç‰©æ–™ä»£ç /åç§°:
 							</div>
 						</td>
 						<td width="57%">
@@ -79,7 +80,7 @@
 						<td width="26%">
 							<div align="left">
 								<input name="btnQuery" type="button" class="button1"
-									id="btnQuery" value="²éÑ¯">
+									id="btnQuery" value="æŸ¥è¯¢">
 							</div>
 						</td>
 					</tr>
@@ -101,7 +102,7 @@
 				class="rd1" align="center">
 				<tr>
 					<td nowrap height="10" class="p2">
-						ÎïÁÏÐÅÏ¢
+						ç‰©æ–™ä¿¡æ¯
 					</td>
 					<td nowrap height="10" class="p3">
 						&nbsp;
@@ -115,22 +116,22 @@
 						<input type="checkbox" name="ifAll" onClick="checkAll()">
 					</td>
 					<td width="155" class="rd6">
-						ÎïÁÏ´úÂë
+						ç‰©æ–™ä»£ç 
 					</td>
 					<td width="155" class="rd6">
-						ÎïÁÏÃû³Æ
+						ç‰©æ–™åç§°
 					</td>
 					<td width="155" class="rd6">
-						ÎïÁÏ¹æ¸ñ
+						ç‰©æ–™è§„æ ¼
 					</td>
 					<td width="155" class="rd6">
-						ÎïÁÏÐÍºÅ
+						ç‰©æ–™åž‹å·
 					</td>
 					<td width="138" class="rd6">
-						Àà±ð
+						ç±»åˆ«
 					</td>
 					<td width="101" class="rd6">
-						¼ÆÁ¿µ¥Î»
+						è®¡é‡å•ä½
 					</td>
 				</tr>
 				<tr>
@@ -140,22 +141,22 @@
 					</td>
 					<td class="rd8">
 						<a href="#"
-							onClick="window.open('item_detail.html', 'ÎïÁÏÏêÏ¸ÐÅÏ¢', 'width=400, height=400, scrollbars=no')">2001</a>
+							onClick="window.open('item_detail.html', 'ç‰©æ–™è¯¦ç»†ä¿¡æ¯', 'width=400, height=400, scrollbars=no')">2001</a>
 					</td>
 					<td class="rd8">
-						ÇàÃ¹ËØ
-					</td>
-					<td class="rd8">
-						xxxxx
+						é’éœ‰ç´ 
 					</td>
 					<td class="rd8">
 						xxxxx
 					</td>
 					<td class="rd8">
-						Î÷Ò©
+						xxxxx
 					</td>
 					<td class="rd8">
-						ºÐ
+						è¥¿è¯
+					</td>
+					<td class="rd8">
+						ç›’
 					</td>
 				</tr>
 				<tr>
@@ -394,33 +395,33 @@
 				<tr>
 					<td nowrap class="rd19" height="2" width="36%">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;¹²&nbspxx&nbspÒ³</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<font color="#FFFFFF">µ±Ç°µÚ</font>&nbsp
+							<font color="#FFFFFF">&nbsp;å…±&nbspxx&nbspé¡µ</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">å½“å‰ç¬¬</font>&nbsp
 							<font color="#FF0000">x</font>&nbsp
-							<font color="#FFFFFF">Ò³</font>
+							<font color="#FFFFFF">é¡µ</font>
 						</div>
 					</td>
 					<td nowrap class="rd19" width="64%">
 						<div align="right">
 							<input name="btnTopPage" class="button1" type="button"
-								id="btnTopPage" value="|&lt;&lt; " title="Ê×Ò³"
+								id="btnTopPage" value="|&lt;&lt; " title="é¦–é¡µ"
 								onClick="topPage()">
 							<input name="btnPreviousPage" class="button1" type="button"
-								id="btnPreviousPage" value=" &lt;  " title="ÉÏÒ³"
+								id="btnPreviousPage" value=" &lt;  " title="ä¸Šé¡µ"
 								onClick="previousPage()">
 							<input name="btnNextPage" class="button1" type="button"
-								id="btnNextPage" value="  &gt; " title="ÏÂÒ³" onClick="nextPage()">
+								id="btnNextPage" value="  &gt; " title="ä¸‹é¡µ" onClick="nextPage()">
 							<input name="btnBottomPage" class="button1" type="button"
-								id="btnBottomPage" value=" &gt;&gt;|" title="Î²Ò³"
+								id="btnBottomPage" value=" &gt;&gt;|" title="å°¾é¡µ"
 								onClick="bottomPage()">
 							<input name="btnAdd" type="button" class="button1" id="btnAdd"
-								value="Ìí¼Ó" onClick="addItem()">
+								value="æ·»åŠ " onClick="addItem()">
 							<input name="btnDelete" class="button1" type="button"
-								id="btnDelete" value="É¾³ý" onClick="deleteItem()">
+								id="btnDelete" value="åˆ é™¤" onClick="deleteItem()">
 							<input name="btnModify" class="button1" type="button"
-								id="btnModify" value="ÐÞ¸Ä" onClick="modifyItem()">
+								id="btnModify" value="ä¿®æ”¹" onClick="modifyItem()">
 							<input name="btnUpload" class="button1" type="button"
-								id="btnUpload" value="ÉÏ´«Í¼Æ¬" onClick="uploadPic4Item()">
+								id="btnUpload" value="ä¸Šä¼ å›¾ç‰‡" onClick="uploadPic4Item()">
 						</div>
 					</td>
 				</tr>

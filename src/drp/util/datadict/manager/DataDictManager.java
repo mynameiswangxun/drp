@@ -97,4 +97,64 @@ public class DataDictManager {
         }
         return abstractDataDict;
     }
+    /**
+     * 查找物料类别列表
+     * @return
+     */
+    public List<ItemCategory> findItemCategoryList(){
+        String sql = "SELECT * FROM data_dic WHERE category='C'";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ItemCategory> categories= new ArrayList<ItemCategory>();
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                ItemCategory itemCategory = new ItemCategory();
+                itemCategory.setId(resultSet.getString("id"));
+                itemCategory.setName(resultSet.getString("name"));
+                categories.add(itemCategory);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+        }
+        return categories;
+    }
+    /**
+     * 查找物料单位列表
+     * @return
+     */
+    public List<ItemUnit> findItemUnitList(){
+        String sql = "SELECT * FROM data_dic WHERE category='D'";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<ItemUnit> units= new ArrayList<ItemUnit>();
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                ItemUnit itemUnit = new ItemUnit();
+                itemUnit.setId(resultSet.getString("id"));
+                itemUnit.setName(resultSet.getString("name"));
+                units.add(itemUnit);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+        }
+        return units;
+    }
 }

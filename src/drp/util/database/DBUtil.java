@@ -1,6 +1,8 @@
 package drp.util.database;
 
 
+import drp.util.exception.ApplicationException;
+
 import java.sql.*;
 
 /**
@@ -24,8 +26,10 @@ public class DBUtil {
                             ,jdbcConfig.getPassword());
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                throw new ApplicationException("系统错误");
             } catch (SQLException e) {
                 e.printStackTrace();
+                throw new ApplicationException("系统错误");
             }
         }
         return connection;

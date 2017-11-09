@@ -1,13 +1,37 @@
+<%@ page import="java.util.List" %>
+<%@ page import="drp.util.datadict.domain.ItemCategory" %>
+<%@ page import="drp.util.datadict.domain.ItemUnit" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%
+	List<ItemCategory> categories = (List<ItemCategory>) request.getAttribute("categories");
+	List<ItemUnit> units = (List<ItemUnit>) request.getAttribute("units");
+%>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>添加物料</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>娣诲姞鐗╂枡</title>
 		<link rel="stylesheet" href="../style/drp.css">
 		<script src="../script/client_validate.js"></script>
+		<script type="text/javascript">
+			function validateForm() {
+			   	var massage = "";
+				if(trim(document.getElementById("itemNo").value).length==0){
+					message = "鐗╂枡浠ｇ爜涓虹┖锛岃淇敼锛乗n";
+				}
+				if(trim(document.getElementById("itemName").value).length==0){
+				    message += "鐗╂枡鍚嶇О涓虹┖锛岃淇敼\n";
+				}
+				if(message.length>0){
+				    alert(message);
+				    return false;
+				}
+				return true;
+            }
+		</script>
 	</head>
 
 	<body class="body1">
-		<form name="itemForm" target="_self" id="itemForm">
+		<form name="itemForm" target="_self" id="itemForm" method="post" action="AddItemServlet.servlet" onsubmit="return validateForm()">
 			<div align="center">
 				<table width="95%" border="0" cellspacing="2" cellpadding="2">
 					<tr>
@@ -22,7 +46,7 @@
 						<td width="522" class="p1" height="25" nowrap>
 							<img src="../images/mark_arrow_03.gif" width="14" height="14">
 							&nbsp;
-							<b>基础数据管理&gt;&gt;物料维护&gt;&gt;添加</b>
+							<b>鍩虹鏁版嵁绠＄悊&gt;&gt;鐗╂枡缁存姢&gt;&gt;娣诲姞</b>
 						</td>
 					</tr>
 				</table>
@@ -31,7 +55,7 @@
 					<tr>
 						<td width="22%" height="29">
 							<div align="right">
-								<font color="#FF0000">*</font>物料代码:&nbsp;
+								<font color="#FF0000">*</font>鐗╂枡浠ｇ爜:&nbsp;
 							</div>
 						</td>
 						<td width="78%">
@@ -42,7 +66,7 @@
 					<tr>
 						<td height="26">
 							<div align="right">
-								<font color="#FF0000">*</font>物料名称:&nbsp;
+								<font color="#FF0000">*</font>鐗╂枡鍚嶇О:&nbsp;
 							</div>
 						</td>
 						<td>
@@ -53,7 +77,7 @@
 					<tr>
 						<td height="26">
 							<div align="right">
-								物料规格:&nbsp;
+								鐗╂枡瑙勬牸:&nbsp;
 							</div>
 						</td>
 						<td>
@@ -66,7 +90,7 @@
 					<tr>
 						<td height="26">
 							<div align="right">
-								物料型号:&nbsp;
+								鐗╂枡鍨嬪彿:&nbsp;
 							</div>
 						</td>
 						<td>
@@ -77,51 +101,53 @@
 					<tr>
 						<td height="26">
 							<div align="right">
-								<font color="#FF0000">*</font>类别:&nbsp;
+								<font color="#FF0000">*</font>绫诲埆:&nbsp;
 							</div>
 						</td>
 						<td>
 							<select name="category" class="select1" id="category">
-								<option value="医疗器械" selected>
-									医疗器械
+								<%
+									for (ItemCategory category:
+										 categories) {
+								%>
+								<option value="<%=category.getId()%>">
+									<%=category.getName()%>
 								</option>
-								<option value="中成药">
-									中成药
-								</option>
-								<option value="西药">
-									西药
-								</option>
+								<%
+									}
+								%>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td height="26">
 							<div align="right">
-								<font color="#FF0000">*</font>计量单位:&nbsp;
+								<font color="#FF0000">*</font>璁￠噺鍗曚綅:&nbsp;
 							</div>
 						</td>
 						<td>
 							<select name="unit" class="select1" id="unit">
-								<option value="盒">
-									盒
+								<%
+									for (ItemUnit unit:
+										 units) {
+								%>
+								<option value="<%=unit.getId()%>">
+									<%=unit.getName()%>
 								</option>
-								<option value="片">
-									片
-								</option>
-								<option value="箱">
-									箱
-								</option>
+								<%
+									}
+								%>
 							</select>
 						</td>
 					</tr>
 				</table>
 				<hr width="97%" align="center" size=0>
 				<div align="center">
-					<input name="btnAdd" class="button1" type="button" id="btnAdd"
-						value="添加">
+					<input name="btnAdd" class="button1" type="submit" id="btnAdd"
+						value="娣诲姞">
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="btnBack" class="button1" type="button" id="btnBack"
-						value="返回" onClick="history.go(-1)">
+						value="杩斿洖" onClick="self.location= 'item_maint.jsp'">
 				</div>
 			</div>
 		</form>
