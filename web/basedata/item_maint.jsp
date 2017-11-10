@@ -43,7 +43,6 @@
 	}
 </script>
 	</head>
-
 	<body class="body1">
 		<form name="itemForm">
 			<div align="center">
@@ -96,7 +95,7 @@
 						</td>
 					</tr>
 				</table>
-
+				<span><font color="red"><%=request.getParameter("errorMessage")==null?"":request.getParameter("errorMessage")%></font></span>
 			</div>
 			<table width="95%" border="0" cellspacing="0" cellpadding="0"
 				class="rd1" align="center">

@@ -6,6 +6,7 @@ import drp.basedata.manager.ItemManagerImpl;
 import drp.util.datadict.domain.ItemCategory;
 import drp.util.datadict.domain.ItemUnit;
 import drp.util.datadict.manager.DataDictManager;
+import drp.util.exception.ApplicationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet(name = "AddItemServlet",urlPatterns = "/basedata/AddItemServlet.servlet")
 public class AddItemServlet extends HttpServlet {
@@ -36,11 +38,17 @@ public class AddItemServlet extends HttpServlet {
         item.setItemUnit(itemUnit);
 
         //向数据库添加Item
-        ItemManager itemManager = new ItemManagerImpl();
-        itemManager.addItem(item);
+        String message = new String();
+        try {
+            ItemManager itemManager = new ItemManagerImpl();
+            itemManager.addItem(item);
+        }catch (ApplicationException aex){
+            aex.printStackTrace();
+            message = aex.getMessage();
+        }
 
         //重定向
-        response.sendRedirect("item_maint.jsp");
+        response.sendRedirect("item_maint.jsp?errorMessage="+ URLEncoder.encode(message,"utf-8"));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

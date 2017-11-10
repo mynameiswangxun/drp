@@ -11,16 +11,16 @@ import drp.util.pagemodel.PageModel;
 import java.sql.Connection;
 
 public class ItemManagerImpl implements ItemManager{
-    @Override
-    public void addItem(Item item) {
+
+    private ItemDao itemDao = null;
+
+    public ItemManagerImpl(){
         ItemDaoFactory itemDaoFactory = null;
-        ItemDao itemDao = null;
         //获得daoFactory的类名
         String factoryClassName = XmlConfigReader.getInstance().getDaoFactoryClassPathByName("mysql");
         //动态加载
         try {
             itemDaoFactory = (ItemDaoFactory) Class.forName(factoryClassName).newInstance();
-            itemDao = itemDaoFactory.createItemDao();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -28,6 +28,10 @@ public class ItemManagerImpl implements ItemManager{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        itemDao = itemDaoFactory.createItemDao();
+    }
+    @Override
+    public void addItem(Item item) {
 
         Connection connection = null;
         try{
