@@ -1,6 +1,8 @@
 package drp.basedata.dao;
 
 import drp.basedata.domain.Item;
+import drp.util.database.DBUtil;
+import drp.util.datadict.domain.AbstractDataDict;
 import drp.util.datadict.domain.ItemCategory;
 import drp.util.datadict.domain.ItemUnit;
 import drp.util.datadict.manager.DataDictManager;
@@ -11,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemDaoForMysql implements ItemDao{
     @Override
@@ -72,12 +76,79 @@ public class ItemDaoForMysql implements ItemDao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new ApplicationException("查询出错！");
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
         }
         return item;
     }
 
     @Override
     public PageModel<Item> findItemList(Connection connection, int pageNo, int pageSize, String condition) {
-        return null;
+        String sql = "SELECT * FROM items where (items_id like ? or name like ?) limit ?,?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        PageModel<Item> pageModel = new PageModel<Item>();
+        List<Item> items = new ArrayList<Item>();
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+condition+"%");
+            preparedStatement.setString(2,"%"+condition+"%");
+            preparedStatement.setInt(3,pageNo-1);
+            preparedStatement.setInt(4,pageSize);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                Item item = new Item();
+                item.setItemId(resultSet.getString("items_id"));
+                item.setItemName(resultSet.getString("name"));
+                item.setSpec(resultSet.getString("spec"));
+                item.setItemPattern(resultSet.getString("pattern"));
+
+                DataDictManager dataDictManager = DataDictManager.getInstance();
+                ItemCategory  itemCategory = (ItemCategory) dataDictManager.
+                        findAbstractDataDictById(resultSet.getString("item_category_id"));
+                ItemUnit unit = (ItemUnit) dataDictManager.findAbstractDataDictById(resultSet.getString("item_unit_id"));
+                item.setItemCategory(itemCategory);
+                item.setItemUnit(unit);
+                items.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ApplicationException("查询出错！");
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+        }
+        pageModel.setPageNo(pageNo);
+        pageModel.setPageSize(pageSize);
+        pageModel.setTotalRecords(findItemsTotal(connection,condition));
+        pageModel.setList(items);
+        return pageModel;
+    }
+
+    /**
+     * 获得记录数总数
+     * @return
+     */
+    private int findItemsTotal(Connection connection,String condition){
+        String sql = "SELECT COUNT(*) FROM items WHERE items_id like ? or name like ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+condition+"%");
+            preparedStatement.setString(2,"%"+condition+"%");
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

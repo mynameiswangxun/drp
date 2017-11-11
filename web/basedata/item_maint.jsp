@@ -1,4 +1,11 @@
+<%@ page import="drp.util.pagemodel.PageModel" %>
+<%@ page import="drp.basedata.domain.Item" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%
+	PageModel<Item> pageModel = (PageModel<Item>) request.getAttribute("PageModel");
+	List<Item> items = pageModel.getList();
+%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -73,8 +80,8 @@
 							</div>
 						</td>
 						<td width="57%">
-							<input name="clientIdOrName" type="text" class="text1"
-								id="clientId4" size="50" maxlength="50">
+							<input name="condition" type="text" class="text1"
+								id="condition" size="50" maxlength="50">
 						</td>
 						<td width="26%">
 							<div align="left">
@@ -133,270 +140,47 @@
 						计量单位
 					</td>
 				</tr>
-				<tr>
+				<%
+					for (Item item:
+						 items) {
 
+				%>
+				<tr>
 					<td class="rd8">
 						<input type="checkbox" name="selectFlag" class="checkbox1">
 					</td>
 					<td class="rd8">
 						<a href="#"
-							onClick="window.open('item_detail.html', '物料详细信息', 'width=400, height=400, scrollbars=no')">2001</a>
+							onClick="window.open('item_detail.html', '物料详细信息', 'width=400, height=400, scrollbars=no')"><%=item.getItemId()%></a>
 					</td>
 					<td class="rd8">
-						青霉素
+						<%=item.getItemName()%>
 					</td>
 					<td class="rd8">
-						xxxxx
+						<%=item.getSpec()==null?"":item.getSpec()%>
 					</td>
 					<td class="rd8">
-						xxxxx
+						<%=item.getItemPattern()==null?"":item.getItemPattern()%>
 					</td>
 					<td class="rd8">
-						西药
+						<%=item.getItemCategory().getName()%>
 					</td>
 					<td class="rd8">
-						盒
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
+						<%=item.getItemUnit().getName()%>
 					</td>
 				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-					<td class="rd8">
-						&nbsp;
-					</td>
-				</tr>
+				<%
+					}
+				%>
 			</table>
 			<table width="95%" height="30" border="0" align="center"
 				cellpadding="0" cellspacing="0" class="rd1">
 				<tr>
 					<td nowrap class="rd19" height="2" width="36%">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;共&nbspxx&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">&nbsp;共&nbsp<%=pageModel.getTopPageNo()%>&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<font color="#FFFFFF">当前第</font>&nbsp
-							<font color="#FF0000">x</font>&nbsp
+							<font color="#FF0000"><%=pageModel.getPageNo()%></font>&nbsp
 							<font color="#FFFFFF">页</font>
 						</div>
 					</td>

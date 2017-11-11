@@ -61,6 +61,7 @@ public class ItemManagerImpl implements ItemManager{
 
     @Override
     public PageModel<Item> findItemList(int pageNo, int pageSize, String condition) {
-        return null;
+        Connection connection = DBUtil.getConnection();
+        return itemDao.findItemList(connection,pageNo,pageSize,condition);
     }
 }
