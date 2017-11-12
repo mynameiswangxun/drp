@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ClientTreeReader {
     private StringBuffer treeHtmlString = new StringBuffer();
-    private Connection connection = DBUtil.getConnection();
+    private Connection connection = null;
 
     /**
      * 返回HTML字符串
@@ -17,8 +17,9 @@ public class ClientTreeReader {
      * @return
      */
     public String getClientTreeHtmlString() {
-
+        connection = DBUtil.getConnection();
         readClientTree(0, 0);
+        Connection connection = null;
         return treeHtmlString.toString();
     }
 

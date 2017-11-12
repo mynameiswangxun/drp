@@ -2,7 +2,6 @@ package drp.basedata.dao;
 
 import drp.basedata.domain.Item;
 import drp.util.database.DBUtil;
-import drp.util.datadict.domain.AbstractDataDict;
 import drp.util.datadict.domain.ItemCategory;
 import drp.util.datadict.domain.ItemUnit;
 import drp.util.datadict.manager.DataDictManager;
@@ -16,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDaoForMysql implements ItemDao{
+public class ItemDaoForMysql implements ItemDao {
     @Override
     public void addItem(Connection connection, Item item) {
         String sql = "INSERT INTO items(items_id,item_category_id,item_unit_id,name,spec,pattern) VALUES(?,?,?,?,?,?) ";
@@ -24,20 +23,22 @@ public class ItemDaoForMysql implements ItemDao{
 
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,item.getItemId());
-            preparedStatement.setString(2,item.getItemCategory().getId());
-            preparedStatement.setString(3,item.getItemUnit().getId());
-            preparedStatement.setString(4,item.getItemName());
-            preparedStatement.setString(5,item.getSpec());
-            preparedStatement.setString(6,item.getItemPattern());
+            preparedStatement.setString(1, item.getItemId());
+            preparedStatement.setString(2, item.getItemCategory().getId());
+            preparedStatement.setString(3, item.getItemUnit().getId());
+            preparedStatement.setString(4, item.getItemName());
+            preparedStatement.setString(5, item.getSpec());
+            preparedStatement.setString(6, item.getItemPattern());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            if(e.getErrorCode()==1062){
-                throw new ApplicationException("添加物料失败!物料代码"+item.getItemId()+"已经存在");
-            }else{
+            if (e.getErrorCode() == 1062) {
+                throw new ApplicationException("添加物料失败!物料代码" + item.getItemId() + "已经存在");
+            } else {
                 throw new ApplicationException("添加物料失败!");
             }
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
         }
     }
 
@@ -48,8 +49,26 @@ public class ItemDaoForMysql implements ItemDao{
 
     @Override
     public void modifyItem(Connection connection, Item item) {
+        String sql = "UPDATE items SET item_category_id=?,item_unit_id=?,name=?,spec=?,pattern=? WHERE items_id=?";
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, item.getItemCategory().getId());
+            preparedStatement.setString(2, item.getItemUnit().getId());
+            preparedStatement.setString(3, item.getItemName());
+            preparedStatement.setString(4, item.getSpec());
+            preparedStatement.setString(5, item.getItemPattern());
+            preparedStatement.setString(6, item.getItemId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ApplicationException("修改物料失败!");
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
     }
+
 
     @Override
     public Item findItemById(Connection connection, String itemId) {
@@ -60,9 +79,9 @@ public class ItemDaoForMysql implements ItemDao{
 
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,itemId);
+            preparedStatement.setString(1, itemId);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 item.setItemId(resultSet.getString("items_id"));
                 item.setItemPattern(resultSet.getString("pattern"));
                 item.setSpec(resultSet.getString("spec"));
@@ -94,13 +113,13 @@ public class ItemDaoForMysql implements ItemDao{
 
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,"%"+condition+"%");
-            preparedStatement.setString(2,"%"+condition+"%");
-            preparedStatement.setInt(3,pageNo-1);
-            preparedStatement.setInt(4,pageSize);
+            preparedStatement.setString(1, "%" + condition + "%");
+            preparedStatement.setString(2, "%" + condition + "%");
+            preparedStatement.setInt(3, pageNo - 1);
+            preparedStatement.setInt(4, pageSize);
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Item item = new Item();
                 item.setItemId(resultSet.getString("items_id"));
                 item.setItemName(resultSet.getString("name"));
@@ -108,7 +127,7 @@ public class ItemDaoForMysql implements ItemDao{
                 item.setItemPattern(resultSet.getString("pattern"));
 
                 DataDictManager dataDictManager = DataDictManager.getInstance();
-                ItemCategory  itemCategory = (ItemCategory) dataDictManager.
+                ItemCategory itemCategory = (ItemCategory) dataDictManager.
                         findAbstractDataDictById(resultSet.getString("item_category_id"));
                 ItemUnit unit = (ItemUnit) dataDictManager.findAbstractDataDictById(resultSet.getString("item_unit_id"));
                 item.setItemCategory(itemCategory);
@@ -124,26 +143,27 @@ public class ItemDaoForMysql implements ItemDao{
         }
         pageModel.setPageNo(pageNo);
         pageModel.setPageSize(pageSize);
-        pageModel.setTotalRecords(findItemsTotal(connection,condition));
+        pageModel.setTotalRecords(findItemsTotal(connection, condition));
         pageModel.setList(items);
         return pageModel;
     }
 
     /**
      * 获得记录数总数
+     *
      * @return
      */
-    private int findItemsTotal(Connection connection,String condition){
+    private int findItemsTotal(Connection connection, String condition) {
         String sql = "SELECT COUNT(*) FROM items WHERE items_id like ? or name like ?";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int result = 0;
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,"%"+condition+"%");
-            preparedStatement.setString(2,"%"+condition+"%");
+            preparedStatement.setString(1, "%" + condition + "%");
+            preparedStatement.setString(2, "%" + condition + "%");
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 result = resultSet.getInt(1);
             }
         } catch (SQLException e) {

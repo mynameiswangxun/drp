@@ -43,6 +43,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 
@@ -77,6 +78,7 @@ public class UserManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return user;
     }
@@ -115,6 +117,7 @@ public class UserManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         pageModel.setList(pageUserList);
         pageModel.setPageNo(pageNo);
@@ -140,6 +143,9 @@ public class UserManager {
             totalRecords = resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
         }
         return totalRecords;
     }
@@ -166,6 +172,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 
@@ -187,6 +194,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 
@@ -232,6 +240,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(statement);
+            DBUtil.closeConnection(connection);
         }
     }
 
@@ -254,6 +263,7 @@ public class UserManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 

@@ -68,6 +68,7 @@ public class ClientManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
 
         return client;
@@ -99,6 +100,7 @@ public class ClientManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 
@@ -139,6 +141,7 @@ public class ClientManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
 
     }
@@ -164,6 +167,10 @@ public class ClientManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return false;
     }
@@ -189,6 +196,10 @@ public class ClientManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return false;
     }
@@ -210,6 +221,7 @@ public class ClientManager {
             e.printStackTrace();
         } finally {
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 
@@ -249,6 +261,8 @@ public class ClientManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(connection);
         }
         return list;
     }

@@ -51,17 +51,24 @@ public class ItemManagerImpl implements ItemManager{
 
     @Override
     public void modifyItem(Item item) {
-
+        Connection connection = DBUtil.getConnection();
+        itemDao.modifyItem(connection,item);
+        DBUtil.closeConnection(connection);
     }
 
     @Override
-    public Item findItemById(Connection connection, String itemId) {
-        return null;
+    public Item findItemById(String itemId) {
+        Connection connection = DBUtil.getConnection();
+        Item item = itemDao.findItemById(connection,itemId);
+        DBUtil.closeConnection(connection);
+        return item;
     }
 
     @Override
     public PageModel<Item> findItemList(int pageNo, int pageSize, String condition) {
         Connection connection = DBUtil.getConnection();
-        return itemDao.findItemList(connection,pageNo,pageSize,condition);
+        PageModel<Item> pageModel = itemDao.findItemList(connection,pageNo,pageSize,condition);
+        DBUtil.closeConnection(connection);
+        return pageModel;
     }
 }

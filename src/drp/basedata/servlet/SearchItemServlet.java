@@ -6,17 +6,20 @@ import drp.basedata.manager.ItemManagerImpl;
 import drp.util.pagemodel.PageModel;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "SearchItemServlet",urlPatterns = "/basedata/SearchItemServlet.servlet")
+@WebServlet(name = "SearchItemServlet",urlPatterns = "/basedata/SearchItemServlet.servlet",
+        initParams = @WebInitParam(name="pageSize",value = "6"))
 public class SearchItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         int pageNo = 1;
-        int pageSize = 6;
+        int pageSize = Integer.parseInt(this.getInitParameter("pageSize"));
 
         //取得页码
         String pageNoString = request.getParameter("pageNo");

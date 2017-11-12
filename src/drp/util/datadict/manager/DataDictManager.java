@@ -43,6 +43,7 @@ public class DataDictManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return levels;
     }
@@ -94,6 +95,7 @@ public class DataDictManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return abstractDataDict;
     }
@@ -124,6 +126,7 @@ public class DataDictManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return categories;
     }
@@ -154,6 +157,7 @@ public class DataDictManager {
         } finally {
             DBUtil.closeResultSet(resultSet);
             DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return units;
     }

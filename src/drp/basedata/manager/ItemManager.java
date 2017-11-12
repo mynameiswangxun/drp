@@ -12,7 +12,7 @@ public interface ItemManager {
 
     void modifyItem(Item item);
 
-    Item findItemById(Connection connection, String itemId);
+    Item findItemById(String itemId);
 
     PageModel<Item> findItemList(int pageNo, int pageSize, String condition);
 }

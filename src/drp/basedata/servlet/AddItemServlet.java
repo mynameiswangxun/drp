@@ -38,7 +38,7 @@ public class AddItemServlet extends HttpServlet {
         item.setItemUnit(itemUnit);
 
         //向数据库添加Item
-        String message = new String();
+        String message = null;
         try {
             ItemManager itemManager = new ItemManagerImpl();
             itemManager.addItem(item);
@@ -46,9 +46,11 @@ public class AddItemServlet extends HttpServlet {
             aex.printStackTrace();
             message = aex.getMessage();
         }
-
+        if(message==null){
+            message = "添加物料成功";
+        }
         //重定向
-        response.sendRedirect("item_maint.jsp?errorMessage="+ URLEncoder.encode(message,"utf-8"));
+        response.sendRedirect("ShowAddItemServlet.servlet?message="+ URLEncoder.encode(message,"utf-8"));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
