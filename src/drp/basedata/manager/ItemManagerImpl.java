@@ -46,7 +46,9 @@ public class ItemManagerImpl implements ItemManager{
 
     @Override
     public void deleteItem(String[] itemIds) {
-
+        Connection connection = DBUtil.getConnection();
+        itemDao.deleteItem(connection,itemIds);
+        DBUtil.closeConnection(connection);
     }
 
     @Override
@@ -70,5 +72,20 @@ public class ItemManagerImpl implements ItemManager{
         PageModel<Item> pageModel = itemDao.findItemList(connection,pageNo,pageSize,condition);
         DBUtil.closeConnection(connection);
         return pageModel;
+    }
+
+    @Override
+    public void UploadFile(String itemId, String fileName) {
+        Connection connection = DBUtil.getConnection();
+        try{
+            Item item = itemDao.findItemById(connection,itemId);
+            item.setFileName(fileName);
+            itemDao.modifyItem(connection,item);
+        } catch (ApplicationException ape){
+            ape.printStackTrace();
+            throw new ApplicationException("上传图片失败");
+        } finally {
+            DBUtil.closeConnection(connection);
+        }
     }
 }

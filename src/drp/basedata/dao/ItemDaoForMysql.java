@@ -18,7 +18,7 @@ import java.util.List;
 public class ItemDaoForMysql implements ItemDao {
     @Override
     public void addItem(Connection connection, Item item) {
-        String sql = "INSERT INTO items(items_id,item_category_id,item_unit_id,name,spec,pattern) VALUES(?,?,?,?,?,?) ";
+        String sql = "INSERT INTO items(items_id,item_category_id,item_unit_id,name,spec,pattern,file_name) VALUES(?,?,?,?,?,?,?) ";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -29,6 +29,7 @@ public class ItemDaoForMysql implements ItemDao {
             preparedStatement.setString(4, item.getItemName());
             preparedStatement.setString(5, item.getSpec());
             preparedStatement.setString(6, item.getItemPattern());
+            preparedStatement.setString(7,item.getFileName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,12 +45,27 @@ public class ItemDaoForMysql implements ItemDao {
 
     @Override
     public void deleteItem(Connection connection, String[] itemIds) {
+        StringBuilder sql = new StringBuilder("DELETE FROM items WHERE items_id in(");
+        for(int i = 0; i<itemIds.length; i++){
+            sql.append("'");
+            sql.append(itemIds[i]);
+            sql.append("',");
+        }
+        sql.setCharAt(sql.length()-1,')');
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement(sql.toString());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ApplicationException("删除物料失败!");
+        }
     }
 
     @Override
     public void modifyItem(Connection connection, Item item) {
-        String sql = "UPDATE items SET item_category_id=?,item_unit_id=?,name=?,spec=?,pattern=? WHERE items_id=?";
+        String sql = "UPDATE items SET item_category_id=?,item_unit_id=?,name=?,spec=?,pattern=?,file_name=? WHERE items_id=?";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -59,7 +75,8 @@ public class ItemDaoForMysql implements ItemDao {
             preparedStatement.setString(3, item.getItemName());
             preparedStatement.setString(4, item.getSpec());
             preparedStatement.setString(5, item.getItemPattern());
-            preparedStatement.setString(6, item.getItemId());
+            preparedStatement.setString(6, item.getFileName());
+            preparedStatement.setString(7,item.getItemId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,6 +103,7 @@ public class ItemDaoForMysql implements ItemDao {
                 item.setItemPattern(resultSet.getString("pattern"));
                 item.setSpec(resultSet.getString("spec"));
                 item.setItemName(resultSet.getString("name"));
+                item.setFileName(resultSet.getString("file_name"));
 
                 DataDictManager dataDictManager = DataDictManager.getInstance();
                 ItemCategory itemCategory = (ItemCategory) dataDictManager.findAbstractDataDictById(resultSet.getString("item_category_id"));
@@ -125,6 +143,7 @@ public class ItemDaoForMysql implements ItemDao {
                 item.setItemName(resultSet.getString("name"));
                 item.setSpec(resultSet.getString("spec"));
                 item.setItemPattern(resultSet.getString("pattern"));
+                item.setFileName(resultSet.getString("file_name"));
 
                 DataDictManager dataDictManager = DataDictManager.getInstance();
                 ItemCategory itemCategory = (ItemCategory) dataDictManager.

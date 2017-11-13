@@ -15,4 +15,6 @@ public interface ItemManager {
     Item findItemById(String itemId);
 
     PageModel<Item> findItemList(int pageNo, int pageSize, String condition);
+
+    void UploadFile(String itemId,String fileName);
 }

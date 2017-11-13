@@ -13,6 +13,7 @@ public class Item {
     private String spec;
     private ItemCategory itemCategory;
     private ItemUnit itemUnit;
+    private String fileName;
 
     public String getItemId() {
         return itemId;
@@ -60,6 +61,14 @@ public class Item {
 
     public void setItemUnit(ItemUnit itemUnit) {
         this.itemUnit = itemUnit;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override

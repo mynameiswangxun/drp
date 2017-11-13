@@ -22,25 +22,28 @@
             var checkBoxes = document.getElementsByName("selectFlag");
             var checkedNum = 0;
             var checkedItemId = 0;
-            for(var i = 0; i<checkBoxes.length; i++){
-                if(checkBoxes[i].checked){
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
                     checkedItemId = checkBoxes[i].value;
                     checkedNum++;
                 }
             }
-            if(checkedNum==0){
+            if (checkedNum == 0) {
                 alert("请选择一个需要修改的物料！");
                 return;
             }
-            if(checkedNum>1){
+            if (checkedNum > 1) {
                 alert("一次只能修改一个物料！");
                 return;
             }
-            window.self.location = "ShowModifyItemServlet.servlet?itemId="+checkedItemId;
+            window.self.location = "ShowModifyItemServlet.servlet?itemId=" + checkedItemId;
         }
 
         function deleteItem() {
-
+            var itemForm = document.getElementById("itemForm");
+            itemForm.method = "post";
+            itemForm.action = "DeleteItemServlet.servlet";
+            itemForm.submit();
         }
 
         function topPage() {
@@ -61,13 +64,30 @@
 
         function checkAll(field) {
             var checkboxes = document.getElementsByName("selectFlag");
-            for(var i = 0; i<checkboxes.length; i++){
+            for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = field.checked;
             }
         }
 
         function uploadPic4Item() {
-            window.self.location = "item_upload.html"
+            var checkBoxes = document.getElementsByName("selectFlag");
+            var checkedNum = 0;
+            var checkedItemId = 0;
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    checkedItemId = checkBoxes[i].value;
+                    checkedNum++;
+                }
+            }
+            if (checkedNum == 0) {
+                alert("请选择一个需要上传图片的物料！");
+                return;
+            }
+            if (checkedNum > 1) {
+                alert("一次只能上传一个物料的图片！");
+                return;
+            }
+            window.self.location = "ShowUploadServlet.servlet?itemId=" + checkedItemId;
         }
     </script>
 </head>
@@ -92,7 +112,7 @@
         </tr>
     </table>
     <hr width="97%" align="center" size=0>
-    <form name="itemForm" method="post" action="SearchItemServlet.servlet">
+    <form name="conditionForm" method="post" action="SearchItemServlet.servlet">
         <table width="95%" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <td width="17%" height="29">
@@ -164,39 +184,40 @@
             计量单位
         </td>
     </tr>
-    <%
-        for (Item item :
-                items) {
-
-    %>
-    <tr>
-        <td class="rd8">
-            <input type="checkbox" name="selectFlag" class="checkbox1" value="<%=item.getItemId()%>">
-        </td>
-        <td class="rd8">
-            <a href="#"
-               onClick="window.open('item_detail.html', '物料详细信息', 'width=400, height=400, scrollbars=no')"><%=item.getItemId()%>
-            </a>
-        </td>
-        <td class="rd8">
-            <%=item.getItemName()%>
-        </td>
-        <td class="rd8">
-            <%=item.getSpec() == null ? "" : item.getSpec()%>
-        </td>
-        <td class="rd8">
-            <%=item.getItemPattern() == null ? "" : item.getItemPattern()%>
-        </td>
-        <td class="rd8">
-            <%=item.getItemCategory().getName()%>
-        </td>
-        <td class="rd8">
-            <%=item.getItemUnit().getName()%>
-        </td>
-    </tr>
-    <%
-        }
-    %>
+    <form name="itemForm" id="itemForm">
+        <%
+            for (Item item :
+                    items) {
+        %>
+        <tr>
+            <td class="rd8">
+                <input type="checkbox" name="selectFlag" class="checkbox1" value="<%=item.getItemId()%>">
+            </td>
+            <td class="rd8">
+                <a href="#"
+                   onClick="window.open('ShowItemDetailServlet.servlet?itemId=<%=item.getItemId()%>', '物料详细信息', 'width=400, height=400, scrollbars=no')"><%=item.getItemId()%>
+                </a>
+            </td>
+            <td class="rd8">
+                <%=item.getItemName()%>
+            </td>
+            <td class="rd8">
+                <%=item.getSpec() == null ? "" : item.getSpec()%>
+            </td>
+            <td class="rd8">
+                <%=item.getItemPattern() == null ? "" : item.getItemPattern()%>
+            </td>
+            <td class="rd8">
+                <%=item.getItemCategory().getName()%>
+            </td>
+            <td class="rd8">
+                <%=item.getItemUnit().getName()%>
+            </td>
+        </tr>
+        <%
+            }
+        %>
+    </form>
 </table>
 <table width="95%" height="30" border="0" align="center"
        cellpadding="0" cellspacing="0" class="rd1">
@@ -237,3 +258,12 @@
 </table>
 </body>
 </html>
+<%
+    if (!"".equals(request.getParameter("message")) && request.getParameter("message") != null) {
+%>
+<script type="text/javascript">
+    alert("<%=request.getParameter("message")%>");
+</script>
+<%
+    }
+%>
