@@ -1,26 +1,20 @@
 package drp.basedata.servlet;
 
 import drp.basedata.domain.Item;
-import drp.basedata.manager.ItemManager;
-import drp.basedata.manager.ItemManagerImpl;
-import drp.util.database.DBUtil;
 import drp.util.datadict.domain.ItemCategory;
 import drp.util.datadict.domain.ItemUnit;
 import drp.util.datadict.manager.DataDictManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 
 @WebServlet(name = "ShowModifyItemServlet",urlPatterns = "/basedata/ShowModifyItemServlet.servlet")
-public class ShowModifyItemServlet extends HttpServlet {
+public class ShowModifyItemServlet extends AbstractItemServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ItemManager itemManager = new ItemManagerImpl();
 
         //根据id查找item
         Item item = itemManager.findItemById(request.getParameter("itemId"));

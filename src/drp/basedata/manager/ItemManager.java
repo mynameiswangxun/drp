@@ -3,7 +3,6 @@ package drp.basedata.manager;
 import drp.basedata.domain.Item;
 import drp.util.pagemodel.PageModel;
 
-import java.sql.Connection;
 
 public interface ItemManager {
     void addItem(Item item);
@@ -17,4 +16,5 @@ public interface ItemManager {
     PageModel<Item> findItemList(int pageNo, int pageSize, String condition);
 
     void UploadFile(String itemId,String fileName);
+
 }

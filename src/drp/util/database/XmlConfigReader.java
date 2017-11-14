@@ -18,8 +18,6 @@ public class XmlConfigReader {
     private static XmlConfigReader xmlConfigReader = new XmlConfigReader();
     private JdbcConfig jdbcConfig = new JdbcConfig();
 
-    //保存dao工厂名称，key=名称，value=类路径
-    private Map<String,String> daoFactoryMap = new HashMap<String,String>();
 
     private XmlConfigReader(){
         SAXReader saxReader = new SAXReader();
@@ -36,16 +34,6 @@ public class XmlConfigReader {
             jdbcConfig.setUrl(urlElement.getStringValue());
             jdbcConfig.setUsername(usernameElement.getStringValue());
             jdbcConfig.setPassword(passwordElement.getStringValue());
-
-            //取得DaoFactory信息
-            List<Element> daoFactoryList = document.selectNodes("/config/dao-factory/*");
-            for (Element element:
-                    daoFactoryList) {
-                String tagName = element.getName();
-                String tagText = element.getText();
-                daoFactoryMap.put(tagName,tagText);
-
-            }
         } catch (DocumentException e) {
             e.printStackTrace();
         }
@@ -59,13 +47,4 @@ public class XmlConfigReader {
         return jdbcConfig;
     }
 
-    /**
-     * 通过数据库名取得具体的daoFactory
-     * @param name
-     * @return
-     */
-    public String getDaoFactoryClassPathByName(String name){
-
-        return daoFactoryMap.get(name.toLowerCase());
-    }
 }

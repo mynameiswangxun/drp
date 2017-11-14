@@ -1,8 +1,6 @@
 package drp.basedata.servlet;
 
 import drp.basedata.domain.Item;
-import drp.basedata.manager.ItemManager;
-import drp.basedata.manager.ItemManagerImpl;
 import drp.util.datadict.domain.ItemCategory;
 import drp.util.datadict.domain.ItemUnit;
 import drp.util.datadict.manager.DataDictManager;
@@ -10,14 +8,13 @@ import drp.util.exception.ApplicationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
 @WebServlet(name = "ModifyItemServlet",urlPatterns = "/basedata/ModifyItemServlet.servlet")
-public class ModifyItemServlet extends HttpServlet {
+public class ModifyItemServlet extends AbstractItemServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
 
@@ -41,7 +38,6 @@ public class ModifyItemServlet extends HttpServlet {
 
         String message = null;
         try{
-            ItemManager itemManager = new ItemManagerImpl();
             itemManager.modifyItem(item);
         } catch (ApplicationException ape){
             ape.printStackTrace();

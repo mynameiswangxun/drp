@@ -6,6 +6,8 @@ import drp.basedata.domain.Item;
 import drp.util.database.DBUtil;
 import drp.util.database.XmlConfigReader;
 import drp.util.exception.ApplicationException;
+import drp.util.factory.BeanFactory;
+import drp.util.factory.DefaultBeanFactory;
 import drp.util.pagemodel.PageModel;
 
 import java.sql.Connection;
@@ -15,20 +17,20 @@ public class ItemManagerImpl implements ItemManager{
     private ItemDao itemDao = null;
 
     public ItemManagerImpl(){
-        ItemDaoFactory itemDaoFactory = null;
-        //获得daoFactory的类名
-        String factoryClassName = XmlConfigReader.getInstance().getDaoFactoryClassPathByName("mysql");
-        //动态加载
-        try {
-            itemDaoFactory = (ItemDaoFactory) Class.forName(factoryClassName).newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        itemDao = itemDaoFactory.createItemDao();
+//        ItemDaoFactory itemDaoFactory = null;
+//        //获得daoFactory的类名
+//        String factoryClassName = XmlConfigReader.getInstance().getDaoFactoryClassPathByName("mysql");
+//        //动态加载
+//        try {
+//            itemDaoFactory = (ItemDaoFactory) Class.forName(factoryClassName).newInstance();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        itemDao = (ItemDao) new DefaultBeanFactory().getBean("itemDao");
     }
     @Override
     public void addItem(Item item) {

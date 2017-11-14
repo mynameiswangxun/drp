@@ -14,6 +14,7 @@
 <body class="body1">
 <form name="itemForm" target="_self" id="itemForm" method="post" action="FileUploadServlet.servlet"
       enctype="multipart/form-data">
+    <input type="hidden" name="itemId" value="<%=item.getItemId()%>">
     <div align="center">
         <table width="95%" border="0" cellspacing="2" cellpadding="2">
             <tr>
@@ -101,7 +102,17 @@
                     </div>
                 </td>
                 <td>
+                    <%
+                        if(item.getFileName()!=null && !"".equals(item.getFileName())){
+                    %>
                     <img src="../upload/<%=item.getFileName()%>" width="85" height="49">
+                    <%
+                        }else{
+                    %>
+                    <img src="../images/blank.gif" width="85" height="49">
+                    <%
+                        }
+                    %>
                 </td>
             </tr>
             <tr>
@@ -127,3 +138,12 @@
 </form>
 </body>
 </html>
+<%
+    if(request.getParameter("message")!=null && !"".equals(request.getParameter("message"))){
+%>
+<script type="text/javascript">
+    alert("<%=request.getParameter("message")%>");
+</script>
+<%
+    }
+%>

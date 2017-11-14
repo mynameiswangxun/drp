@@ -1,8 +1,6 @@
 package drp.basedata.servlet;
 
 import drp.basedata.domain.Item;
-import drp.basedata.manager.ItemManager;
-import drp.basedata.manager.ItemManagerImpl;
 import drp.util.datadict.domain.ItemCategory;
 import drp.util.datadict.domain.ItemUnit;
 import drp.util.datadict.manager.DataDictManager;
@@ -10,14 +8,13 @@ import drp.util.exception.ApplicationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
 @WebServlet(name = "AddItemServlet",urlPatterns = "/basedata/AddItemServlet.servlet")
-public class AddItemServlet extends HttpServlet {
+public class AddItemServlet extends AbstractItemServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         //从request中取得数据
@@ -40,7 +37,6 @@ public class AddItemServlet extends HttpServlet {
         //向数据库添加Item
         String message = null;
         try {
-            ItemManager itemManager = new ItemManagerImpl();
             itemManager.addItem(item);
         }catch (ApplicationException aex){
             aex.printStackTrace();

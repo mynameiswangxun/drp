@@ -104,7 +104,17 @@
                     </div>
                 </td>
                 <td>
+                    <%
+                        if(item.getFileName()!=null && !"".equals(item.getFileName())){
+                    %>
                     <img src="../upload/<%=item.getFileName()%>" width="85" height="49">
+                    <%
+                    }else{
+                    %>
+                    <img src="../images/blank.gif" width="85" height="49">
+                    <%
+                        }
+                    %>
                 </td>
             </tr>
         </table>
