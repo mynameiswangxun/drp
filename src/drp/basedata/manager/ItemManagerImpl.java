@@ -1,13 +1,10 @@
 package drp.basedata.manager;
 
 import drp.basedata.dao.ItemDao;
-import drp.basedata.dao.ItemDaoFactory;
 import drp.basedata.domain.Item;
 import drp.util.database.DBUtil;
-import drp.util.database.XmlConfigReader;
 import drp.util.exception.ApplicationException;
 import drp.util.factory.BeanFactory;
-import drp.util.factory.DefaultBeanFactory;
 import drp.util.pagemodel.PageModel;
 
 import java.sql.Connection;
@@ -30,7 +27,7 @@ public class ItemManagerImpl implements ItemManager{
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }
-        itemDao = (ItemDao) new DefaultBeanFactory().getBean("itemDao");
+        itemDao = (ItemDao)BeanFactory.getInstance().getDaoObject(ItemDao.class);
     }
     @Override
     public void addItem(Item item) {

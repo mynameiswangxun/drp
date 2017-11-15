@@ -2,7 +2,6 @@ package drp.util.servlet;
 
 
 import drp.util.factory.BeanFactory;
-import drp.util.factory.DefaultBeanFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,11 +15,9 @@ public class InitServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        //创建缺省工厂
-        BeanFactory beanFactory = new DefaultBeanFactory();
 
         //将工厂设置到ServletContext中（Application）
-        getServletContext().setAttribute("BeanFactory",beanFactory);
+        getServletContext().setAttribute("BeanFactory",BeanFactory.getInstance());
 
         System.out.println("InitServlet init");
     }

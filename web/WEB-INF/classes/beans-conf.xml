@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <beans>
-    <bean id="itemDao" class="drp.basedata.dao.ItemDaoForMysql"></bean>
-    <bean id="itemManager" class="drp.basedata.manager.ItemManagerImpl"></bean>
+    <services-class>
+        <service id="drp.basedata.manager.ItemManager" class="drp.basedata.manager.ItemManagerImpl"></service>
+    </services-class>
+    <dao-class>
+        <dao id="drp.basedata.dao.ItemDao" class="drp.basedata.dao.ItemDaoForMysql"></dao>
+    </dao-class>
 </beans>

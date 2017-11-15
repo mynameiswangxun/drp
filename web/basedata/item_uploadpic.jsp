@@ -9,6 +9,17 @@
     <title>上传物料图片</title>
     <link rel="stylesheet" href="../style/drp.css">
     <script src="../script/client_validate.js"></script>
+    <script>
+        function upLoad() {
+            var filename = document.getElementById("fileName").value;
+            var fileType = filename.substr(filename.lastIndexOf(".")+1,filename.length);
+            if(fileType!="jpg" && fileType!="gif" && fileType!="bmp"){
+                alert("只支持jpg,git,bmp文件格式！");
+                return;
+            }
+            document.getElementById("itemForm").submit();
+        }
+    </script>
 </head>
 
 <body class="body1">
@@ -122,14 +133,14 @@
                     </div>
                 </td>
                 <td width="78%">
-                    <input name="fileName" type="file" class="text1" size="40" maxlength="40">
+                    <input id="fileName" name="fileName" type="file" class="text1" size="40" maxlength="40">
                 </td>
             </tr>
         </table>
         <hr width="97%" align="center" size=0>
         <div align="center">
-            <input name="btn_upload" class="button1" type="submit"
-                   id="btn_upload" value="上传">
+            <input name="btn_upload" class="button1" type="button"
+                   id="btn_upload" value="上传" onclick="upLoad()">
             &nbsp;&nbsp;&nbsp;&nbsp;
             <input name="btnBack" class="button1" type="button" id="btnBack"
                    value="返回" onClick="self.location='SearchItemServlet.servlet'">

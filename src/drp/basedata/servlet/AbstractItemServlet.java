@@ -1,7 +1,6 @@
 package drp.basedata.servlet;
 
 import drp.basedata.manager.ItemManager;
-import drp.basedata.manager.ItemManagerImpl;
 import drp.util.factory.BeanFactory;
 
 import javax.servlet.ServletException;
@@ -16,7 +15,8 @@ public abstract class AbstractItemServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         BeanFactory beanFactory = (BeanFactory)getServletContext().getAttribute("BeanFactory");
-        itemManager = (ItemManager) beanFactory.getBean("itemManager");
+//        itemManager = (ItemManager) beanFactory.getBean("itemManager");
 //        itemManager = new ItemManagerImpl();
+        itemManager = (ItemManager) beanFactory.getServiceObject(ItemManager.class);
     }
 }
