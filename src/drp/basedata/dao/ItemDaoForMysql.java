@@ -133,7 +133,7 @@ public class ItemDaoForMysql implements ItemDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, "%" + condition + "%");
             preparedStatement.setString(2, "%" + condition + "%");
-            preparedStatement.setInt(3, pageNo - 1);
+            preparedStatement.setInt(3, (pageNo - 1)*pageSize);
             preparedStatement.setInt(4, pageSize);
             resultSet = preparedStatement.executeQuery();
 

@@ -1,7 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>��ƺ����ڼ�ά��</title>
+		<title>会计核算期间维护</title>
 		<link rel="stylesheet" href="../style/drp.css">
 	</head>
 
@@ -19,7 +20,7 @@
 						<td width="522" class="p1" height="17" nowrap>
 							<img src="../images/mark_arrow_02.gif" width="14" height="14">
 							&nbsp;
-							<b>�������ݹ���&gt;&gt;��ƺ����ڼ�ά��</b>
+							<b>基础数据管理&gt;&gt;会计核算期间维护</b>
 						</td>
 					</tr>
 				</table>
@@ -29,7 +30,7 @@
 				cellspacing="0" class="rd1" id="toolbar">
 				<tr>
 					<td width="49%" class="rd19">
-						<font color="#FFFFFF">��ѯ�б�</font>
+						<font color="#FFFFFF">查询列表</font>
 					</td>
 					<td width="27%" nowrap class="rd16">
 						<div align="right"></div>
@@ -40,22 +41,22 @@
 				align="center" class="table1">
 				<tr>
 					<td width="79" class="rd6">
-						ѡ��
+						选择
 					</td>
 					<td width="123" class="rd6">
-						������
+						核算年
 					</td>
 					<td width="146" class="rd6">
-						������
+						核算月
 					</td>
 					<td width="188" class="rd6">
-						��ʼ����
+						开始日期
 					</td>
 					<td width="204" class="rd6">
-						��������
+						结束日期
 					</td>
 					<td width="172" class="rd6">
-						������״̬
+						核算期状态
 					</td>
 				</tr>
 				<tr>
@@ -75,7 +76,7 @@
 						2007-06-30
 					</td>
 					<td class="rd8">
-						����
+						可用
 					</td>
 				</tr>
 				<tr>
@@ -264,27 +265,27 @@
 				<tr>
 					<td nowrap class="rd19" height="2">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;��&nbspxx&nbspҳ</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<font color="#FFFFFF">��ǰ��</font>&nbsp
+							<font color="#FFFFFF">&nbsp;共&nbspxx&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">当前第</font>&nbsp
 							<font color="#FF0000">x</font>&nbsp
-							<font color="#FFFFFF">ҳ</font>
+							<font color="#FFFFFF">页</font>
 						</div>
 					</td>
 					<td nowrap class="rd19">
 						<div align="right">
 							<input name="btnTopPage" class="button1" type="button"
-								id="btnTopPage" value="|&lt;&lt; " title="��ҳ">
+								id="btnTopPage" value="|&lt;&lt; " title="首页">
 							<input name="btnPreviousPage" class="button1" type="button"
-								id="btnPreviousPage" value=" &lt;  " title="��ҳ">
+								id="btnPreviousPage" value=" &lt;  " title="上页">
 							<input name="btnNextPage" class="button1" type="button"
-								id="btnNextPage" value="  &gt; " title="��ҳ">
+								id="btnNextPage" value="  &gt; " title="下页">
 							<input name="btnBottomPage" class="button1" type="button"
-								id="btnBottomPage" value=" &gt;&gt;|" title="βҳ">
+								id="btnBottomPage" value=" &gt;&gt;|" title="尾页">
 							<input name="btnAdd" type="button" class="button1" id="btnAdd"
-								value="����" onClick="self.location='fiscal_year_period_add.html'">
+								value="添加" onClick="self.location='fiscal_year_period_add.jsp'">
 							<input name="btnModify" class="button1" type="button"
-								id="btnModify" value="�޸�"
-								onClick="self.location='fiscal_year_period_modify.html'">
+								id="btnModify" value="修改"
+								onClick="self.location='fiscal_year_period_modify.jsp'">
 						</div>
 					</td>
 				</tr>

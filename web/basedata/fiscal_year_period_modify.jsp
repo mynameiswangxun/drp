@@ -1,10 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>ÐÞ¸Ä»á¼ÆºËËãÆÚ¼ä</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ä¿®æ”¹ä¼šè®¡æ ¸ç®—æœŸé—´</title>
 		<link rel="stylesheet" href="../style/drp.css">
-		<link href="../style/JSCalendar.css" rel=stylesheet type=text/css>
-		<script src="../script/JSCalendar.js"></script>
+		<script src="../script/calendar.js"></script>
 		<script src="../script/client_validate.js"></script>
 	</head>
 
@@ -25,7 +25,7 @@
 						<td width="522" class="p1" height="25" nowrap>
 							<img src="../images/mark_arrow_03.gif" width="14" height="14">
 							&nbsp;
-							<b>»ù´¡Êý¾Ý¹ÜÀí&gt;&gt;»á¼ÆºËËãÆÚ¼äÎ¬»¤&gt;&gt;ÐÞ¸Ä</b>
+							<b>åŸºç¡€æ•°æ®ç®¡ç†&gt;&gt;ä¼šè®¡æ ¸ç®—æœŸé—´ç»´æŠ¤&gt;&gt;ä¿®æ”¹</b>
 						</td>
 					</tr>
 				</table>
@@ -34,7 +34,7 @@
 					<tr>
 						<td width="22%" height="29">
 							<div align="right">
-								ºËËãÄê:&nbsp;
+								æ ¸ç®—å¹´:&nbsp;
 							</div>
 						</td>
 						<td width="78%">
@@ -45,7 +45,7 @@
 					<tr>
 						<td height="26">
 							<div align="right">
-								ºËËãÔÂ:&nbsp;
+								æ ¸ç®—æœˆ:&nbsp;
 							</div>
 						</td>
 						<td>
@@ -56,32 +56,32 @@
 					<tr>
 						<td height="26">
 							<div align="right">
-								<font color="#FF0000">*</font>¿ªÊ¼ÈÕÆÚ:&nbsp;
+								<font color="#FF0000">*</font>å¼€å§‹æ—¥æœŸ:&nbsp;
 							</div>
 						</td>
 						<td>
 							<label>
 								<input type="text" name="beginDate" size="10" maxlength="10"
-									value="2001-01-01" readonly="true" onClick=JSCalendar(this)>
+									value="2001-01-01" readonly="true" onClick=SelectDate(this)>
 							</label>
 						</td>
 					</tr>
 					<tr>
 						<td height="26">
 							<div align="right">
-								<font color="#FF0000">*</font>½áÊøÈÕÆÚ:&nbsp;
+								<font color="#FF0000">*</font>ç»“æŸæ—¥æœŸ:&nbsp;
 							</div>
 						</td>
 						<td>
 							<input name="endDate" type="text" id="endDate"
-								onClick=JSCalendar(this) value="2001-01-01" size="10"
+								onClick=SelectDate(this) value="2001-01-01" size="10"
 								maxlength="10" readonly="true">
 						</td>
 					</tr>
 					<tr>
 						<td height="26">
 							<div align="right">
-								<font color="#FF0000">*</font>ÊÇ·ñ¿ÉÓÃ:&nbsp;
+								<font color="#FF0000">*</font>æ˜¯å¦å¯ç”¨:&nbsp;
 							</div>
 						</td>
 						<td>
@@ -93,10 +93,10 @@
 				<hr width="97%" align="center" size=0>
 				<div align="center">
 					<input name="btnModify" class="button1" type="button"
-						id="btnModify" value="ÐÞ¸Ä">
+						id="btnModify" value="ä¿®æ”¹">
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="btnBack" class="button1" type="button" id="btnBack"
-						value="·µ»Ø" onClick="history.go(-1)">
+						value="è¿”å›ž" onClick="history.go(-1)">
 				</div>
 			</div>
 		</form>

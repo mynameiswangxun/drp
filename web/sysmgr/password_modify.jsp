@@ -6,6 +6,7 @@
         UserManager userManager = UserManager.getInstance();
         User user = (User)session.getAttribute("user_info");
         userManager.modifyPassword(user.getId(),request.getParameter("newPassword"));
+        session.removeAttribute("user_info");
         session.setAttribute("user_info",userManager.findUserById(user.getId()));
         out.print("密码修改成功");
     }
