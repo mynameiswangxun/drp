@@ -2,8 +2,10 @@
 <beans>
     <services-class>
         <service id="drp.basedata.manager.ItemManager" class="drp.basedata.manager.ItemManagerImpl"></service>
+        <service id="drp.basedata.manager.FiscalTimeManager" class="drp.basedata.manager.FiscalTimeManagerImpl"></service>
     </services-class>
     <dao-class>
         <dao id="drp.basedata.dao.ItemDao" class="drp.basedata.dao.ItemDaoForMysql"></dao>
+        <dao id="drp.basedata.dao.FiscalTimeDao" class="drp.basedata.dao.FiscalTimeDaoForMysql"></dao>
     </dao-class>
 </beans>

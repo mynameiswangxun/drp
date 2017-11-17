@@ -32,6 +32,10 @@ public class IdGenerator {
             modifyValue(tableName,result);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
         return result;
     }
@@ -48,6 +52,9 @@ public class IdGenerator {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
         }
     }
 }
