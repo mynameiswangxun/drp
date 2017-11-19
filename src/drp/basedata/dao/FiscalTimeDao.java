@@ -18,7 +18,7 @@ public interface FiscalTimeDao {
      * @param connection
      * @param ids
      */
-    void delFiscalTimeDao(Connection connection,String[] ids);
+    void delFiscalTimeDao(Connection connection,int[] ids);
 
     /**
      * 修改会计核算期
@@ -32,7 +32,7 @@ public interface FiscalTimeDao {
      * @param id
      * @return
      */
-    FiscalTime findFiscalTimeById(Connection connection,String id);
+    FiscalTime findFiscalTimeById(Connection connection,int id);
 
     /**
      * 分页查询

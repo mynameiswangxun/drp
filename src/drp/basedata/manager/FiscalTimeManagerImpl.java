@@ -29,4 +29,46 @@ public class FiscalTimeManagerImpl implements FiscalTimeManager {
         }
         return pageModel;
     }
+
+    @Override
+    public FiscalTime findFiscalTimeById(int id) {
+        Connection connection = DBUtil.getConnection();
+        FiscalTime fiscalTime = null;
+        try{
+            fiscalTime = fiscalTimeDao.findFiscalTimeById(connection,id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("查找会计核算期失败!");
+        } finally {
+            DBUtil.closeConnection(connection);
+        }
+
+        return fiscalTime;
+    }
+
+    @Override
+    public void modifyFiscalTime(FiscalTime fiscalTime) {
+        Connection connection = DBUtil.getConnection();
+        try{
+            fiscalTimeDao.modifyFiscalTimeDao(connection,fiscalTime);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("修改会计核算期失败!");
+        } finally {
+            DBUtil.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void addFiscalTime(FiscalTime fiscalTime) {
+        Connection connection = DBUtil.getConnection();
+        try {
+            fiscalTimeDao.addFiscalTimeDao(connection,fiscalTime);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("增加会计核算期失败!");
+        } finally {
+            DBUtil.closeConnection(connection);
+        }
+    }
 }

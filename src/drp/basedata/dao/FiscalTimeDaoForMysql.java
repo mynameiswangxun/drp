@@ -33,12 +33,11 @@ public class FiscalTimeDaoForMysql implements FiscalTimeDao{
     }
 
     @Override
-    public void delFiscalTimeDao(Connection connection, String[] ids) {
+    public void delFiscalTimeDao(Connection connection, int[] ids) {
         StringBuilder sql = new StringBuilder("DELETE FROM fiscal_year_period WHERE id in(");
         for(int i = 0; i<ids.length; i++){
-            sql.append("'");
             sql.append(ids[i]);
-            sql.append("',");
+            sql.append(",");
         }
         sql.setCharAt(sql.length()-1,')');
         PreparedStatement preparedStatement = null;
@@ -78,14 +77,14 @@ public class FiscalTimeDaoForMysql implements FiscalTimeDao{
     }
 
     @Override
-    public FiscalTime findFiscalTimeById(Connection connection,String id) {
+    public FiscalTime findFiscalTimeById(Connection connection,int id) {
         String sql = "SELECT * FROM fiscal_year_period WHERE id=?";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         FiscalTime fiscalTime = null;
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,Integer.parseInt(id));
+            preparedStatement.setInt(1,id);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 fiscalTime = new FiscalTime();

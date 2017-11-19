@@ -37,6 +37,20 @@
             function bottomPage() {
                 window.self.location = "fiscal_year_period_maint.jsp?pageNo=<%=pageModel.getBottomPageNo()%>";
             }
+            function goModify(){
+                var checkBoxes = document.getElementsByName("selectFlag");
+                var selectId = null;
+                for(var i=0;i<checkBoxes.length; i++){
+                    if(checkBoxes[i].checked){
+                        selectId = checkBoxes[i].value;
+					}
+				}
+				if(selectId==null){
+                    alert("请选择一个需要修改的会计核算日期");
+                    return;
+				}
+                window.self.location = "fiscal_year_period_modify.jsp?id="+selectId;
+			}
 		</script>
 	</head>
 
@@ -148,7 +162,7 @@
 								value="添加" onClick="self.location='fiscal_year_period_add.jsp'">
 							<input name="btnModify" class="button1" type="button"
 								id="btnModify" value="修改"
-								onClick="self.location='fiscal_year_period_modify.jsp'">
+								onClick="goModify()">
 						</div>
 					</td>
 				</tr>
