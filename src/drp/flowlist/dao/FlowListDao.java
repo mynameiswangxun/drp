@@ -12,7 +12,7 @@ public interface FlowListDao {
      * 生成流向单号
      * @return
      */
-    String generateFlowListNum() throws DaoException;
+     String generateFlowListNum() throws DaoException;
 
     /**
      * 增加流向单
