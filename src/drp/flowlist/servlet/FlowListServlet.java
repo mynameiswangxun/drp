@@ -9,7 +9,6 @@ import drp.util.factory.BeanFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +24,8 @@ public class FlowListServlet extends BaseServlet {
         super.service(request, response);
         if ("add".equals(getCommand())) {
             addFlowList(request,response);
+        } else if("showAdd".equals(getCommand())){
+            showAdd(request,response);
         }
     }
 
@@ -45,6 +46,10 @@ public class FlowListServlet extends BaseServlet {
         flowList.setRecorder(getUser());
         flowList.setVouSts("N");
         flowList.setOpType("A");
+        //添加会计核算期
+        FiscalTime fiscalTime = new FiscalTime();
+        fiscalTime.setId(1);
+        flowList.setFiscalTime(fiscalTime);
         List<FlowDetail> flowDetails = new ArrayList();
 
         String[] aimIds = request.getParameterValues("aimId");
@@ -71,6 +76,17 @@ public class FlowListServlet extends BaseServlet {
         FlowListManager flowListManager = (FlowListManager) BeanFactory.getInstance().getServiceObject(FlowListManager.class);
         flowListManager.addFlowList(flowList);
 
-        response.sendRedirect("flow_card_add.html");
+        response.sendRedirect("flow_card_add.jsp");
+    }
+
+    /**
+     * 展示添加页面
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void showAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.getRequestDispatcher("flow_card_add.jsp").forward(request,response);
     }
 }

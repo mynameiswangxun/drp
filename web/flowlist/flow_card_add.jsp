@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=GB18030"
-pageEncoding="GB18030"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+pageEncoding="utf-8"%>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-		<title>Ìí¼ÓÁ÷Ïòµ¥Î¬»¤</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>æ·»åŠ æµå‘å•ç»´æŠ¤</title>
 		<link rel="stylesheet" href="../style/drp.css">
 		<link href="../style/JSCalendar.css" rel=stylesheet type=text/css>
 		<script src="../script/calendar.js"></script>
@@ -13,11 +13,11 @@ pageEncoding="GB18030"%>
     
     
     function selectAimClient(index) {
-		window.open('aim_client_select.html?index=' + index, 'ÇëÑ¡ÔñÐè·½¿Í»§', 'width=700, height=400, scrollbars=no');
+		window.open('aim_client_select.html?index=' + index, 'è¯·é€‰æ‹©éœ€æ–¹å®¢æˆ·', 'width=700, height=400, scrollbars=no');
     }   
      
     function selectItem(index) {
-		window.open('item_select.html?index=' + index, 'ÇëÑ¡ÔñÎïÁÏ', 'width=700, height=400, scrollbars=no');
+		window.open('item_select.jsp?index=' + index, 'è¯·é€‰æ‹©ç‰©æ–™', 'width=700, height=400, scrollbars=no');
     } 
      
     function addOneLineOnClick() {
@@ -39,7 +39,7 @@ pageEncoding="GB18030"%>
 		col = row.insertCell(7);
 		col.innerHTML = "<input id=qty name=qty size=6 maxlength=6>";
 		col = row.insertCell(8);
-		col.innerHTML = "<input type='button' value='É¾³ý' id=btnDeleteLine name=btnDeleteLine onclick=\"return DeleteRow('row" + rowIndex + "')\"></tr>";
+		col.innerHTML = "<input type='button' value='åˆ é™¤' id=btnDeleteLine name=btnDeleteLine onclick=\"return DeleteRow('row" + rowIndex + "')\"></tr>";
 		rowIndex++;
 	}
 	
@@ -80,7 +80,7 @@ pageEncoding="GB18030"%>
 						<td width="522" class="p1" height="2" nowrap>
 							<img src="../images/mark_arrow_03.gif" width="14" height="14">
 							&nbsp;
-							<b>·ÖÏúÉÌ¿â´æ¹ÜÀí&gt;&gt;Á÷Ïòµ¥Î¬»¤&gt;&gt;Ìí¼Ó</b>
+							<b>åˆ†é”€å•†åº“å­˜ç®¡ç†&gt;&gt;æµå‘å•ç»´æŠ¤&gt;&gt;æ·»åŠ </b>
 						</td>
 					</tr>
 				</table>
@@ -89,7 +89,7 @@ pageEncoding="GB18030"%>
 					<tr>
 						<td width="15%" height="29">
 							<div align="right">
-								<font color="#FF0000">*</font>¹©·½·ÖÏúÉÌ´úÂë:&nbsp;
+								<font color="#FF0000">*</font>ä¾›æ–¹åˆ†é”€å•†ä»£ç :&nbsp;
 							</div>
 						</td>
 						<td width="16%">
@@ -97,11 +97,11 @@ pageEncoding="GB18030"%>
 								size="10" maxlength="10" readonly="true">
 							<input name="btnSelectClient" type="button" id="btnSelectClient"
 								value="..." class="button1"
-								onClick="window.open('client_select.html', 'Ñ¡Ôñ·ÖÏúÉÌ', 'width=700, height=400, scrollbars=no')">
+								onClick="window.open('client_select.jsp', 'é€‰æ‹©åˆ†é”€å•†', 'width=700, height=400, scrollbars=no')">
 						</td>
 						<td width="16%">
 							<div align="right">
-								¹©·½·ÖÏúÉÌÃû³Æ:&nbsp;
+								ä¾›æ–¹åˆ†é”€å•†åç§°:&nbsp;
 							</div>
 						</td>
 						<td width="29%">
@@ -122,50 +122,50 @@ pageEncoding="GB18030"%>
 					<tr>
 						<td nowrap>
 							<div align="left">
-								<font color="#FF0000">*</font>Ðè·½¿Í»§´úÂë
+								<font color="#FF0000">*</font>éœ€æ–¹å®¢æˆ·ä»£ç 
 							</div>
 						</td>
 						<td nowrap>
 							<div align="left">
-								Ðè·½¿Í»§Ãû³Æ
+								éœ€æ–¹å®¢æˆ·åç§°
 							</div>
 						</td>
 						<td nowrap>
 							<div align="left">
-								<font color="#FF0000">*</font>ÎïÁÏ´úÂë
+								<font color="#FF0000">*</font>ç‰©æ–™ä»£ç 
 							</div>
 						</td>
 						<td nowrap>
 							<div align="left">
-								ÎïÁÏÃû³Æ
+								ç‰©æ–™åç§°
 							</div>
 						</td>
 						<td nowrap>
-							¹æ¸ñ
+							è§„æ ¼
 						</td>
 						<td nowrap>
-							ÐÍºÅ
+							åž‹å·
 						</td>
 						<td nowrap>
-							¼ÆÁ¿µ¥Î»
+							è®¡é‡å•ä½
 						</td>
 						<td nowrap>
-							<font color="#FF0000">*</font>²Ù×÷ÊýÁ¿
+							<font color="#FF0000">*</font>æ“ä½œæ•°é‡
 						</td>
 						<td nowrap>
 							<div align="left">
-								É¾³ý
+								åˆ é™¤
 							</div>
 						</td>
 					</tr>
 				</table>
 				<p>
 					<input name="btnAddLine" type="button" id="btnAddLine"
-						onClick="return addOneLineOnClick()" value="¼ÓÈëÒ»ÐÐ">
-					<input name="btnSave" type="button" id="btnSave" value="±£´æ"
+						onClick="return addOneLineOnClick()" value="åŠ å…¥ä¸€è¡Œ">
+					<input name="btnSave" type="button" id="btnSave" value="ä¿å­˜"
 						onClick="addFlowCard()">
 					<input name="btnBack" type="button" id="btnBack" onClick="goBack()"
-						value="·µ»Ø">
+						value="è¿”å›ž">
 				</p>
 				<p>
 					&nbsp;

@@ -4,6 +4,7 @@ import drp.basedata.domain.Client;
 import drp.util.database.DBUtil;
 import drp.util.datadict.domain.ClientLevel;
 import drp.util.datadict.manager.DataDictManager;
+import drp.util.pagemodel.PageModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -280,5 +281,87 @@ public class ClientManager {
             parent.setIsLeaf("Y");
             modifyClientOrArea(parent);
         }
+    }
+
+    /**
+     * 条件分页查询
+     * @param pageNo
+     * @param pageSize
+     * @param condition
+     * @return
+     */
+    public PageModel<Client> findClientList(int pageNo,int pageSize,String condition){
+        String sql = "SELECT * FROM client WHERE is_client='Y' AND (client_id LIKE ? OR name LIKE ?) LIMIT ?,? ";
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PageModel<Client> pageModel = new PageModel<Client>();
+        List<Client> clients = new ArrayList<Client>();
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+condition+"%");
+            preparedStatement.setString(2,"%"+condition+"%");
+            preparedStatement.setInt(3,(pageNo-1)*pageSize);
+            preparedStatement.setInt(4,pageSize);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Client client = new Client();
+                client.setId(resultSet.getInt("id"));
+                client.setPid(resultSet.getInt("pid"));
+                client.setName(resultSet.getString("name"));
+                client.setClientId(resultSet.getString("client_id"));
+                client.setBankAccount(resultSet.getString("bank_account"));
+                client.setContactTel(resultSet.getString("contact_tel"));
+                client.setAddress(resultSet.getString("address"));
+                client.setZipCode(resultSet.getString("zip_code"));
+                client.setIsLeaf(resultSet.getString("is_leaf"));
+                client.setIsClient(resultSet.getString("is_client"));
+                ClientLevel clientLevel = null;
+                if(!(resultSet.getString("client_level_id")==null||"".equals(resultSet.getString("client_level_id")))){
+                    DataDictManager dataDictManager = DataDictManager.getInstance();
+                    clientLevel =(ClientLevel)dataDictManager.findAbstractDataDictById(resultSet.getString("client_level_id"));
+                }
+                client.setClientLevel(clientLevel);
+                clients.add(client);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+        pageModel.setTotalRecords(findClientTotalRecordsByCondition(connection,condition));
+        pageModel.setPageNo(pageNo);
+        pageModel.setPageSize(pageSize);
+        pageModel.setList(clients);
+        return pageModel;
+    }
+
+    /**
+     * 根据条件找到客户端的总数量
+     * @param connection
+     * @param condition
+     * @return
+     */
+    private int findClientTotalRecordsByCondition(Connection connection ,String condition){
+        String sql = "SELECT COUNT(*) FROM client WHERE is_client='Y' AND (client_id LIKE ? OR name LIKE ?)";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int result = 0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+condition+"%");
+            preparedStatement.setString(2,"%"+condition+"%");
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

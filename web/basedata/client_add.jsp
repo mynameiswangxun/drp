@@ -23,7 +23,8 @@
         client.setContactTel(request.getParameter("contactTel"));
         client.setAddress(request.getParameter("address"));
         client.setZipCode(request.getParameter("zipCode"));
-
+        client.setIsClient("Y");
+        client.setIsLeaf("Y");
         ClientManager clientManager = ClientManager.getInstance();
         clientManager.addClientOrArea(client);
 %>

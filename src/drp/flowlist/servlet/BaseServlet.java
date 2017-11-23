@@ -16,8 +16,8 @@ public class BaseServlet extends HttpServlet {
     private User user;
     private BeanFactory beanFactory = BeanFactory.getInstance();
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String command = request.getParameter("command");
-        User user = (User) request.getAttribute("");
+       command = request.getParameter("command");
+       user = (User) request.getAttribute("");
 
     }
     protected String getCommand(){

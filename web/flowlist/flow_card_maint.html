@@ -8,7 +8,7 @@
 		<script src="../script/client_validate.js"></script>
 		<script type="text/javascript">
 	function addFlowCard() {
-		window.self.location = "flow_card_add.html";
+		window.self.location = "FlowListServlet.servlet?command=showAdd";
 	}
 	
 	function modifyFlowCard() {
@@ -81,7 +81,7 @@
 								size="10" maxlength="10" readonly="true">
 							<input name="btnSelectClient" type="button" id="btnSelectClient"
 								value="..." class="button1"
-								onClick="window.open('client_select.html', '选择分销商', 'width=700, height=400, scrollbars=no')">
+								onClick="window.open('client_select.jsp', '选择分销商', 'width=700, height=400, scrollbars=no')">
 						</td>
 						<td width="14%">
 							<div align="right">
