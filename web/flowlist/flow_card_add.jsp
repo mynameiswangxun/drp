@@ -13,7 +13,7 @@ pageEncoding="utf-8"%>
     
     
     function selectAimClient(index) {
-		window.open('aim_client_select.html?index=' + index, '请选择需方客户', 'width=700, height=400, scrollbars=no');
+		window.open('aim_client_select.jsp?index=' + index, '请选择需方客户', 'width=700, height=400, scrollbars=no');
     }   
      
     function selectItem(index) {

@@ -1,6 +1,6 @@
 package drp.flowlist.servlet;
 
-import drp.flowlist.domain.AimClient;
+import drp.basedata.domain.AimClient;
 import drp.flowlist.domain.FlowDetail;
 import drp.flowlist.domain.FlowList;
 import drp.basedata.domain.*;

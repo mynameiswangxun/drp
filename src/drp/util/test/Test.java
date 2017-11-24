@@ -1,6 +1,7 @@
 package drp.util.test;
 
 import drp.basedata.dao.ItemDaoForMysql;
+import drp.basedata.manager.AimClientManager;
 import drp.basedata.manager.ClientManager;
 import drp.basedata.manager.ItemManagerImpl;
 import drp.util.database.DBUtil;
@@ -9,6 +10,7 @@ import drp.util.database.XmlConfigReader;
 import drp.util.datadict.manager.DataDictManager;
 import drp.basedata.domain.*;
 import drp.util.datadict.domain.ClientLevel;
+import drp.util.pagemodel.PageModel;
 
 import java.util.List;
 
@@ -33,7 +35,6 @@ public class Test {
 ////        System.out.println(ClientManager.getInstance().isExistAreaName("北京市"));
 //        ClientManager clientManager = ClientManager.getInstance();
 //        clientManager.delClientOrArea(10021);
-        List<Item> items =  new ItemDaoForMysql().findItemList(DBUtil.getConnection(),1,5,"").getList();
-        System.out.println(new ItemDaoForMysql().findItemList(DBUtil.getConnection(),1,5,""));
+        PageModel<AimClient> pageModel = AimClientManager.getInstance().findAimClientManagerListByCondition(1,6,"");
     }
 }

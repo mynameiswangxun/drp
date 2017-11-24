@@ -1,11 +1,13 @@
-package drp.flowlist.domain;
+package drp.basedata.domain;
 
+
+import drp.util.datadict.domain.ClientLevel;
 
 public class AimClient {
     private int id;
     private String name;
     private String clientID;
-    private String clientLevelName;
+    private String levelName;
 
     public int getId() {
         return id;
@@ -31,12 +33,12 @@ public class AimClient {
         this.clientID = clientID;
     }
 
-    public String getClientLevelName() {
-        return clientLevelName;
+    public String getLevelName() {
+        return levelName;
     }
 
-    public void setClientLevelName(String clientLevelName) {
-        this.clientLevelName = clientLevelName;
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class AimClient {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", clientID='" + clientID + '\'' +
-                ", clientLevelName='" + clientLevelName + '\'' +
+                ", clientLevelName='" + levelName + '\'' +
                 '}';
     }
 }

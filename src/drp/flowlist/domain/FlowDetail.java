@@ -1,5 +1,6 @@
 package drp.flowlist.domain;
 
+import drp.basedata.domain.AimClient;
 import drp.basedata.domain.Item;
 
 import java.math.BigDecimal;
