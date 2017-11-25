@@ -1,8 +1,16 @@
+<%@ page import="drp.basedata.manager.TemiClientManager" %>
+<%@ page import="drp.basedata.domain.TemiClient" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%
+	TemiClientManager temiClientManager = new TemiClientManager();
+	int id = Integer.parseInt(request.getParameter("id"));
+	TemiClient temiClient = temiClientManager.findTemiClientOrAreaById(id);
+%>
 <html>
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
-		<title>终端客户维护</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>缁堢瀹㈡埛缁存姢</title>
 	</head>
 
 	<body class="body1">
@@ -14,7 +22,7 @@
 					<td width="522" class="p1" height="2" nowrap="nowrap">
 						<img src="../images/mark_arrow_02.gif" width="14" height="14" />
 						&nbsp;
-						<b>基础数据管理&gt;&gt;终端客户维护</b>
+						<b>鍩虹鏁版嵁绠＄悊&gt;&gt;缁堢瀹㈡埛缁存姢</b>
 					</td>
 				</tr>
 			</table>
@@ -25,13 +33,13 @@
 				<tr>
 					<td width="213">
 						<div align="right">
-							当前终端客户名称：
+							褰撳墠缁堢瀹㈡埛鍚嶇О锛�
 						</div>
 					</td>
 					<td width="410">
 						<label>
 							<input name="temiaName" type="text" class="text1" id="temiaName"
-								readonly="true" />
+								readonly="true" value="<%=temiClient.getName()%>"/>
 						</label>
 					</td>
 				</tr>
@@ -44,14 +52,14 @@
 			<p align="center">
 				<input name="btnModifyTemiClient" type="button" class="button1"
 					id="btnModifyTemiClient"
-					onClick="self.location='temi_client_modify.html'" value="修改终端客户" />
+					onClick="self.location='temi_client_modify.html'" value="淇敼缁堢瀹㈡埛" />
 				&nbsp;
 				<input name="btnDeleteTemiClient" type="button" class="button1"
-					id="btnDeleteTemiClient" value="删除终端客户" />
+					id="btnDeleteTemiClient" value="鍒犻櫎缁堢瀹㈡埛" />
 				&nbsp;
 				<input name="btnDetailInfo" type="button" class="button1"
 					id="btnDetailInfo"
-					onClick="self.location='temi_client_detail.html'" value="查看详细信息" />
+					onClick="self.location='temi_client_detail.html'" value="鏌ョ湅璇︾粏淇℃伅" />
 			</p>
 		</form>
 	</body>

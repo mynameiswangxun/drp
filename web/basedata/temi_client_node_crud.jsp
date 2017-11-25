@@ -1,9 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page import="drp.basedata.manager.TemiClientManager" %>
+<%@ page import="drp.basedata.domain.TemiClient" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+
+<%
+	TemiClientManager temiClientManager = new TemiClientManager();
+	int id = Integer.parseInt(request.getParameter("id"));
+	TemiClient temiClient = temiClientManager.findTemiClientOrAreaById(id);
+%>
+<html>
 	<head>
 		<link rel="stylesheet" href="../style/drp.css" />
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
-		<title>终端客户维护</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>缁堢瀹㈡埛缁存姢</title>
 	</head>
 
 	<body class="body1">
@@ -14,7 +22,7 @@
 					<td width="522" class="p1" height="2" nowrap="nowrap">
 						<img src="../images/mark_arrow_02.gif" width="14" height="14" />
 						&nbsp;
-						<b>基础数据管理&gt;&gt;终端客户维护</b>
+						<b>鍩虹鏁版嵁绠＄悊&gt;&gt;缁堢瀹㈡埛缁存姢</b>
 					</td>
 				</tr>
 			</table>
@@ -25,13 +33,13 @@
 				<tr>
 					<td width="213">
 						<div align="right">
-							当前区域名称：
+							褰撳墠鍖哄煙鍚嶇О锛�
 						</div>
 					</td>
 					<td width="410">
 						<label>
 							<input name="name" type="text" class="text1" id="name" size="40"
-								maxlength="40" readonly="true" />
+								maxlength="40" readonly="true" value="<%=temiClient.getName()%>"/>
 						</label>
 					</td>
 				</tr>
@@ -44,18 +52,18 @@
 			<p align="center">
 				<input name="btnAddRegion" type="button" class="button1"
 					id="btnAddRegion"
-					onClick="self.location='temi_client_node_add.html'" value="添加区域" />
+					onClick="self.location='temi_client_node_add.jsp?pid=<%=id%>'" value="娣诲姞鍖哄煙" />
 				&nbsp;
 				<input name="btnDeleteRegion" type="button" class="button1"
-					id="btnDeleteRegion" value="删除区域" />
+					id="btnDeleteRegion" value="鍒犻櫎鍖哄煙" />
 				&nbsp;
 				<input name="btnModifyRegion" type="button" class="button1"
 					id="btnModifyRegion"
-					onClick="self.location='temi_client_node_modify.html'" value="修改区域" />
+					onClick="self.location='temi_client_node_modify.html'" value="淇敼鍖哄煙" />
 				&nbsp;
 				<input name="btnAddTemiClient" type="button" class="button1"
 					id="btnAddTemiClient"
-					onClick="self.location='temi_client_add.html'" value="添加终端客户" />
+					onClick="self.location='temi_client_add.jsp?pid=<%=id%>'" value="娣诲姞缁堢瀹㈡埛" />
 			</p>
 		</form>
 	</body>

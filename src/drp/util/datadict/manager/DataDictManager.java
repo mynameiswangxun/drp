@@ -161,4 +161,31 @@ public class DataDictManager {
         }
         return units;
     }
+    public List<TemiClientLevel> findTemiClientLevelList(){
+        String sql = "SELECT * FROM data_dic WHERE category='B'";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<TemiClientLevel> units= new ArrayList<TemiClientLevel  >();
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                TemiClientLevel temiClientLevel = new TemiClientLevel();
+                temiClientLevel.setId(resultSet.getString("id"));
+                temiClientLevel.setName(resultSet.getString("name"));
+                units.add(temiClientLevel);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return units;
+    }
 }

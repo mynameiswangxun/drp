@@ -91,10 +91,10 @@
                id="btnDeleteRegion" value="删除区域" onClick="deleteRegion()" <%=id==10000?"disabled=\"disabled\"":""%>/>
         &nbsp;
         <input name="btnModifyRegion" type="button" class="button1"
-               id="btnModifyRegion" onClick="modifyRegion()" value="修改区域"/>
+               id="btnModifyRegion" onClick="modifyRegion()" value="修改区域" <%=id==10000?"disabled=\"disabled\"":""%>/>
         &nbsp;
         <input name="btnAddClient" type="button" class="button1"
-               id="btnAddClient" onClick="addClient()" value="添加分销商"/>
+               id="btnAddClient" onClick="addClient()" value="添加分销商" <%=id==10000?"disabled=\"disabled\"":""%>/>
     </p>
 </form>
 </body>
