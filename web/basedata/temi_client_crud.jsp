@@ -1,10 +1,31 @@
 <%@ page import="drp.basedata.manager.TemiClientManager" %>
 <%@ page import="drp.basedata.domain.TemiClient" %>
+<%@ page import="drp.util.exception.ApplicationException" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%
 	TemiClientManager temiClientManager = new TemiClientManager();
 	int id = Integer.parseInt(request.getParameter("id"));
 	TemiClient temiClient = temiClientManager.findTemiClientOrAreaById(id);
+	String message = "";
+	if ("delete".equals(request.getParameter("command"))) {
+		message = "删除成功";
+		try {
+			temiClientManager.deleteTemiClientOrAreaById(id);
+		} catch (ApplicationException ape){
+			ape.printStackTrace();
+			message = ape.getMessage();
+		}
+	}
+%>
+<%if (message!=null&&!"".equals(message)){
+%>
+<script type="text/javascript">
+    alert("<%=message%>");
+    window.parent.temiClientTreeFrame.location.reload();
+    window.self.location='temi_client_display_area.html';
+</script>
+<%
+	}
 %>
 <html>
 	<head>
@@ -52,14 +73,14 @@
 			<p align="center">
 				<input name="btnModifyTemiClient" type="button" class="button1"
 					id="btnModifyTemiClient"
-					onClick="self.location='temi_client_modify.html'" value="修改终端客户" />
+					onClick="self.location='temi_client_modify.jsp?id=<%=id%>'" value="修改终端客户" />
 				&nbsp;
 				<input name="btnDeleteTemiClient" type="button" class="button1"
-					id="btnDeleteTemiClient" value="删除终端客户" />
+					id="btnDeleteTemiClient" value="删除终端客户" onclick="self.location='temi_client_crud.jsp?id=<%=id%>&command=delete'" />
 				&nbsp;
 				<input name="btnDetailInfo" type="button" class="button1"
 					id="btnDetailInfo"
-					onClick="self.location='temi_client_detail.html'" value="查看详细信息" />
+					onClick="self.location='temi_client_detail.jsp?id=<%=id%>'" value="查看详细信息" />
 			</p>
 		</form>
 	</body>

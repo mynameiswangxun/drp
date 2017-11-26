@@ -36,6 +36,6 @@ public class Test {
 ////        System.out.println(ClientManager.getInstance().isExistAreaName("北京市"));
 //        ClientManager clientManager = ClientManager.getInstance();
 //        clientManager.delClientOrArea(10021);
-        System.out.println(new TemiClientManager().isExistTemiClientByTemiClientId("B0001"));
+        new TemiClientManager().deleteTemiClientOrAreaById(20003);
     }
 }
