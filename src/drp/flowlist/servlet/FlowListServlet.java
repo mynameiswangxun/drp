@@ -40,7 +40,7 @@ public class FlowListServlet extends BaseServlet {
     private void addFlowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         FlowList flowList = new FlowList();
         Client client = new Client();
-        client.setId(Integer.parseInt(request.getParameter("clientId")));
+        client.setId(Integer.parseInt(request.getParameter("cid")));
         flowList.setClient(client);
         flowList.setOpDate(new Date());
         flowList.setRecorder(getUser());
@@ -48,8 +48,9 @@ public class FlowListServlet extends BaseServlet {
         flowList.setOpType("A");
         //添加会计核算期
         FiscalTime fiscalTime = new FiscalTime();
-        fiscalTime.setId(1);
+        fiscalTime.setId(Integer.parseInt(request.getParameter("fiscalId")));
         flowList.setFiscalTime(fiscalTime);
+
         List<FlowDetail> flowDetails = new ArrayList();
 
         String[] aimIds = request.getParameterValues("aimId");
@@ -68,6 +69,8 @@ public class FlowListServlet extends BaseServlet {
             AimClient aimClient = new AimClient();
             aimClient.setClientID(aimIds[i]);
             flowDetail.setAimClient(aimClient);
+
+            flowDetail.setAdjustFlag("N");
 
             flowDetails.add(flowDetail);
         }

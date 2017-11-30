@@ -34,6 +34,7 @@ public class FlowListManagerImpl implements FlowListManager {
             //提交事务
             ConnectionManager.commitTransaction(connection);
         } catch (DaoException e){
+            e.printStackTrace();
             //回滚事务
             ConnectionManager.rollbackTransaction(connection);
             throw new ApplicationException("添加流向单失败!");

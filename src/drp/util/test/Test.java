@@ -5,6 +5,8 @@ import drp.basedata.manager.AimClientManager;
 import drp.basedata.manager.ClientManager;
 import drp.basedata.manager.ItemManagerImpl;
 import drp.basedata.manager.TemiClientManager;
+import drp.flowlist.dao.FlowListDaoForMysql;
+import drp.flowlist.domain.FlowList;
 import drp.util.database.DBUtil;
 import drp.util.database.IdGenerator;
 import drp.util.database.XmlConfigReader;
@@ -36,6 +38,7 @@ public class Test {
 ////        System.out.println(ClientManager.getInstance().isExistAreaName("北京市"));
 //        ClientManager clientManager = ClientManager.getInstance();
 //        clientManager.delClientOrArea(10021);
-        new TemiClientManager().deleteTemiClientOrAreaById(20003);
+//        new TemiClientManager().deleteTemiClientOrAreaById(20003);
+        new FlowListDaoForMysql().addFlowList("1",new FlowList());
     }
 }

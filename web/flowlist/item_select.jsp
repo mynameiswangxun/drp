@@ -7,6 +7,7 @@
          pageEncoding="utf-8" %>
 <%
     request.setCharacterEncoding("utf-8");
+    int index = Integer.parseInt(request.getParameter("index"));
     int pageNo = 1;
     int pageSize = 6;
     String condition = "";
@@ -28,26 +29,49 @@
     <script src="../script/client_validate.js"></script>
     <script type="text/javascript">
         function topPage() {
-            window.self.location="item_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>";
+            window.self.location = "item_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>&index=<%=index%>";
         }
 
         function previousPage() {
-            window.self.location="item_select.jsp?pageNo=<%=pageModel.getPreviousPageNo()%>&condition=<%=condition%>";
+            window.self.location = "item_select.jsp?pageNo=<%=pageModel.getPreviousPageNo()%>&condition=<%=condition%>&index=<%=index%>";
         }
 
         function nextPage() {
-            window.self.location="item_select.jsp?pageNo=<%=pageModel.getNextPageNo()%>&condition=<%=condition%>";
+            window.self.location = "item_select.jsp?pageNo=<%=pageModel.getNextPageNo()%>&condition=<%=condition%>&index=<%=index%>";
         }
 
         function bottomPage() {
-            window.self.location="item_select.jsp?pageNo=<%=pageModel.getBottomPageNo()%>&condition=<%=condition%>";
+            window.self.location = "item_select.jsp?pageNo=<%=pageModel.getBottomPageNo()%>&condition=<%=condition%>&index=<%=index%>";
         }
 
         function queryClient() {
-            window.self.location="item_select.jsp?condition="+document.getElementById("itemNoOrName").value;
+            window.self.location = "item_select.jsp?condition=" + document.getElementById("itemNoOrName").value+"&index=<%=index%>";
         }
 
         function selectOk() {
+            var selectFlag = document.getElementsByName("selectFlag");
+            var selected;
+            for(var i=0;i<selectFlag.length;i++){
+                if(selectFlag[i].checked){
+                    selected = selectFlag[i];
+                }
+            }
+            var aboutItem = selected.value.split(",");
+            var rowLength = window.opener.document.all.tblFlowCardDetail.rows.length;
+            if (rowLength == 2) {
+                window.opener.document.all.itemNo.value = aboutItem[0];
+                window.opener.document.all.itemName.value = aboutItem[1];
+                window.opener.document.all.spec.value = aboutItem[2];
+                window.opener.document.all.pattern.value = aboutItem[3];
+                window.opener.document.all.unit.value = aboutItem[4];
+            }else{
+                window.opener.document.all.itemNo[<%=index%>].value = aboutItem[0];
+                window.opener.document.all.itemName[<%=index%>].value = aboutItem[1];
+                window.opener.document.all.spec[<%=index%>].value = aboutItem[2];
+                window.opener.document.all.pattern[<%=index%>].value = aboutItem[3];
+                window.opener.document.all.unit[<%=index%>].value = aboutItem[4];
+
+            }
             window.close();
         }
 
@@ -143,7 +167,8 @@
         %>
         <tr>
             <td width="35" class="rd8">
-                <input type="radio" name="selectFlag" value="<%=item.getItemId()%>"
+                <input type="radio" name="selectFlag" value="<%=item.getItemId()%>,<%=item.getItemName()%>,
+<%=item.getSpec()==null?"":item.getSpec()%>,<%=item.getItemPattern()==null?"":item.getItemPattern()%>,<%=item.getItemUnit().getName()%>"
                        onDblClick="selectOk()">
             </td>
             <td width="170" class="rd8">
@@ -153,10 +178,10 @@
                 <%=item.getItemName()%>
             </td>
             <td width="195" class="rd8">
-                <%=item.getSpec()==null?"":item.getSpec()%>
+                <%=item.getSpec() == null ? "" : item.getSpec()%>
             </td>
             <td width="293" class="rd8">
-                <%=item.getItemPattern()==null?"":item.getItemPattern()%>
+                <%=item.getItemPattern() == null ? "" : item.getItemPattern()%>
             </td>
             <td width="293" class="rd8">
                 <%=item.getItemCategory().getName()%>

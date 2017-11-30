@@ -46,7 +46,19 @@
 	}
 	
 	function selectOk() {
-		window.close();
+		var selectFlag = document.getElementsByName("selectFlag");
+        var selected;
+		for(var i=0;i<selectFlag.length;i++){
+		    if(selectFlag[i].checked){
+		        selected = selectFlag[i];
+			}
+		}
+		var aboutClient = selected.value.split(",");
+		window.opener.document.getElementById("cid").value=aboutClient[0];
+        window.opener.document.getElementById("clientId").value=aboutClient[1];
+        window.opener.document.getElementById("clientName").value=aboutClient[2];
+        window.close();
+
 	}
 	
 </script>
@@ -132,7 +144,7 @@
 				%>
 				<tr>
 					<td class="rd8">
-						<input type="radio" name="selectFlag" value="<%=client.getId()%>"
+						<input type="radio" name="selectFlag" value="<%=client.getId()%>,<%=client.getClientId()%>,<%=client.getName()%>"
 							onDblClick="selectOk()">
 					</td>
 					<td class="rd8">
@@ -154,9 +166,9 @@
 				<tr>
 					<td nowrap class="rd19" height="2" width="36%">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;共&nbsp<%=pageModel.getTopPageNo()%>&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">&nbsp;共&nbsp<%=pageModel.getTotalPageNum()%>&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<font color="#FFFFFF">当前第</font>&nbsp
-							<font color="#FF0000"><%=pageModel.getTopPageNo()%></font>&nbsp
+							<font color="#FF0000"><%=pageModel.getPageNo()%></font>&nbsp
 							<font color="#FFFFFF">页</font>
 						</div>
 					</td>

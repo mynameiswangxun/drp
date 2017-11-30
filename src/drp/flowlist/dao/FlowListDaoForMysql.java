@@ -45,7 +45,7 @@ public class FlowListDaoForMysql implements FlowListDao{
     public void addFlowList(String flowListNum, FlowList flowList) throws DaoException {
         String sql = "INSERT INTO flow_list (flow_num, fiscal_year_period_id, client_id, op_date, recorder_id" +
                 ", vou_sts, op_type)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                " VALUES (?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = null;
         Connection connection = null;
 
@@ -72,7 +72,7 @@ public class FlowListDaoForMysql implements FlowListDao{
 
     @Override
     public void addFlowDetail(String flowListNum, List<FlowDetail> flowDetailList) throws DaoException {
-        String sql = "INSERT INTO flow_detail (flow_list_num, items_id, aim_client_id, op_num,adjust_flag) VALUES (?, ?, ?, ?,?)";
+        String sql = "INSERT INTO flow_detail (flow_list_num, items_id, aim_client_id, op_num,adjust_flag) VALUES (?, ?, ?, ?,?);";
         PreparedStatement preparedStatement = null;
         Connection connection = null;
 
@@ -81,7 +81,7 @@ public class FlowListDaoForMysql implements FlowListDao{
             preparedStatement = connection.prepareStatement(sql);
             for (FlowDetail flowDetail:
                  flowDetailList) {
-                preparedStatement.setString(1,flowDetail.getFlowList().getFlowNum());
+                preparedStatement.setString(1,flowListNum);
                 preparedStatement.setString(2,flowDetail.getItem().getItemId());
                 preparedStatement.setInt(3,flowDetail.getAimClient().getId());
                 preparedStatement.setBigDecimal(4,flowDetail.getOpNum());
@@ -91,6 +91,8 @@ public class FlowListDaoForMysql implements FlowListDao{
             preparedStatement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
         }
     }
 

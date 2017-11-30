@@ -5,6 +5,7 @@
 		 pageEncoding="utf-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
+	int index = Integer.parseInt(request.getParameter("index"));
 	int pageNo = 1;
 	int pageSize = 6;
 	String condition = "";
@@ -24,28 +25,47 @@
 		<script src="../script/client_validate.js"></script>
 		<script type="text/javascript">
 	function topPage() {
-	    window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>";
+	    window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>&index=<%=index%>";
 	}
 	
 	function previousPage() {
-        window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>";
+        window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>&index=<%=index%>";
 	}
 	
 	function nextPage() {
-        window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>";
+        window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>&index=<%=index%>";
 	}
 	
 	function bottomPage() {
-        window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>";
+        window.self.location = "aim_client_select.jsp?pageNo=<%=pageModel.getTopPageNo()%>&condition=<%=condition%>&index=<%=index%>";
 
 	}
 	
 	function queryClient() {
-        window.self.location = "aim_client_select.jsp?condition="+document.getElementById("aimClientIdOrName").value;
+        window.self.location = "aim_client_select.jsp?condition="+document.getElementById("aimClientIdOrName").value+"&index=<%=index%>";
 	}
 	
 	function selectOk() {
-		window.close();
+        var selectFlag = document.getElementsByName("selectFlag");
+        var selected;
+        for(var i=0;i<selectFlag.length;i++){
+            if(selectFlag[i].checked){
+                selected = selectFlag[i];
+            }
+        }
+        var aboutAimClient = selected.value.split(",");
+        var rowLength = window.opener.document.all.tblFlowCardDetail.rows.length;
+        if (rowLength == 2) {
+            window.opener.document.all.aimInnerId.value =aboutAimClient[0];
+            window.opener.document.all.aimId.value = aboutAimClient[1];
+            window.opener.document.all.aimName.value = aboutAimClient[2];
+        }else{
+            window.opener.document.all.aimInnerId[<%=index%>].value = aboutAimClient[0];
+            window.opener.document.all.aimId[<%=index%>].value = aboutAimClient[1];
+            window.opener.document.all.aimName[<%=index%>].value = aboutAimClient[2];
+		}
+
+        window.close();
 	}
 	
 </script>
@@ -131,7 +151,7 @@
 				%>
 				<tr>
 					<td class="rd8">
-						<input type="radio" name="selectFlag" value="<%=aimClient.getId()%>"
+						<input type="radio" name="selectFlag" value="<%=aimClient.getId()%>,<%=aimClient.getClientID()%>,<%=aimClient.getName()%>"
 							onDblClick="selectOk()">
 					</td>
 					<td class="rd8">
@@ -153,7 +173,7 @@
 				<tr>
 					<td nowrap class="rd19" height="2" width="36%">
 						<div align="left">
-							<font color="#FFFFFF">&nbsp;共&nbsp<%=pageModel.getTotalPageNum()%>&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<font color="#FFFFFF">&nbsp;共&nbsp<%=pageModel.getTopPageNo()%>&nbsp页</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<font color="#FFFFFF">当前第</font>&nbsp
 							<font color="#FF0000"><%=pageModel.getPageNo()%></font>&nbsp
 							<font color="#FFFFFF">页</font>
