@@ -1,11 +1,13 @@
 package drp.flowlist.servlet;
 
 import drp.basedata.domain.AimClient;
+import drp.basedata.manager.ClientManager;
 import drp.flowlist.domain.FlowDetail;
 import drp.flowlist.domain.FlowList;
 import drp.basedata.domain.*;
 import drp.flowlist.manager.FlowListManager;
 import drp.util.factory.BeanFactory;
+import drp.util.pagemodel.PageModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,12 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "FlowListServlet", urlPatterns = "/flowlist/FlowListServlet.servlet")
 public class FlowListServlet extends BaseServlet {
+    private FlowListManager flowListManager;
+
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //显示调用父类的service方法
         super.service(request, response);
@@ -26,7 +32,15 @@ public class FlowListServlet extends BaseServlet {
             addFlowList(request,response);
         } else if("showAdd".equals(getCommand())){
             showAdd(request,response);
+        } else if("search".equals(getCommand())){
+            search(request,response);
         }
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        flowListManager =  (FlowListManager) BeanFactory.getInstance().getServiceObject(FlowListManager.class);
     }
 
     /**
@@ -76,7 +90,7 @@ public class FlowListServlet extends BaseServlet {
         }
         flowList.setFlowDetails(flowDetails);
 
-        FlowListManager flowListManager = (FlowListManager) BeanFactory.getInstance().getServiceObject(FlowListManager.class);
+//        FlowListManager flowListManager = (FlowListManager) BeanFactory.getInstance().getServiceObject(FlowListManager.class);
         flowListManager.addFlowList(flowList);
 
         response.sendRedirect("flow_card_add.jsp");
@@ -91,5 +105,55 @@ public class FlowListServlet extends BaseServlet {
      */
     private void showAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.getRequestDispatcher("flow_card_add.jsp").forward(request,response);
+    }
+
+    private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //给各参数设定默认值
+        int pageNo = 1;
+        int pageSize = 6;
+        String cid = "";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date beginDate = null;
+        try {
+            beginDate = simpleDateFormat.parse("2007-01-01");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date endDate = null;
+        try {
+            endDate = simpleDateFormat.parse("2027-01-01");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(request.getParameter("pageNo")!=null && !"".equals(request.getParameter("pageNo"))){
+            pageNo = Integer.parseInt(request.getParameter("pageNo"));
+        }
+        if(request.getParameter("cid")!=null && !"".equals(request.getParameter("cid"))){
+            cid = request.getParameter("cid");
+        }
+        if(request.getParameter("beginDate")!=null && !"".equals(request.getParameter("beginDate"))){
+            try {
+                beginDate = simpleDateFormat.parse(request.getParameter("beginDate"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if(request.getParameter("endDate")!=null && !"".equals(request.getParameter("endDate"))){
+            try {
+                endDate = simpleDateFormat.parse(request.getParameter("endDate"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        PageModel<FlowList> pageModel = flowListManager.findFlowLists(pageNo,pageSize,cid,beginDate,endDate);
+
+        request.setAttribute("pageModel",pageModel);
+        request.setAttribute("client", "".equals(cid)? null:ClientManager.getInstance().findClientOrAreaById(Integer.parseInt(cid)));
+        request.setAttribute("beginDate",beginDate);
+        request.setAttribute("endDate",endDate);
+
+        request.getRequestDispatcher("flow_card_maint.jsp").forward(request,response);
     }
 }

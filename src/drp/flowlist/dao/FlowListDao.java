@@ -104,4 +104,13 @@ public interface FlowListDao {
      */
     List<FlowDetail> findFlowDetailById(String flowListNum) throws DaoException;
 
+    /**
+     * 获得满足条件的总数量
+     * @param clientId
+     * @param beginDate
+     * @param date
+     * @return
+     */
+    int getRecordCount(String clientId,Date beginDate,Date date);
+
 }

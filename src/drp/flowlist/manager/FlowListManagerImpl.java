@@ -10,6 +10,7 @@ import drp.util.pagemodel.PageModel;
 
 import java.sql.Connection;
 import java.util.Date;
+import java.util.List;
 
 public class FlowListManagerImpl implements FlowListManager {
     FlowListDao flowListDao = null;
@@ -56,7 +57,26 @@ public class FlowListManagerImpl implements FlowListManager {
 
     @Override
     public PageModel<FlowList> findFlowLists(int pageNo, int pageSize, String clientId, Date beginDate, Date endDate) throws ApplicationException {
-        return null;
+        Connection connection = null;
+        PageModel<FlowList> pageModel = new PageModel<>();
+        try{
+            connection = ConnectionManager.getConnection();
+            List<FlowList> list = flowListDao.findFlowLists(pageNo,pageSize,clientId,beginDate,endDate);
+            int totalNum = flowListDao.getRecordCount(clientId,beginDate,endDate);
+
+            pageModel.setPageNo(pageNo);
+            pageModel.setPageSize(pageSize);
+            pageModel.setTotalRecords(totalNum);
+            pageModel.setList(list);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("查找失败!");
+        } finally {
+            ConnectionManager.closeConnection();
+        }
+
+        return pageModel;
     }
 
     @Override

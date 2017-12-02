@@ -52,9 +52,9 @@
 //                tblFlowCardDetail.rows[j].cells[0].getElementsByName("btnSelectAimClient").index--;
 //                tblFlowCardDetail.rows[j].cells[2].getElementsByName("btnSelectAimClient").index--;
                 var btnSelectAimClient = document.getElementsByName("btnSelectAimClient");
-                var btnSelectItem =  document.getElementsByName("btnSelectItem");
-                btnSelectAimClient[j].setAttribute("index",(parseInt(btnSelectAimClient[j].getAttribute("index"))-1).toString());
-                btnSelectItem[j].setAttribute("index",(parseInt(btnSelectItem[j].getAttribute("index"))-1).toString());
+                var btnSelectItem = document.getElementsByName("btnSelectItem");
+                btnSelectAimClient[j].setAttribute("index", (parseInt(btnSelectAimClient[j].getAttribute("index")) - 1).toString());
+                btnSelectItem[j].setAttribute("index", (parseInt(btnSelectItem[j].getAttribute("index")) - 1).toString());
 //                alert(btnSelectAimClient[j].getAttribute("index"));
             }
             tblFlowCardDetail.deleteRow(i);
@@ -62,13 +62,67 @@
         }
 
         function addFlowCard() {
-           var flowCardAddForm = document.getElementById("flowCardAddForm");
+            if (document.getElementById("cid").value == "") {
+                alert("请选择供方分销商!");
+                return;
+            }
+            if (document.getElementById("fiscalId").value == "") {
+                alert("请选择会计核算期!");
+                return;
+            }
+            var aimInnerId = document.getElementsByName("aimInnerId");
+            if (aimInnerId.length == 0) {
+                alert("请选择需方客户!");
+                return;
+            }
+            for(var i = 0; i<aimInnerId.length;i++){
+                if(aimInnerId[i].value == ""){
+                    alert("请选择需方客户!");
+                    return;
+                }
+            }
+            var itemNo = document.getElementsByName("itemNo");
+            for(var i = 0;i<itemNo.length;i++){
+                if(itemNo[i].value == ""){
+                    alert("请选择物料!");
+                    return;
+                }
+            }
+            var qty = document.getElementsByName("qty");
+            for(var i = 0;i<qty.length;i++){
+                if(qty[i].value == ""){
+                    alert("操作数量不能为空!");
+                    return;
+                }
+                if(!isnumber(qty[i].value)){
+                    alert("操作数量必须为数字!");
+                    return;
+                }
+            }
+
+            var aIdAndiNo = new Array();
+            for(var i = 0; i<aimInnerId.length;i++){
+                aIdAndiNo[i] = aimInnerId[i].value + itemNo[i].value;
+            }
+            for(var i = 0 ; i<aIdAndiNo.length; i++){
+                for(var j = 0; j<aIdAndiNo.length; j++){
+                    if(i==j){
+                        continue;
+                    }
+                    if(aIdAndiNo[i]==aIdAndiNo[j]){
+                        alert("相同需方与物料不能分写两栏!");
+                        return;
+                    }
+                }
+            }
+
+            var flowCardAddForm = document.getElementById("flowCardAddForm");
             flowCardAddForm.action = "FlowListServlet.servlet?command=add";
             flowCardAddForm.submit();
         }
 
         function goBack() {
-            window.self.location = "flow_card_maint.html"
+            window.self.location = "flow_card_maint.jsp"
         }
 
     </script>
@@ -76,7 +130,7 @@
 
 <body class="body1">
 <div align="center">
-    <form name="flowCardAddForm" method="post"  id="flowCardAddForm">
+    <form name="flowCardAddForm" method="post" id="flowCardAddForm">
         <table width="95%" border="0" cellspacing="2" cellpadding="2">
             <tr>
                 <td>
