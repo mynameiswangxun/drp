@@ -86,6 +86,19 @@ public class FlowListManagerImpl implements FlowListManager {
 
     @Override
     public FlowList findFlowList(String flowCardNum) throws ApplicationException {
-        return null;
+        Connection connection = null;
+        FlowList flowList = null;
+        try{
+            connection = ConnectionManager.getConnection();
+            flowList = flowListDao.findFlowListById(flowCardNum);
+            flowList.setFlowDetails(flowListDao.findFlowDetailById(flowCardNum));
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("查找失败!");
+        } finally {
+            ConnectionManager.closeConnection();
+        }
+        return flowList;
     }
 }

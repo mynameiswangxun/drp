@@ -122,7 +122,7 @@
         }
 
         function goBack() {
-            window.self.location = "flow_card_maint.jsp"
+            window.self.location = "FlowListServlet.servlet"
         }
 
     </script>

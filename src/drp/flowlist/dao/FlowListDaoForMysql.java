@@ -1,7 +1,9 @@
 package drp.flowlist.dao;
 
+import drp.basedata.manager.AimClientManager;
 import drp.basedata.manager.ClientManager;
 import drp.basedata.manager.FiscalTimeManagerImpl;
+import drp.basedata.manager.ItemManagerImpl;
 import drp.flowlist.domain.FlowDetail;
 import drp.flowlist.domain.FlowList;
 import drp.flowlist.manager.FlowListManagerImpl;
@@ -167,10 +169,6 @@ public class FlowListDaoForMysql implements FlowListDao{
         return flowLists;
     }
 
-    @Override
-    public int findCountOfFlowList(String clientId, Date beginDate, Date endDate) throws DaoException {
-        return 0;
-    }
 
     @Override
     public void auditFlowCard(String[] flowListNum) throws DaoException {
@@ -179,12 +177,76 @@ public class FlowListDaoForMysql implements FlowListDao{
 
     @Override
     public FlowList findFlowListById(String flowListNum) throws DaoException {
-        return null;
+        FlowList flowList =null;
+        String sql = "SELECT * FROM flow_list WHERE flow_num=?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,flowListNum);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                flowList = new FlowList();
+                flowList.setFlowNum(resultSet.getString("flow_num"));
+                flowList.setFiscalTime(new FiscalTimeManagerImpl().findFiscalTimeById(resultSet.getInt("fiscal_year_period_id")));
+                flowList.setClient(ClientManager.getInstance().findClientOrAreaById(resultSet.getInt("client_id")));
+                flowList.setOpDate(resultSet.getDate("op_date"));
+                flowList.setRecorder(UserManager.getInstance().findUserById(resultSet.getString("recorder_id")));
+                flowList.setVouSts(resultSet.getString("vou_sts"));
+                flowList.setAdjuster(UserManager.getInstance().findUserById(resultSet.getString("adjuster_id")));
+                flowList.setAdjustDate(resultSet.getDate("adjust_date"));
+                flowList.setSpotter(UserManager.getInstance().findUserById(resultSet.getString("spotter_id")));
+                flowList.setSpotDate(resultSet.getDate("spot_date"));
+                flowList.setSpotDesc(resultSet.getString("spot_desc"));
+                flowList.setConfirmer(UserManager.getInstance().findUserById("confirmer_id"));
+                flowList.setConfirmDate(resultSet.getDate("confirm_date"));
+                flowList.setOpType(resultSet.getString("op_type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+        }
+
+
+        return flowList;
     }
 
     @Override
     public List<FlowDetail> findFlowDetailById(String flowListNum) throws DaoException {
-        return null;
+        String sql = "SELECT * FROM flow_detail WHERE flow_list_num=?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        List<FlowDetail> flowDetails = new ArrayList<>();
+
+        try {
+            connection = ConnectionManager.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,flowListNum);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                FlowDetail flowDetail = new FlowDetail();
+                flowDetail.setItem(new ItemManagerImpl().findItemById(resultSet.getString("items_id")));
+                flowDetail.setAimClient(AimClientManager.getInstance().findAimClientbyId(resultSet.getInt("aim_client_id")));
+                flowDetail.setOpNum(resultSet.getBigDecimal("op_num"));
+                flowDetail.setAdjustNum(resultSet.getBigDecimal("adjust_num"));
+                flowDetail.setAdjustReason(resultSet.getString("adjust_reason"));
+                flowDetail.setAdjustFlag(resultSet.getString("adjust_flag"));
+                flowDetails.add(flowDetail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+        }
+
+        return flowDetails;
     }
 
     @Override

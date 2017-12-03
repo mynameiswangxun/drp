@@ -15,7 +15,7 @@
 	if (request.getParameter("condition") != null) {
 		condition = request.getParameter("condition");
 	}
-	PageModel<AimClient> pageModel = AimClientManager.getInstance().findAimClientManagerListByCondition(pageNo,pageSize,condition);
+	PageModel<AimClient> pageModel = AimClientManager.getInstance().findAimClientListByCondition(pageNo,pageSize,condition);
 %>
 <html>
 	<head>

@@ -28,7 +28,7 @@ public class AimClientManager {
      * @param condition
      * @return
      */
-    public PageModel<AimClient> findAimClientManagerListByCondition(int pageNo,int pageSize, String condition){
+    public PageModel<AimClient> findAimClientListByCondition(int pageNo,int pageSize, String condition){
         String sql = "SELECT * FROM aim_view WHERE client_temi_id LIKE ? OR name LIKE ? LIMIT ?,? ";
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -87,5 +87,33 @@ public class AimClientManager {
             DBUtil.closeStatement(preparedStatement);
         }
         return result;
+    }
+    public AimClient findAimClientbyId(int id){
+        String sql = "SELECT * FROM aim_view WHERE id=?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        AimClient aimClient = null;
+
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                aimClient = new AimClient();
+                aimClient.setId(id);
+                aimClient.setName(resultSet.getString("name"));
+                aimClient.setClientID(resultSet.getString("client_temi_id"));
+                aimClient.setLevelName(resultSet.getString("client_temi_level_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeResultSet(resultSet);
+            DBUtil.closeStatement(preparedStatement);
+            DBUtil.closeConnection(connection);
+        }
+        return aimClient;
     }
 }

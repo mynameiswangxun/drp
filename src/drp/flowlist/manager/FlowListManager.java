@@ -1,10 +1,12 @@
 package drp.flowlist.manager;
 
+import drp.flowlist.domain.FlowDetail;
 import drp.flowlist.domain.FlowList;
 import drp.util.exception.ApplicationException;
 import drp.util.pagemodel.PageModel;
 
 import java.util.Date;
+import java.util.List;
 
 public interface FlowListManager {
     /**
@@ -54,4 +56,5 @@ public interface FlowListManager {
      * @throws ApplicationException
      */
     FlowList findFlowList(String flowCardNum) throws ApplicationException;
+
 }

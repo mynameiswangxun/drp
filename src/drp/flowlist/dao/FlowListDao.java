@@ -71,15 +71,6 @@ public interface FlowListDao {
      */
     List<FlowList> findFlowLists(int pageNo, int pageSize, String clientId, Date beginDate,Date endDate) throws DaoException;
 
-    /**
-     * 查询记录数
-     * @param clientId
-     * @param beginDate
-     * @param endDate
-     * @return
-     * @throws DaoException
-     */
-    int findCountOfFlowList(String clientId, Date beginDate,Date endDate) throws DaoException;
 
     /**
      * 送审流向单

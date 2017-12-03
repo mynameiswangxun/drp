@@ -112,6 +112,10 @@ public class UserManager {
                 user.setCreateDate(resultSet.getTimestamp("create_date"));
                 pageUserList.add(user);
             }
+            pageModel.setList(pageUserList);
+            pageModel.setPageNo(pageNo);
+            pageModel.setPageSize(pageSize);
+            pageModel.setTotalRecords(getTotalRecords(connection));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -119,10 +123,6 @@ public class UserManager {
             DBUtil.closeStatement(preparedStatement);
             DBUtil.closeConnection(connection);
         }
-        pageModel.setList(pageUserList);
-        pageModel.setPageNo(pageNo);
-        pageModel.setPageSize(pageSize);
-        pageModel.setTotalRecords(getTotalRecords(connection));
         return pageModel;
     }
 

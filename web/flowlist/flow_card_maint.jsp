@@ -203,7 +203,7 @@
                 </td>
                 <td width="88" class="rd8">
                     <a href="#"
-                       onClick="window.open('flow_card_detail.html', '流向单详细信息', 'width=800, height=400, scrollbars=no')">
+                       onClick="window.open('flow_card_detail.jsp?flowNum=<%=flowList.getFlowNum()%>', '流向单详细信息', 'width=800, height=400, scrollbars=no')">
                         <%=flowList.getFlowNum()%></a>
                 </td>
                 <td width="158" class="rd8">

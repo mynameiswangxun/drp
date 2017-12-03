@@ -34,6 +34,8 @@ public class FlowListServlet extends BaseServlet {
             showAdd(request,response);
         } else if("search".equals(getCommand())){
             search(request,response);
+        } else{
+            search(request,response);
         }
     }
 
@@ -67,7 +69,7 @@ public class FlowListServlet extends BaseServlet {
 
         List<FlowDetail> flowDetails = new ArrayList();
 
-        String[] aimIds = request.getParameterValues("aimId");
+        String[] aimIds = request.getParameterValues("aimInnerId");
         String[] itemIds = request.getParameterValues("itemNo");
         String[] qtys = request.getParameterValues("qty");
 
@@ -81,7 +83,7 @@ public class FlowListServlet extends BaseServlet {
             flowDetail.setOpNum(new BigDecimal(qtys[i]));
 
             AimClient aimClient = new AimClient();
-            aimClient.setClientID(aimIds[i]);
+            aimClient.setId(Integer.parseInt(aimIds[i]));
             flowDetail.setAimClient(aimClient);
 
             flowDetail.setAdjustFlag("N");
