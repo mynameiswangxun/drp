@@ -30,12 +30,22 @@
         }
 
         function deleteFlowCard() {
-            var cid = document.getElementById("cid").value;
-            var beginDate = document.getElementById("beginDate").value;
-            var endDate = document.getElementById("endDate").value;
-            alert(cid);
-            alert(beginDate);
-            alert(endDate);
+            var selectFlag = document.getElementsByName("selectFlag");
+            var selected = null;
+            for(var i = 0;i<selectFlag.length;i++){
+                if(selectFlag[i].checked){
+                    selected = selectFlag[i];
+                }
+            }
+            if(selected==null){
+                alert("请选择需要删除的流向单!");
+                return;
+            }
+            document.getElementById("command").value = "delete";
+            var flowCardForm = document.getElementById("flowCardForm");
+            flowCardForm.method = "post";
+            flowCardForm.action = "FlowListServlet.servlet";
+            flowCardForm.submit();
         }
 
         function topPage() {
@@ -74,13 +84,38 @@
         }
 
         function auditFlowCard() {
+            var selectFlag = document.getElementsByName("selectFlag");
+            var selected = null;
+            for(var i = 0;i<selectFlag.length;i++){
+                if(selectFlag[i].checked){
+                    selected = selectFlag[i];
+                }
+            }
+            if(selected==null){
+                alert("请选择需要送审的流向单!");
+                return;
+            }
+            document.getElementById("command").value = "audit";
+            var flowCardForm = document.getElementById("flowCardForm");
+            flowCardForm.method = "post";
+            flowCardForm.action = "FlowListServlet.servlet";
+            flowCardForm.submit();
+        }
+
+        function checkAll(field) {
+            var selectFlag = document.getElementsByName("selectFlag");
+            var selected = null;
+            for(var i = 0;i<selectFlag.length;i++){
+                selectFlag[i].checked = field.checked;
+            }
         }
 
     </script>
 </head>
 
 <body class="body1">
-<form name="flowCardForm">
+<form name="flowCardForm" id="flowCardForm">
+    <input type="hidden" name="command" id="command">
     <div align="center">
         <table width="95%" border="0" cellspacing="2" cellpadding="2">
             <tr>
@@ -174,7 +209,7 @@
                align="center" class="table1" title="点击选中的数据查看详细信息...">
             <tr>
                 <td class="rd6">
-                    <input type="checkbox" name="ifAll" onClick="checkAll()">
+                    <input type="checkbox" name="ifAll" onClick="checkAll(this)">
                 </td>
                 <td class="rd6">
                     流向单号
@@ -198,8 +233,7 @@
             %>
             <tr>
                 <td width="37" class="rd8">
-                    <input name="selectFlag" type="checkbox" class="checkbox1"
-                           id="selectFlag" value="<%=flowList.getFlowNum()%>">
+                    <input name="selectFlag" type="checkbox" class="checkbox1" value="<%=flowList.getFlowNum()%>">
                 </td>
                 <td width="88" class="rd8">
                     <a href="#"

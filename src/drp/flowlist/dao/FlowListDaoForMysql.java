@@ -106,11 +106,53 @@ public class FlowListDaoForMysql implements FlowListDao{
 
     @Override
     public void delFlowList(String[] flowListNum) throws DaoException {
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i=0;i<flowListNum.length;i++){
+            stringBuffer.append("?,");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length()-1);
+        String sql = "DELETE FROM flow_list WHERE flow_num IN ("+stringBuffer.toString()+")";
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            for(int i=0;i<flowListNum.length;i++){
+                preparedStatement.setString(i+1,flowListNum[i]);
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
 
     }
 
     @Override
     public void delFlowDetail(String[] flowListNum) throws DaoException {
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i=0;i<flowListNum.length;i++){
+            stringBuffer.append("?,");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length()-1);
+        String sql = "DELETE FROM flow_detail WHERE flow_list_num IN ("+stringBuffer.toString()+")";
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            for(int i=0;i<flowListNum.length;i++){
+                preparedStatement.setString(i+1,flowListNum[i]);
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
 
     }
 
@@ -126,7 +168,7 @@ public class FlowListDaoForMysql implements FlowListDao{
 
     @Override
     public List<FlowList> findFlowLists(int pageNo, int pageSize, String clientId, Date beginDate, Date endDate) throws DaoException {
-        String sql = "SELECT * FROM flow_list WHERE(client_id LIKE ? AND op_date BETWEEN ? AND ?) limit ?,? ";
+        String sql = "SELECT * FROM flow_list WHERE(client_id LIKE ? AND op_date BETWEEN ? AND ? AND vou_sts='N') limit ?,? ";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<FlowList> flowLists = new ArrayList<>();
@@ -172,6 +214,28 @@ public class FlowListDaoForMysql implements FlowListDao{
 
     @Override
     public void auditFlowCard(String[] flowListNum) throws DaoException {
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i=0;i<flowListNum.length;i++){
+            stringBuffer.append("?,");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length()-1);
+        String sql = "UPDATE flow_list SET vou_sts='S' WHERE flow_num IN ("+stringBuffer.toString()+")";
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            for(int i=0;i<flowListNum.length;i++){
+                preparedStatement.setString(i+1,flowListNum[i]);
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(preparedStatement);
+        }
+
 
     }
 

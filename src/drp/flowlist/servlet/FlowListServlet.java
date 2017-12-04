@@ -34,7 +34,11 @@ public class FlowListServlet extends BaseServlet {
             showAdd(request,response);
         } else if("search".equals(getCommand())){
             search(request,response);
-        } else{
+        }else if("delete".equals(getCommand())){
+            delete(request,response);
+        }else if("audit".equals(getCommand())){
+            audit(request,response);
+        }else{
             search(request,response);
         }
     }
@@ -157,5 +161,35 @@ public class FlowListServlet extends BaseServlet {
         request.setAttribute("endDate",endDate);
 
         request.getRequestDispatcher("flow_card_maint.jsp").forward(request,response);
+    }
+
+    /**
+     * 删除流向单
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String[] flowNums = request.getParameterValues("selectFlag");
+
+        flowListManager.delFlowList(flowNums);
+
+        response.sendRedirect("FlowListServlet.servlet");
+    }
+
+    /**
+     * 送审流向单
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void audit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] flowNums = request.getParameterValues("selectFlag");
+
+        flowListManager.auditFlowList(flowNums);
+
+        response.sendRedirect("FlowListServlet.servlet");
     }
 }

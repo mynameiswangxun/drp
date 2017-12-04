@@ -47,7 +47,19 @@ public class FlowListManagerImpl implements FlowListManager {
 
     @Override
     public void delFlowList(String[] flowCardNum) throws ApplicationException {
+        Connection connection = null;
+        FlowList flowList = null;
+        try{
+            connection = ConnectionManager.getConnection();
+            flowListDao.delFlowDetail(flowCardNum);
+            flowListDao.delFlowList(flowCardNum);
 
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("删除失败!");
+        } finally {
+            ConnectionManager.closeConnection();
+        }
     }
 
     @Override
@@ -81,8 +93,20 @@ public class FlowListManagerImpl implements FlowListManager {
 
     @Override
     public void auditFlowList(String[] flowCardNum) throws ApplicationException {
+        Connection connection = null;
+        FlowList flowList = null;
+        try{
+            connection = ConnectionManager.getConnection();
+            flowListDao.auditFlowCard(flowCardNum);
 
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("送审失败!");
+        } finally {
+            ConnectionManager.closeConnection();
+        }
     }
+
 
     @Override
     public FlowList findFlowList(String flowCardNum) throws ApplicationException {
