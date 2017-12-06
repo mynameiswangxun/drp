@@ -29,24 +29,28 @@ public class FlowListServlet extends BaseServlet {
         //显示调用父类的service方法
         super.service(request, response);
         if ("add".equals(getCommand())) {
-            addFlowList(request,response);
-        } else if("showAdd".equals(getCommand())){
-            showAdd(request,response);
-        } else if("search".equals(getCommand())){
-            search(request,response);
-        }else if("delete".equals(getCommand())){
-            delete(request,response);
-        }else if("audit".equals(getCommand())){
-            audit(request,response);
-        }else{
-            search(request,response);
+            addFlowList(request, response);
+        } else if ("showAdd".equals(getCommand())) {
+            showAdd(request, response);
+        } else if ("search".equals(getCommand())) {
+            search(request, response);
+        } else if ("delete".equals(getCommand())) {
+            delete(request, response);
+        } else if ("audit".equals(getCommand())) {
+            audit(request, response);
+        } else if ("modify".equals(getCommand())) {
+            modify(request, response);
+        } else if ("showModify".equals(getCommand())) {
+            showModify(request,response);
+        } else {
+            search(request, response);
         }
     }
 
     @Override
     public void init() throws ServletException {
         super.init();
-        flowListManager =  (FlowListManager) BeanFactory.getInstance().getServiceObject(FlowListManager.class);
+        flowListManager = (FlowListManager) BeanFactory.getInstance().getServiceObject(FlowListManager.class);
     }
 
     /**
@@ -77,7 +81,7 @@ public class FlowListServlet extends BaseServlet {
         String[] itemIds = request.getParameterValues("itemNo");
         String[] qtys = request.getParameterValues("qty");
 
-        for(int i = 0; i<aimIds.length; i++){
+        for (int i = 0; i < aimIds.length; i++) {
             FlowDetail flowDetail = new FlowDetail();
             Item item = new Item();
             item.setItemId(itemIds[i]);
@@ -104,16 +108,17 @@ public class FlowListServlet extends BaseServlet {
 
     /**
      * 展示添加页面
+     *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    private void showAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        request.getRequestDispatcher("flow_card_add.jsp").forward(request,response);
+    private void showAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("flow_card_add.jsp").forward(request, response);
     }
 
-    private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //给各参数设定默认值
         int pageNo = 1;
         int pageSize = 6;
@@ -132,20 +137,20 @@ public class FlowListServlet extends BaseServlet {
             e.printStackTrace();
         }
 
-        if(request.getParameter("pageNo")!=null && !"".equals(request.getParameter("pageNo"))){
+        if (request.getParameter("pageNo") != null && !"".equals(request.getParameter("pageNo"))) {
             pageNo = Integer.parseInt(request.getParameter("pageNo"));
         }
-        if(request.getParameter("cid")!=null && !"".equals(request.getParameter("cid"))){
+        if (request.getParameter("cid") != null && !"".equals(request.getParameter("cid"))) {
             cid = request.getParameter("cid");
         }
-        if(request.getParameter("beginDate")!=null && !"".equals(request.getParameter("beginDate"))){
+        if (request.getParameter("beginDate") != null && !"".equals(request.getParameter("beginDate"))) {
             try {
                 beginDate = simpleDateFormat.parse(request.getParameter("beginDate"));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        if(request.getParameter("endDate")!=null && !"".equals(request.getParameter("endDate"))){
+        if (request.getParameter("endDate") != null && !"".equals(request.getParameter("endDate"))) {
             try {
                 endDate = simpleDateFormat.parse(request.getParameter("endDate"));
             } catch (ParseException e) {
@@ -153,24 +158,25 @@ public class FlowListServlet extends BaseServlet {
             }
         }
 
-        PageModel<FlowList> pageModel = flowListManager.findFlowLists(pageNo,pageSize,cid,beginDate,endDate);
+        PageModel<FlowList> pageModel = flowListManager.findFlowLists(pageNo, pageSize, cid, beginDate, endDate);
 
-        request.setAttribute("pageModel",pageModel);
-        request.setAttribute("client", "".equals(cid)? null:ClientManager.getInstance().findClientOrAreaById(Integer.parseInt(cid)));
-        request.setAttribute("beginDate",beginDate);
-        request.setAttribute("endDate",endDate);
+        request.setAttribute("pageModel", pageModel);
+        request.setAttribute("client", "".equals(cid) ? null : ClientManager.getInstance().findClientOrAreaById(Integer.parseInt(cid)));
+        request.setAttribute("beginDate", beginDate);
+        request.setAttribute("endDate", endDate);
 
-        request.getRequestDispatcher("flow_card_maint.jsp").forward(request,response);
+        request.getRequestDispatcher("flow_card_maint.jsp").forward(request, response);
     }
 
     /**
      * 删除流向单
+     *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] flowNums = request.getParameterValues("selectFlag");
 
         flowListManager.delFlowList(flowNums);
@@ -180,6 +186,7 @@ public class FlowListServlet extends BaseServlet {
 
     /**
      * 送审流向单
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -189,6 +196,62 @@ public class FlowListServlet extends BaseServlet {
         String[] flowNums = request.getParameterValues("selectFlag");
 
         flowListManager.auditFlowList(flowNums);
+
+        response.sendRedirect("FlowListServlet.servlet");
+    }
+
+    /**
+     * 展示流向单
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void showModify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] flowNums = request.getParameterValues("selectFlag");
+
+        FlowList flowList = flowListManager.findFlowList(flowNums[0]);
+
+        request.setAttribute("flowList",flowList);
+
+        request.getRequestDispatcher("flow_card_modify.jsp").forward(request, response);
+    }
+
+    /**
+     * 修改流向单
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String flowNum = request.getParameter("flowNum");
+
+        List<FlowDetail> flowDetails = new ArrayList();
+        String[] aimIds = request.getParameterValues("aimInnerId");
+        String[] itemIds = request.getParameterValues("itemNo");
+        String[] qtys = request.getParameterValues("qty");
+
+        for (int i = 0; i < aimIds.length; i++) {
+            FlowDetail flowDetail = new FlowDetail();
+            Item item = new Item();
+            item.setItemId(itemIds[i]);
+            flowDetail.setItem(item);
+
+            //设置操作数量
+            flowDetail.setOpNum(new BigDecimal(qtys[i]));
+
+            AimClient aimClient = new AimClient();
+            aimClient.setId(Integer.parseInt(aimIds[i]));
+            flowDetail.setAimClient(aimClient);
+
+            flowDetail.setAdjustFlag("N");
+
+            flowDetails.add(flowDetail);
+        }
+        flowListManager.modifyFlowList(flowNum,flowDetails);
 
         response.sendRedirect("FlowListServlet.servlet");
     }

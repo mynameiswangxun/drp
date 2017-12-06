@@ -25,10 +25,11 @@ public interface FlowListManager {
 
     /**
      * 修改流向单
-     * @param flowList
+     * @param flowNum
+     * @param flowDetails
      * @throws ApplicationException
      */
-    void modifyFlowList(FlowList flowList) throws ApplicationException;
+    void modifyFlowList(String flowNum,List<FlowDetail> flowDetails) throws ApplicationException;
 
     /**
      * 条件分页查询流向单

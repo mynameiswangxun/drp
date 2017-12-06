@@ -1,6 +1,7 @@
 package drp.flowlist.manager;
 
 import drp.flowlist.dao.FlowListDao;
+import drp.flowlist.domain.FlowDetail;
 import drp.flowlist.domain.FlowList;
 import drp.util.database.ConnectionManager;
 import drp.util.exception.ApplicationException;
@@ -63,8 +64,21 @@ public class FlowListManagerImpl implements FlowListManager {
     }
 
     @Override
-    public void modifyFlowList(FlowList flowList) throws ApplicationException {
+    public void modifyFlowList(String flowNum,List<FlowDetail> flowDetails) throws ApplicationException {
+        Connection connection = null;
+        String[] flowNumTemp = new String[1];
+        flowNumTemp[0] = flowNum;
+        try{
+            connection = ConnectionManager.getConnection();
+           flowListDao.delFlowDetail(flowNumTemp);
+           flowListDao.addFlowDetail(flowNum,flowDetails);
 
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException("修改失败!");
+        } finally {
+            ConnectionManager.closeConnection();
+        }
     }
 
     @Override

@@ -26,7 +26,28 @@
         }
 
         function modifyFlowCard() {
-            window.self.location = "flow_card_modify.html";
+            var selectFlag = document.getElementsByName("selectFlag");
+            var selected = null;
+            var numOfSelect = 0;
+            for(var i = 0;i<selectFlag.length;i++){
+                if(selectFlag[i].checked){
+                    selected = selectFlag[i];
+                    numOfSelect++;
+                }
+            }
+            if(selected==null){
+                alert("请选择需要修改的流向单!");
+                return;
+            }
+            if(numOfSelect>1){
+                alert("一次只能修改一份流向单");
+                return;
+            }
+            document.getElementById("command").value = "showModify";
+            var flowCardForm = document.getElementById("flowCardForm");
+            flowCardForm.method = "post";
+            flowCardForm.action = "FlowListServlet.servlet";
+            flowCardForm.submit();
         }
 
         function deleteFlowCard() {
