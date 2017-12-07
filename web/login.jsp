@@ -24,7 +24,7 @@
 %>
 <HTML>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <TITLE></TITLE>
 
     <SCRIPT language=JavaScript>
@@ -178,17 +178,6 @@
                                     <TD align=left>
                                         <INPUT name="password" id="password" type=password size="20"
                                                maxlength="20" value="">
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD align=left>
-                                        <FONT face="verdana, arial, helvetica, sans-serif"
-                                              size=-1>验证码：</FONT>
-                                    </TD>
-                                    <TD align=left>
-                                        <INPUT name=userId2 type=text size="6" maxlength="6">
-                                        &nbsp;
-                                        <img src="images/authImage.jpg">
                                     </TD>
                                 </TR>
                                 <TR>

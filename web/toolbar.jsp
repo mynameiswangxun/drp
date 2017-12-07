@@ -6,7 +6,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Untitled Document</title>
 		<link rel="stylesheet" href="style/drp.css">
 
@@ -49,7 +49,7 @@ a:active {
 				<td width="5%" nowrap>
 					&nbsp;
 				</td>
-				<td width="58%" nowrap>
+				<td width="68%" nowrap>
 					<font color="#FFFFFF">
 						<div id="showMainMenu" display='none'>
 							<a href="#" onClick="changeWin()">显示主菜单</a>
@@ -58,14 +58,8 @@ a:active {
 				<td width="21%">
 					当前用户：<%=user==null?"null":user.getUsername()%>
 				</td>
-				<td width="8%">
-					<font color="#FFFFFF">关于 &nbsp;帮助</font>
-				</td>
-				<td width="2%">
-					&nbsp;
-				</td>
 				<td width="6%">
-					<font color="#FFFFFF">注销</font>
+					<span onclick="window.parent.self.location='login.jsp'"><font color="#FFFFFF">注销</font></span>
 				</td>
 			</tr>
 		</table>
