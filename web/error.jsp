@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>错误信息!</title>
-    <meta http-equiv="content-type" content="text/html;charset=gb2312">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <style type="text/css">
         <!--
         .STYLE1 {

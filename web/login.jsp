@@ -28,6 +28,9 @@
     <TITLE></TITLE>
 
     <SCRIPT language=JavaScript>
+        if(window.self != window.top){
+            window.top.location = window.self.location;
+        }
         function init() {
             document.getElementById("loginForm").focus();
         }
