@@ -64,7 +64,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (10000,0,NULL,'所有分销商',NULL,NULL,NULL,NULL,NULL,'N','N'),(10001,10000,NULL,'华北区',NULL,NULL,NULL,NULL,NULL,'N','N'),(10002,10000,NULL,'东北区',NULL,NULL,NULL,NULL,NULL,'Y','N'),(10003,10000,NULL,'华南区',NULL,NULL,NULL,NULL,NULL,'Y','N'),(10004,10001,NULL,'北京市',NULL,NULL,NULL,NULL,NULL,'N','N'),(10005,10004,'100','北京医药股份有限公司','A0001',NULL,NULL,NULL,NULL,'Y','Y');
+INSERT INTO `client` VALUES (10000,0,NULL,'所有分销商',NULL,NULL,NULL,NULL,NULL,'N','N'),(10001,10000,NULL,'华北区',NULL,'','','','','N','N'),(10002,10000,NULL,'东北区',NULL,'','','','','N','N'),(10003,10000,NULL,'华南区',NULL,'','','','','N','N'),(10011,10002,NULL,'沈阳',NULL,'','','','','Y','N'),(10027,10001,NULL,'北京',NULL,'','','','','N','N'),(10033,10027,'100','北京医药股份有限公司','A0002','123','123','123','123','Y','Y'),(10034,10003,NULL,'湖南省',NULL,'','','','','N','N'),(10035,10034,'100','湖南省医药有限公司','A0001','','','','','Y','Y');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,6 +150,7 @@ CREATE TABLE `fiscal_year_period` (
 
 LOCK TABLES `fiscal_year_period` WRITE;
 /*!40000 ALTER TABLE `fiscal_year_period` DISABLE KEYS */;
+INSERT INTO `fiscal_year_period` VALUES (1,2017,1,'2017-01-01','2017-01-18','Y'),(3,2017,2,'2017-02-01','2017-02-16','Y');
 /*!40000 ALTER TABLE `fiscal_year_period` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +169,7 @@ CREATE TABLE `flow_detail` (
   `adjust_num` decimal(12,2) DEFAULT '0.00' COMMENT '调整数量',
   `adjust_reason` varchar(40) DEFAULT NULL COMMENT '调整理由',
   `adjust_flag` char(1) DEFAULT 'N' COMMENT '调整标记\nY：已调整\nN：未调整',
-  PRIMARY KEY (`flow_list_num`,`items_id`),
+  PRIMARY KEY (`flow_list_num`,`items_id`,`aim_client_id`),
   KEY `fk_flow_detail_items1_idx` (`items_id`),
   KEY `fk_flow_detail_flow_list1_idx` (`flow_list_num`),
   CONSTRAINT `fk_flow_detail_flow_list1` FOREIGN KEY (`flow_list_num`) REFERENCES `flow_list` (`flow_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -182,6 +183,7 @@ CREATE TABLE `flow_detail` (
 
 LOCK TABLES `flow_detail` WRITE;
 /*!40000 ALTER TABLE `flow_detail` DISABLE KEYS */;
+INSERT INTO `flow_detail` VALUES ('201712040001','a0002',20006,111.00,0.00,NULL,'N'),('201712040001','a0004',10035,10.00,0.00,NULL,'N'),('201712040001','a0004',20005,10.00,0.00,NULL,'N'),('201712040001','a0004',20006,10.00,0.00,NULL,'N'),('201712040002','a0002',20006,11.00,0.00,NULL,'N');
 /*!40000 ALTER TABLE `flow_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,25 +201,25 @@ CREATE TABLE `flow_list` (
   `op_date` date NOT NULL COMMENT '操作日期',
   `recorder_id` varchar(10) NOT NULL COMMENT '录入人id',
   `vou_sts` char(1) NOT NULL DEFAULT 'N' COMMENT '单据状态\nS：送审\nN：录入',
-  `adjust_id` varchar(10) NOT NULL COMMENT '审核人id',
-  `adjust_adte` date DEFAULT NULL COMMENT '审核日期',
-  `spotter_id` varchar(10) NOT NULL COMMENT '抽查人id',
+  `adjuster_id` varchar(10) DEFAULT NULL COMMENT '审核人id',
+  `adjust_date` date DEFAULT NULL COMMENT '审核日期',
+  `spotter_id` varchar(10) DEFAULT NULL COMMENT '抽查人id',
   `spot_date` date DEFAULT NULL COMMENT '抽查日期',
   `spot_desc` varchar(40) DEFAULT NULL COMMENT '抽查描述',
-  `confirmer_id` varchar(10) NOT NULL COMMENT '复审人代码',
+  `confirmer_id` varchar(10) DEFAULT NULL COMMENT '复审人代码',
   `confirm_date` date DEFAULT NULL COMMENT '复审人日期',
   `op_type` char(1) DEFAULT NULL COMMENT '操作类型\nA：流向单\nB：盘点单',
   PRIMARY KEY (`flow_num`),
   KEY `fk_flow_list_fiscal_year_period1_idx` (`fiscal_year_period_id`),
   KEY `fk_flow_list_client1_idx` (`client_id`),
   KEY `fk_flow_list_user_msg1_idx` (`recorder_id`),
-  KEY `fk_flow_list_user_msg2_idx` (`adjust_id`),
+  KEY `fk_flow_list_user_msg2_idx` (`adjuster_id`),
   KEY `fk_flow_list_user_msg3_idx` (`spotter_id`),
   KEY `fk_flow_list_user_msg4_idx` (`confirmer_id`),
   CONSTRAINT `fk_flow_list_client1` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flow_list_fiscal_year_period1` FOREIGN KEY (`fiscal_year_period_id`) REFERENCES `fiscal_year_period` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flow_list_user_msg1` FOREIGN KEY (`recorder_id`) REFERENCES `user_msg` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_flow_list_user_msg2` FOREIGN KEY (`adjust_id`) REFERENCES `user_msg` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_flow_list_user_msg2` FOREIGN KEY (`adjuster_id`) REFERENCES `user_msg` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flow_list_user_msg3` FOREIGN KEY (`spotter_id`) REFERENCES `user_msg` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flow_list_user_msg4` FOREIGN KEY (`confirmer_id`) REFERENCES `user_msg` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -229,6 +231,7 @@ CREATE TABLE `flow_list` (
 
 LOCK TABLES `flow_list` WRITE;
 /*!40000 ALTER TABLE `flow_list` DISABLE KEYS */;
+INSERT INTO `flow_list` VALUES ('201712040001',3,10033,'2017-12-04','root','N',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'A'),('201712040002',3,10035,'2017-12-04','root','S',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'A');
 /*!40000 ALTER TABLE `flow_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,6 +249,7 @@ CREATE TABLE `items` (
   `name` varchar(20) DEFAULT NULL COMMENT '物料名称',
   `spec` varchar(20) DEFAULT NULL COMMENT '规格',
   `pattern` varchar(20) DEFAULT NULL COMMENT '型号',
+  `file_name` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`items_id`),
   KEY `fk_items_data_dic1_idx` (`item_category_id`),
   KEY `fk_items_data_dic2_idx` (`item_unit_id`),
@@ -260,7 +264,32 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES ('a0001','302','401','感康','','','4fcbc.jpg'),('a0002','302','401','达喜','','','word.gif'),('a0004','300','401','胡高威','11','123','arrowup.gif');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `table_id`
+--
+
+DROP TABLE IF EXISTS `table_id`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `table_id` (
+  `table_name` varchar(20) NOT NULL,
+  `value` int(11) DEFAULT NULL,
+  PRIMARY KEY (`table_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `table_id`
+--
+
+LOCK TABLES `table_id` WRITE;
+/*!40000 ALTER TABLE `table_id` DISABLE KEYS */;
+INSERT INTO `table_id` VALUES ('client',10035),('fiscal_year_period',3),('temi_client',20017);
+/*!40000 ALTER TABLE `table_id` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -296,7 +325,7 @@ CREATE TABLE `temi_client` (
 
 LOCK TABLES `temi_client` WRITE;
 /*!40000 ALTER TABLE `temi_client` DISABLE KEYS */;
-INSERT INTO `temi_client` VALUES (20000,0,NULL,'所有终端客户',NULL,NULL,NULL,NULL,NULL,'N','N'),(20001,20000,NULL,'华北区',NULL,NULL,NULL,NULL,NULL,'N','N'),(20002,20000,NULL,'东北区',NULL,NULL,NULL,NULL,NULL,'Y','N'),(20003,20000,NULL,'华南区',NULL,NULL,NULL,NULL,NULL,'Y','N'),(20004,20001,NULL,'北京市',NULL,NULL,NULL,NULL,NULL,'N','N'),(20005,20004,'200','北京中医医院','B0001',NULL,NULL,NULL,NULL,'Y','Y');
+INSERT INTO `temi_client` VALUES (20000,0,NULL,'所有终端客户',NULL,NULL,NULL,NULL,NULL,'N','N'),(20001,20000,NULL,'华北区',NULL,NULL,NULL,NULL,NULL,'N','N'),(20002,20000,NULL,'东北区',NULL,NULL,NULL,NULL,NULL,'Y','N'),(20004,20001,NULL,'北京市',NULL,NULL,NULL,NULL,NULL,'N','N'),(20005,20004,'202','北京中医医院','B0001','123','123','123','123','Y','Y'),(20006,20004,'200','北京西医医院','B0002','123','123','1','23','Y','Y'),(20017,20000,NULL,'华南区',NULL,NULL,NULL,NULL,NULL,'Y','N');
 /*!40000 ALTER TABLE `temi_client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,7 +353,7 @@ CREATE TABLE `user_msg` (
 
 LOCK TABLES `user_msg` WRITE;
 /*!40000 ALTER TABLE `user_msg` DISABLE KEYS */;
-INSERT INTO `user_msg` VALUES ('root','系统管理员','root123',NULL,NULL,NULL);
+INSERT INTO `user_msg` VALUES ('a0001','wangxun','123456','1234567','253251440@qq.com','2017-10-24'),('a0006','王勋','123456','1234567','253251440@qq.com','2017-10-27'),('a1238','蛙是是的','123456','253255','253251440@qq.com','2017-10-27'),('a1888','升水的啊','123456','123456','253251440@qq.com','2017-10-27'),('root','系统管理员','123456',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user_msg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,4 +384,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-21 22:35:58
+-- Dump completed on 2017-12-14 21:15:37
