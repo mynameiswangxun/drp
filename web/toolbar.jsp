@@ -50,10 +50,10 @@ a:active {
 					&nbsp;
 				</td>
 				<td width="68%" nowrap>
-					<font color="#FFFFFF">
-						<div id="showMainMenu" display='none'>
-							<a href="#" onClick="changeWin()">显示主菜单</a>
-						</div> </font>
+					<%--<font color="#FFFFFF">--%>
+						<%--<div id="showMainMenu" display='none'>--%>
+							<%--<a href="#" onClick="changeWin()">显示主菜单</a>--%>
+						<%--</div> </font>--%>
 				</td>
 				<td width="21%">
 					当前用户：<%=user==null?"null":user.getUsername()%>
