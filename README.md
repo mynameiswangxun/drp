@@ -6,7 +6,7 @@
  ![image](http://m.qpic.cn/psb?/dd6f3193-303e-4590-abaf-efa20e080cc5/KtwwaKUQzZyPIz1AmoQ9T8JXKjCHI5.YHerjomIhAFs!/b/dPIAAAAAAAAA&bo=hwYLAgAAAAADF7o!&rf=viewer_4)
 
 - 修改密码:修改当前用户的密码
- ![image](http://m.qpic.cn/psb?/dd6f3193-303e-4590-abaf-efa20e080cc5/*KxVA3EsWGhdqNX2kmWs2M.ilsyeJa.dOQGEzJM5IeE!/b/dPMAAAAAAAAA&bo=uQWAAgAAAAADJzw!&rf=viewer_4)
+ ![image](http://m.qpic.cn/psb?/dd6f3193-303e-4590-abaf-efa20e080cc5/6*gKy7dng7qKCIYuHmGKr.BHfjP81Sn0WOv1RY7WP7E!/b/dPIAAAAAAAAA&bo=hQU1AgAAAAADF4U!&rf=viewer_4)
 
 ### 基础数据管理
 - 会计核算期间维护:对会计核算期间的crud
